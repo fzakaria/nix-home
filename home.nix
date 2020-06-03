@@ -24,8 +24,6 @@ in {
   # Place packages here that are 
   home.packages = with pkgs; [
     tmux
-    neovim
-    vim
     (callPackage ./programs/ruby/rbenv.nix {})
     (callPackage ./programs/ruby/ruby-build.nix {})
   ]; 
@@ -160,6 +158,32 @@ in {
       pager = "less -FR";
       theme = "TwoDark"; 
     };
+  };
+
+  programs.htop = {
+    enable = true;
+  };
+
+  programs.jq = {
+    enable = true;
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+  };
+
+  programs.ssh = {
+    enable = true;
+    controlMaster = "auto";
+    controlPersist = "60m";
+    extraConfig = ''
+      Host cloudtop
+        Hostname ${variables.username}.c.googlers.com
+    '';
+    forwardAgent = true;
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./programs/zsh/p10k.zsh;

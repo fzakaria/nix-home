@@ -22,6 +22,8 @@ mv ~/.zshrc ~/.zshrc.bak
 mv ~/.gitconfig ~/.gitconfig.bak
 mv ~/.p10k.zsh ~/.p10k.zsh.bak
 mv ~/.rbenv ~/.rbenv.bak
+mv ~/.config/htop/htoprc ~/.config/htop/htoprc.bak
+mv ~/.ssh/config ~/.ssh/config.bak
 ```
 
 ### Bootstrap
