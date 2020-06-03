@@ -39,6 +39,9 @@ setup_home-manager() {
 
 setup_osx() {
     echo "> Mac OS X detected"
+
+    echo "> Not supported at the moment."
+    exit 1
 }
 
 setup_linux() {
