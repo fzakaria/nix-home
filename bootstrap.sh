@@ -48,6 +48,9 @@ setup_linux() {
 setup_nix
 setup_home-manager
 
+# run the installation
+source install.sh
+
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     setup_linux
 elif [[ "$OSTYPE" == "darwin"* ]]; then
