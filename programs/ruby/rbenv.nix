@@ -1,4 +1,4 @@
-with import <nixpkgs> {};
+{stdenv, fetchFromGitHub, bash}:
 stdenv.mkDerivation {
   name = "rbenv";
   

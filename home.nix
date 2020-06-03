@@ -26,6 +26,7 @@
     tmux
     neovim
     vim
+    (callPackage ./programs/ruby/rbenv.nix {})
   ]; 
 
   programs.zsh = {
