@@ -26,7 +26,7 @@
     tmux
     neovim
     vim
-  ];
+  ]; 
 
   programs.zsh = {
     enable = true;
