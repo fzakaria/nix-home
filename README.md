@@ -13,6 +13,11 @@ If you want the official explanation on what Nix does better please read [why yo
 ## Getting Started
 
 You can git clone this repository wherever you'd like!
+Don't forget to update the submodules
+```bash
+git submodule init 
+git submodule update
+```
 
 ### Backup Files
 Athough this tool will **try it's best** not to clobber any files outside it's management; it's best just to backup any files before on-boarding.
