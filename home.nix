@@ -186,5 +186,16 @@ in {
     forwardAgent = true;
   };
 
+  home.file  ={
+    ".tmux.conf" = {
+      source = ./programs/tmux/ohmytmux/.tmux.conf;
+      target = ".tmux.conf";
+    };
+    ".tmux.conf.local" = {
+      source = ./programs/tmux/ohmytmux/.tmux.conf.local;
+      target = ".tmux.conf.local";
+    };
+  };
+
   home.file.".p10k.zsh".text = builtins.readFile ./programs/zsh/p10k.zsh;
 }
