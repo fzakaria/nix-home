@@ -1,6 +1,8 @@
 { config, pkgs, lib, ... }:
 
-{
+let 
+  variables = import ./variables.nix;
+in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -21,8 +23,6 @@
 
   # Place packages here that are 
   home.packages = with pkgs; [
-    zsh
-    git
     tmux
     neovim
     vim
@@ -81,6 +81,84 @@
     oh-my-zsh = {
       enable = true;
       plugins = ["git" "ssh-agent" "rake"];
+    };
+  };
+
+  programs.git = {
+    enable = true;
+    package = pkgs.gitAndTools.gitFull;
+    userName = variables.username;
+    userEmail = variables.email;
+    aliases = {
+      # List available aliases
+      aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
+      # get a diff not fancy!
+      patch = "!git --no-pager diff --no-color";
+      # Command shortcuts
+      co = "checkout";
+      st = "status";
+      ci = "commit";
+      br = "branch";
+      # Display tree-like log, because default log is a pain…
+      lg = "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
+      # Useful when you have to update your last commit
+      # with staged files without editing the commit message.
+      oops = "commit --amend --no-edit";
+      # Edit last commit message
+      reword = "commit --amend";
+      # Undo last commit but keep changed files in stage
+      uncommit = "reset --soft HEAD~1";
+      # Remove file(s) from Git but not from disk
+      untrack = "rm --cache --";
+      # Print recent branches used
+      brv = "branch --sort=-committerdate -vvv";
+    };
+    extraConfig = {
+      http = {
+        cookiefile = "~/.gitcookies";
+      };
+      color = {
+        ui = "auto";
+      };
+      core = {
+        editor = "vim";
+        # Don't consider trailing space change as a cause for merge conflicts
+        whitespace = "-trailing-space";
+      };
+      status = {
+        # Display submodule rev change summaries in status
+        submoduleSummary = true;
+        # Recursively traverse untracked directories to display all contents
+        showUntrackedFiles = "all";
+      };
+      diff = {
+        tool = "bc3";
+      };
+      "difftool \"bc3\"" = {
+        trustExitCode = true;
+      };
+      difftool = {
+        prompt = false;
+      };
+      merge = {
+        tool = "bc3";
+      };
+      "mergetool \"bc3\"" = {
+        trustExitCode = true;
+      };
+    };
+    delta = {
+      enable = true;
+      options = ["--dark"];
+    };
+    ignores = ["*~" "*.swp" "*.orig"];
+  };
+
+  programs.bat = {
+    enable = true;
+    config = { 
+      pager = "less -FR";
+      theme = "TwoDark"; 
     };
   };
 
