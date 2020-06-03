@@ -26,6 +26,7 @@ mv ~/.config/htop/htoprc ~/.config/htop/htoprc.bak
 mv ~/.ssh/config ~/.ssh/config.bak
 mv ~/.tmux.conf ~/.tmux.conf.bak
 mv ~/.tmux.conf.local ~/.tmux.conf.local.bak
+mv ~/.vimrc ~/.vimrc.bak 
 ```
 
 ### Bootstrap
