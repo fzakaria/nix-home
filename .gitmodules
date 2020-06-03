@@ -1,3 +1,6 @@
 [submodule "programs/tmux/ohmytmux"]
 	path = programs/tmux/ohmytmux
 	url = git@github.com:gpakosz/.tmux.git
+[submodule "programs/vim/vim_runtime"]
+	path = programs/vim/vim_runtime
+	url = git@github.com:amix/vimrc.git

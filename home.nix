@@ -195,6 +195,14 @@ in {
       source = ./programs/tmux/ohmytmux/.tmux.conf.local;
       target = ".tmux.conf.local";
     };
+    ".vim_runtime" = {
+      source = ./programs/vim/vim_runtime;
+      target = ".vim_runtime";
+    };
+    ".vimrc" = {
+      source = ./programs/vim/vimrc;
+      target = ".vimrc";
+    };
   };
 
   home.file.".p10k.zsh".text = builtins.readFile ./programs/zsh/p10k.zsh;
