@@ -27,6 +27,7 @@
     neovim
     vim
     (callPackage ./programs/ruby/rbenv.nix {})
+    (callPackage ./programs/ruby/ruby-build.nix {})
   ]; 
 
   programs.zsh = {
@@ -73,6 +74,9 @@
          # seems to fail since the library is not present. When I have a better understanding of Nix
          # let's fix this.
          [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
+
+         # Allow rbenv to function by adding the shims
+         eval "$(rbenv init -)"
       '';
     oh-my-zsh = {
       enable = true;

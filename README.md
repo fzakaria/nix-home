@@ -21,6 +21,7 @@ Athough this tool will **try it's best** not to clobber any files outside it's m
 mv ~/.zshrc ~/.zshrc.bak
 mv ~/.gitconfig ~/.gitconfig.bak
 mv ~/.p10k.zsh ~/.p10k.zsh.bak
+mv ~/.rbenv ~/.rbenv.bak
 ```
 
 ### Bootstrap
