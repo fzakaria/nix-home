@@ -67,6 +67,11 @@
       ''
          # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
          [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+         # FIXME: SSH or tooling that requires libnss-cache (https://github.com/google/libnss-cache)
+         # seems to fail since the library is not present. When I have a better understanding of Nix
+         # let's fix this.
+         [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
       '';
     oh-my-zsh = {
       enable = true;
