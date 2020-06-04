@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 
-let 
-  variables = import ./variables.nix;
+let variables = import ./variables.nix;
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -24,9 +23,10 @@ in {
   # Place packages here that are 
   home.packages = with pkgs; [
     tmux
-    (callPackage ./programs/ruby/rbenv.nix {})
-    (callPackage ./programs/ruby/ruby-build.nix {})
-  ]; 
+    nixfmt
+    (callPackage ./programs/ruby/rbenv.nix { })
+    (callPackage ./programs/ruby/ruby-build.nix { })
+  ];
 
   programs.zsh = {
     enable = true;
@@ -63,22 +63,21 @@ in {
         file = "powerlevel10k.zsh-theme";
       }
     ];
-    initExtra = 
-      ''
-         # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+    initExtra = ''
+      # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-         # FIXME: SSH or tooling that requires libnss-cache (https://github.com/google/libnss-cache)
-         # seems to fail since the library is not present. When I have a better understanding of Nix
-         # let's fix this.
-         [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
+      # FIXME: SSH or tooling that requires libnss-cache (https://github.com/google/libnss-cache)
+      # seems to fail since the library is not present. When I have a better understanding of Nix
+      # let's fix this.
+      [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
 
-         # Allow rbenv to function by adding the shims
-         eval "$(rbenv init -)"
-      '';
+      # Allow rbenv to function by adding the shims
+      eval "$(rbenv init -)"
+    '';
     oh-my-zsh = {
       enable = true;
-      plugins = ["git" "ssh-agent" "rake"];
+      plugins = [ "git" "ssh-agent" "rake" ];
     };
   };
 
@@ -89,7 +88,8 @@ in {
     userEmail = variables.email;
     aliases = {
       # List available aliases
-      aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
+      aliases =
+        "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
       # get a diff not fancy!
       patch = "!git --no-pager diff --no-color";
       # Command shortcuts
@@ -98,7 +98,8 @@ in {
       ci = "commit";
       br = "branch";
       # Display tree-like log, because default log is a pain…
-      lg = "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
+      lg =
+        "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
       # Useful when you have to update your last commit
       # with staged files without editing the commit message.
       oops = "commit --amend --no-edit";
@@ -112,12 +113,8 @@ in {
       brv = "branch --sort=-committerdate -vvv";
     };
     extraConfig = {
-      http = {
-        cookiefile = "~/.gitcookies";
-      };
-      color = {
-        ui = "auto";
-      };
+      http = { cookiefile = "~/.gitcookies"; };
+      color = { ui = "auto"; };
       core = {
         editor = "vim";
         # Don't consider trailing space change as a cause for merge conflicts
@@ -129,44 +126,30 @@ in {
         # Recursively traverse untracked directories to display all contents
         showUntrackedFiles = "all";
       };
-      diff = {
-        tool = "bc3";
-      };
-      "difftool \"bc3\"" = {
-        trustExitCode = true;
-      };
-      difftool = {
-        prompt = false;
-      };
-      merge = {
-        tool = "bc3";
-      };
-      "mergetool \"bc3\"" = {
-        trustExitCode = true;
-      };
+      diff = { tool = "bc3"; };
+      "difftool \"bc3\"" = { trustExitCode = true; };
+      difftool = { prompt = false; };
+      merge = { tool = "bc3"; };
+      "mergetool \"bc3\"" = { trustExitCode = true; };
     };
     delta = {
       enable = true;
-      options = ["--dark"];
+      options = [ "--dark" ];
     };
-    ignores = ["*~" "*.swp" "*.orig"];
+    ignores = [ "*~" "*.swp" "*.orig" ];
   };
 
   programs.bat = {
     enable = true;
-    config = { 
+    config = {
       pager = "less -FR";
-      theme = "TwoDark"; 
+      theme = "TwoDark";
     };
   };
 
-  programs.htop = {
-    enable = true;
-  };
+  programs.htop = { enable = true; };
 
-  programs.jq = {
-    enable = true;
-  };
+  programs.jq = { enable = true; };
 
   programs.neovim = {
     enable = true;
@@ -186,7 +169,7 @@ in {
     forwardAgent = true;
   };
 
-  home.file  ={
+  home.file = {
     ".tmux.conf" = {
       source = ./programs/tmux/ohmytmux/.tmux.conf;
       target = ".tmux.conf";
