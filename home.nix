@@ -26,6 +26,8 @@ in {
     nixfmt
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
+    (callPackage ./programs/node/nodenv.nix { })
+    (callPackage ./programs/node/node-build.nix { })
   ];
 
   programs.zsh = {
@@ -74,6 +76,8 @@ in {
 
       # Allow rbenv to function by adding the shims
       eval "$(rbenv init -)"
+      # Allow nodenv to function by adding the shims
+      eval "$(nodenv init -)"
     '';
     oh-my-zsh = {
       enable = true;

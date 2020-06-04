@@ -1,15 +1,15 @@
 { stdenv, fetchFromGitHub, bash }:
 stdenv.mkDerivation {
-  name = "rbenv";
+  name = "nodenv";
 
   # fetchFromGitHub is a build support function that fetches a GitHub
   # repository and extracts into a directory; so we can use it
   # fetchFromGithub is actually a derivation itself :)
   src = fetchFromGitHub {
-    owner = "rbenv";
-    repo = "rbenv";
-    rev = "v1.1.2";
-    sha256 = "12i050vs35iiblxga43zrj7xwbaisv3mq55y9ikagkr8pj1vmq53";
+    owner = "nodenv";
+    repo = "nodenv";
+    rev = "v1.3.2";
+    sha256 = "0zimrxspdwjx6b65bgkc9p9jyii6mxmc5r4ww3ghmxgba38rzfh6";
   };
 
   buildPhase = ''
@@ -25,6 +25,6 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     mv libexec $out
     mv completions $out
-    ln -s $out/libexec/rbenv $out/bin/rbenv
+    ln -s $out/libexec/nodenv $out/bin/nodenv
   '';
 }
