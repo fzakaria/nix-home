@@ -24,7 +24,7 @@ in {
   home.packages = with pkgs; [
     tmux
     nixfmt
-    delta
+    gitAndTools.delta
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
     (callPackage ./programs/node/nodenv.nix { })
