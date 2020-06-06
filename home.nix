@@ -24,6 +24,7 @@ in {
   home.packages = with pkgs; [
     tmux
     nixfmt
+    delta
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
     (callPackage ./programs/node/nodenv.nix { })
@@ -65,6 +66,14 @@ in {
         file = "powerlevel10k.zsh-theme";
       }
     ];
+    initExtraBeforeCompInit = ''
+      # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+      # Initialization code that may require console input (password prompts, [y/n]
+      # confirmations, etc.) must go above this block; everything else may go below.
+      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+      fi
+    '';
     initExtra = ''
       # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
       [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -88,58 +97,6 @@ in {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    userName = variables.username;
-    userEmail = variables.email;
-    aliases = {
-      # List available aliases
-      aliases =
-        "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
-      # get a diff not fancy!
-      patch = "!git --no-pager diff --no-color";
-      # Command shortcuts
-      co = "checkout";
-      st = "status";
-      ci = "commit";
-      br = "branch";
-      # Display tree-like log, because default log is a pain…
-      lg =
-        "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
-      # Useful when you have to update your last commit
-      # with staged files without editing the commit message.
-      oops = "commit --amend --no-edit";
-      # Edit last commit message
-      reword = "commit --amend";
-      # Undo last commit but keep changed files in stage
-      uncommit = "reset --soft HEAD~1";
-      # Remove file(s) from Git but not from disk
-      untrack = "rm --cache --";
-      # Print recent branches used
-      brv = "branch --sort=-committerdate -vvv";
-    };
-    extraConfig = {
-      http = { cookiefile = "~/.gitcookies"; };
-      color = { ui = "auto"; };
-      core = {
-        editor = "vim";
-        # Don't consider trailing space change as a cause for merge conflicts
-        whitespace = "-trailing-space";
-      };
-      status = {
-        # Display submodule rev change summaries in status
-        submoduleSummary = true;
-        # Recursively traverse untracked directories to display all contents
-        showUntrackedFiles = "all";
-      };
-      diff = { tool = "bc3"; };
-      "difftool \"bc3\"" = { trustExitCode = true; };
-      difftool = { prompt = false; };
-      merge = { tool = "bc3"; };
-      "mergetool \"bc3\"" = { trustExitCode = true; };
-    };
-    delta = {
-      enable = true;
-      options = [ "--dark" ];
-    };
     ignores = [ "*~" "*.swp" "*.orig" ];
   };
 
@@ -167,7 +124,7 @@ in {
     controlMaster = "auto";
     controlPersist = "60m";
     extraConfig = ''
-      Host cloudtop
+      Host cloudtop 
         Hostname ${variables.username}.c.googlers.com
     '';
     forwardAgent = true;
@@ -189,6 +146,14 @@ in {
     ".vimrc" = {
       source = ./programs/vim/vimrc;
       target = ".vimrc";
+    };
+    ".gitconfig" = {
+      source = ./programs/git/gitconfig;
+      target = ".gitconfig";
+    };
+    ".gitignore_global" = {
+      source = ./programs/git/gitignore_global;
+      target = ".gitignore_global";
     };
   };
 
