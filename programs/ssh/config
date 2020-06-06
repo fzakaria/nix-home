@@ -1,0 +1,22 @@
+Host *
+  ForwardAgent yes
+  ServerAliveInterval 0
+  HashKnownHosts no
+  UserKnownHostsFile ~/.ssh/known_hosts
+  ControlMaster auto
+  ControlPath ~/.ssh/master-%r@%n:%p
+  ControlPersist 60m
+
+Host cloudtop
+  Hostname fmzakari.c.googlers.com
+
+Host bastion
+  IdentityFile ~/.ssh/bastion_faridzakaria
+  HostName  bastion-tunnel.looker.com
+  User  faridzakaria
+  ForwardAgent yes
+  CheckHostIP yes
+  ServerAliveInterval 15
+  DynamicForward localhost:2222
+  GatewayPorts no
+  HostKeyAlias bastion-tunnel.looker.com

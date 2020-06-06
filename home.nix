@@ -25,11 +25,18 @@ in {
     tmux
     nixfmt
     gitAndTools.delta
+    openssh
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
     (callPackage ./programs/node/nodenv.nix { })
     (callPackage ./programs/node/node-build.nix { })
   ];
+
+  # otherwise typing `man` shows
+  # > /home/fmzakari/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
+  # https://github.com/rycee/home-manager/issues/432
+  programs.man.enable = false;
+  home.extraOutputsToInstall = [ "man" ];
 
   programs.zsh = {
     enable = true;
@@ -66,28 +73,7 @@ in {
         file = "powerlevel10k.zsh-theme";
       }
     ];
-    initExtraBeforeCompInit = ''
-      # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-      # Initialization code that may require console input (password prompts, [y/n]
-      # confirmations, etc.) must go above this block; everything else may go below.
-      if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-        source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-      fi
-    '';
-    initExtra = ''
-      # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-      [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-      # FIXME: SSH or tooling that requires libnss-cache (https://github.com/google/libnss-cache)
-      # seems to fail since the library is not present. When I have a better understanding of Nix
-      # let's fix this.
-      [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
-
-      # Allow rbenv to function by adding the shims
-      eval "$(rbenv init -)"
-      # Allow nodenv to function by adding the shims
-      eval "$(nodenv init -)"
-    '';
+    initExtraBeforeCompInit = builtins.readFile ./programs/zsh/zshrc;
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "ssh-agent" "rake" ];
@@ -97,7 +83,6 @@ in {
   programs.git = {
     enable = true;
     package = pkgs.gitAndTools.gitFull;
-    ignores = [ "*~" "*.swp" "*.orig" ];
   };
 
   programs.bat = {
@@ -119,16 +104,7 @@ in {
     vimdiffAlias = true;
   };
 
-  programs.ssh = {
-    enable = true;
-    controlMaster = "auto";
-    controlPersist = "60m";
-    extraConfig = ''
-      Host cloudtop 
-        Hostname ${variables.username}.c.googlers.com
-    '';
-    forwardAgent = true;
-  };
+  programs.ssh = { enable = true; };
 
   home.file = {
     ".tmux.conf" = {
@@ -155,7 +131,14 @@ in {
       source = ./programs/git/gitignore_global;
       target = ".gitignore_global";
     };
+    ".ssh/config" = {
+      source = ./programs/ssh/config;
+      target = ".ssh/config";
+    };
+    ".p10k.zsh" = {
+      source = ./programs/zsh/p10k.zsh;
+      target = ".p10k.zsh";
+    };
   };
 
-  home.file.".p10k.zsh".text = builtins.readFile ./programs/zsh/p10k.zsh;
 }
