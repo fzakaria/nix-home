@@ -97,13 +97,6 @@ in {
 
   programs.jq = { enable = true; };
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-  };
-
   programs.ssh = { enable = true; };
 
   home.file = {
