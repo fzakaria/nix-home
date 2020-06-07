@@ -22,6 +22,12 @@ in {
 
   # Place packages here that are 
   home.packages = with pkgs; [
+    # Rust CLI Tools! I love rust.
+    exa
+    fd
+    ripgrep
+    fzf
+
     tmux
     nixfmt
     gitAndTools.delta
@@ -91,6 +97,20 @@ in {
       pager = "less -FR";
       theme = "TwoDark";
     };
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    changeDirWidgetCommand =
+      "fd --color always --hidden --follow --exclude .git --type d";
+    changeDirWidgetOptions =
+      [ "--ansi --preview 'exa --color always --tree {} | head -500'" ];
+    fileWidgetCommand =
+      "fd --color always --type f --hidden --follow --exclude .git";
+    fileWidgetOptions = [
+      "--ansi --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+    ];
   };
 
   programs.htop = { enable = true; };
