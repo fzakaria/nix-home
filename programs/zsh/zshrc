@@ -17,3 +17,6 @@ fi
 eval "$(rbenv init -)"
 # Allow nodenv to function by adding the shims
 eval "$(nodenv init -)"	
+
+# Replace cat with bat; a much prettier version
+alias cat='bat'

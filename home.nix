@@ -27,10 +27,14 @@ in {
     fd
     ripgrep
     fzf
+    bat
 
+    jq
+    htop
     tmux
     nixfmt
     gitAndTools.delta
+    gitAndTools.gitFull
     openssh
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
@@ -43,6 +47,9 @@ in {
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
+  home.sessionVariables = {
+    BAT_CONFIG_PATH = "~/.batrc";
+  };
 
   programs.zsh = {
     enable = true;
@@ -86,19 +93,6 @@ in {
     };
   };
 
-  programs.git = {
-    enable = true;
-    package = pkgs.gitAndTools.gitFull;
-  };
-
-  programs.bat = {
-    enable = true;
-    config = {
-      pager = "less -FR";
-      theme = "TwoDark";
-    };
-  };
-
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -112,12 +106,6 @@ in {
       "--ansi --preview 'bat --style=numbers --color=always --line-range :500 {}'"
     ];
   };
-
-  programs.htop = { enable = true; };
-
-  programs.jq = { enable = true; };
-
-  programs.ssh = { enable = true; };
 
   home.file = {
     ".tmux.conf" = {
@@ -151,6 +139,10 @@ in {
     ".p10k.zsh" = {
       source = ./programs/zsh/p10k.zsh;
       target = ".p10k.zsh";
+    };
+    ".batrc" = {
+      source = ./programs/bat/batrc;
+      target = ".batrc";
     };
   };
 
