@@ -41,3 +41,13 @@ It will take care of installing Nix.
 ### Updating
 
 Subsequent updating to the repository can be reflected in your system by simply running `./install.sh`
+
+### Uninstall
+
+You can uninstall by running:
+
+```bash
+ rm -rf /nix
+ ```
+
+ > Don't forget to move back all your backup dotfiles!
