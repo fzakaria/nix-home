@@ -47,9 +47,7 @@ in {
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
-  home.sessionVariables = {
-    BAT_CONFIG_PATH = "~/.batrc";
-  };
+  home.sessionVariables = { BAT_CONFIG_PATH = "~/.batrc"; };
 
   programs.zsh = {
     enable = true;
@@ -103,7 +101,7 @@ in {
     fileWidgetCommand =
       "fd --color always --type f --hidden --follow --exclude .git";
     fileWidgetOptions = [
-      "--ansi --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+      "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
     ];
   };
 
