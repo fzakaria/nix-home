@@ -37,7 +37,6 @@ in {
     nixfmt
     gitAndTools.delta
     gitAndTools.gitFull
-    openssh
     (callPackage ./programs/ruby/rbenv.nix { })
     (callPackage ./programs/ruby/ruby-build.nix { })
     (callPackage ./programs/node/nodenv.nix { })
