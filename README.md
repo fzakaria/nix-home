@@ -47,7 +47,9 @@ Subsequent updating to the repository can be reflected in your system by simply 
 You can uninstall by running:
 
 ```bash
- rm -rf /nix
+# remove the . "$HOME/.nix-profile/etc/profile.d/nix.sh" line in your ~/.profile or ~/.bash_profile
+rm -rf $HOME/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
+rm -rf /nix
  ```
 
  > Don't forget to move back all your backup dotfiles!

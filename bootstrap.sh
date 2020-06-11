@@ -22,6 +22,7 @@ setup_nix() {
     else
         echo "> Install nix"
         curl https://nixos.org/nix/install | sh
+        source ~/.nix-profile/etc/profile.d/nix.sh
     fi
 }
 
