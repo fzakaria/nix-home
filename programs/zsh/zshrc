@@ -19,9 +19,4 @@ eval "$(rbenv init -)"
 eval "$(nodenv init -)"	
 
 # Replace cat with bat; a much prettier version
-alias cat='bat'
-
-# Modify the $PATH here if you need
-#
-# Add user installation of python for Linux
-path+="$HOME/.local/bin"
+alias cat='bat --style=plain'

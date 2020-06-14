@@ -31,6 +31,7 @@ in {
     fzf
     bat
 
+    redo-apenwarr
     jq
     htop
     tmux
