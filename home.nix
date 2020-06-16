@@ -1,7 +1,13 @@
 { config, pkgs, lib, ... }:
 
-let variables = import ./variables.nix;
+let variables = import ./variables.nix;                                                                                                                                               
 in {
+  imports = if builtins.currentSystem == "x86_64-linux"
+  then [ ./platforms/linux.nix ]
+  else if builtins.currentSystem == "x86_64-darwin"
+  then [./platforms/darwin.nix]
+  else [];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -9,8 +15,6 @@ in {
   # paths it should manage.
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";
-
-  targets.genericLinux.enable = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -22,13 +26,13 @@ in {
   # changes in each release.
   home.stateVersion = "20.09";
 
-  # Place packages here that are 
+  # Place packages here that are
   home.packages = with pkgs; [
     # Rust CLI Tools! I love rust.
     exa
     fd
-    ripgrep
     fzf
+    ripgrep
     bat
 
     redo-apenwarr
@@ -45,7 +49,7 @@ in {
   ];
 
   # otherwise typing `man` shows
-  # > /home/fmzakari/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
+  # > ~/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
@@ -125,7 +129,11 @@ in {
       target = ".vimrc";
     };
     ".gitconfig" = {
-      source = ./programs/git/gitconfig;
+      source = pkgs.substituteAll {
+        src = ./programs/git/gitconfig;
+        full_name = "${variables.full_name}";
+        email = "${variables.email}";
+      };
       target = ".gitconfig";
     };
     ".gitignore_global" = {

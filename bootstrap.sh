@@ -52,6 +52,9 @@ setup_linux() {
 setup_nix
 setup_home-manager
 
+# generate the custom variables
+./bin/generate-variables
+
 # run the installation
 source install.sh
 

@@ -1,8 +1,8 @@
 [http]
 	cookiefile = "~/.gitcookies"
 [user]
-	email = "fmzakari@google.com"
-	name = "fmzakari"
+	email = @email@
+	name = @full_name@
 [alias]
 	# List available aliases
 	aliases = !git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'
