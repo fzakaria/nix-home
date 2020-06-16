@@ -1,12 +1,14 @@
 { config, pkgs, lib, ... }:
 
-let variables = import ./variables.nix;                                                                                                                                               
+with lib.strings;
+let variables = import ./variables.nix;
 in {
-  imports = if builtins.currentSystem == "x86_64-linux"
-  then [ ./platforms/linux.nix ]
-  else if builtins.currentSystem == "x86_64-darwin"
-  then [./platforms/darwin.nix]
-  else [];
+  imports = if (hasInfix builtins.currentSystem "linux") then
+    [ ./platforms/linux.nix ]
+  else if (hasInfix builtins.currentSystem "darwin") then
+    [ ./platforms/darwin.nix ]
+  else
+    [ ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
