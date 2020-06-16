@@ -49,7 +49,7 @@ in {
   ];
 
   # otherwise typing `man` shows
-  # > /home/fmzakari/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
+  # > ~/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
