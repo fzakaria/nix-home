@@ -128,16 +128,33 @@ in {
     withRuby = true;
 
     plugins = with pkgs.vimPlugins; [
+      # general
+      vim-which-key
       neovim-sensible
-      vim-gitgutter
+      vim-surround
+
+      # visuals
+
+      vim-airline
+      vim-devicons
+
+      # navigation
       nerdtree
       nerdtree-git-plugin
-      # Intellisense engine for Vim8 & Neovim, full language server protocol support as VSCode
+
+      # intellisense
+      vim-nix
       coc-nvim
       coc-solargraph
       coc-highlight
       coc-tsserver
+
+      # git
+      vim-fugitive
+      vim-gitgutter
     ];
+
+    extraConfig = builtins.readFile ./programs/neovim/init.vim;
   };
 
   # Whether to enable fontconfig configuration.
@@ -153,10 +170,6 @@ in {
     ".tmux.conf.local" = {
       source = ./programs/tmux/ohmytmux/.tmux.conf.local;
       target = ".tmux.conf.local";
-    };
-    "init.vim" = {
-      source = ./programs/neovim/init.vim;
-      target = "${config.xdg.configHome}/nvim/init.vim";
     };
     ".gitconfig" = {
       source = pkgs.substituteAll {
