@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let variables = import ./variables.nix;
+    os = import (if pkgs.stdenv.isDarwin then ./machines/darwin.nix else ./machines/linux.nix);
 in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -9,8 +10,6 @@ in {
   # paths it should manage.
   home.username = builtins.getEnv "USER";
   home.homeDirectory = builtins.getEnv "HOME";
-
-  targets.genericLinux.enable = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
