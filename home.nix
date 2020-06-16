@@ -37,6 +37,12 @@ in {
     ripgrep
     bat
 
+    # Intellisense engine for Vim8 & Neovim, full language server protocol support as VSCode
+    vimPlugins.coc-nvim
+    # typescript &  javascript language server
+    nodePackages.javascript-typescript-langserver
+    # ruby language server
+    solargraph
     redo-apenwarr
     jq
     htop
@@ -111,6 +117,13 @@ in {
     fileWidgetOptions = [
       "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
     ];
+  };
+
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
   };
 
   home.file = {
