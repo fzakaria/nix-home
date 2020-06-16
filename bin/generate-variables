@@ -11,6 +11,9 @@ username = (gets).strip
 puts "What is your email?"
 email = (gets).strip
 
+puts "What is your full name?"
+full_name = (gets).strip
+
 rendered = ERB.new(File.read(TEMPLATE_FILE), nil, nil).result(binding)
 
 File.open(RENDER_FILE, "w+") do |f|

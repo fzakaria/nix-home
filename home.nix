@@ -1,8 +1,13 @@
 { config, pkgs, lib, ... }:
 
-let variables = import ./variables.nix;
-    os = import (if pkgs.stdenv.isDarwin then ./machines/darwin.nix else ./machines/linux.nix);
+let variables = import ./variables.nix;                                                                                                                                               
 in {
+  imports = if builtins.currentSystem == "x86_64-linux"
+  then [ ./platforms/linux.nix ]
+  else if builtins.currentSystem == "x86_64-darwin"
+  then [./platforms/darwin.nix]
+  else [];
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -21,13 +26,13 @@ in {
   # changes in each release.
   home.stateVersion = "20.09";
 
-  # Place packages here that are 
+  # Place packages here that are
   home.packages = with pkgs; [
     # Rust CLI Tools! I love rust.
     exa
     fd
-    ripgrep
     fzf
+    ripgrep
     bat
 
     redo-apenwarr
@@ -124,7 +129,11 @@ in {
       target = ".vimrc";
     };
     ".gitconfig" = {
-      source = ./programs/git/gitconfig;
+      source = pkgs.substituteAll {
+        src = ./programs/git/gitconfig;
+        full_name = "${variables.full_name}";
+        email = "${variables.email}";
+      };
       target = ".gitconfig";
     };
     ".gitignore_global" = {
