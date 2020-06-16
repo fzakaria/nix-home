@@ -37,10 +37,9 @@ in {
     ripgrep
     bat
 
-    # Intellisense engine for Vim8 & Neovim, full language server protocol support as VSCode
-    vimPlugins.coc-nvim
-    # typescript &  javascript language server
-    nodePackages.javascript-typescript-langserver
+    # fonts
+    dejavu_fonts
+    powerline-fonts
     # ruby language server
     solargraph
     redo-apenwarr
@@ -124,7 +123,27 @@ in {
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
+    withNodeJs = true;
+    withPython3 = true;
+    withRuby = true;
+
+    plugins = with pkgs.vimPlugins; [
+      neovim-sensible
+      vim-gitgutter
+      nerdtree
+      nerdtree-git-plugin
+      # Intellisense engine for Vim8 & Neovim, full language server protocol support as VSCode
+      coc-nvim
+      coc-solargraph
+      coc-highlight
+      coc-tsserver
+    ];
   };
+
+  # Whether to enable fontconfig configuration.
+  # This will, for example, allow fontconfig to discover fonts and
+  # configurations installed through home.packages
+  fonts.fontconfig.enable = true;
 
   home.file = {
     ".tmux.conf" = {
@@ -135,13 +154,9 @@ in {
       source = ./programs/tmux/ohmytmux/.tmux.conf.local;
       target = ".tmux.conf.local";
     };
-    ".vim_runtime" = {
-      source = ./programs/vim/vim_runtime;
-      target = ".vim_runtime";
-    };
-    ".vimrc" = {
-      source = ./programs/vim/vimrc;
-      target = ".vimrc";
+    "init.vim" = {
+      source = ./programs/neovim/init.vim;
+      target = "${config.xdg.configHome}/nvim/init.vim";
     };
     ".gitconfig" = {
       source = pkgs.substituteAll {
