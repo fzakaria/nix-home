@@ -1,7 +1,14 @@
 { config, pkgs, lib, ... }:
 
+with pkgs;
 with lib.strings;
 let variables = import ./variables.nix;
+    spacevim = fetchFromGitHub {
+      owner = "SpaceVim";
+      repo = "SpaceVim";
+      rev = "v1.4.0";
+      sha256 = "0k29aljva5dbm9hlk6v144zi4m1912ga71j5aqcgzyw59baighlw";
+    };
 in {
   imports = if (hasInfix builtins.currentSystem "linux") then
     [ ./platforms/linux.nix ]
@@ -37,11 +44,17 @@ in {
     ripgrep
     bat
 
+    # spacevim
+    (neovim.override { withPython3 = true; vimAlias = true; viAlias = true; })
+    ctags
+    solargraph
+    nodePackages.javascript-typescript-langserver
+    nodePackages.typescript-language-server
     # fonts
+    (nerdfonts.override { fonts = ["SourceCodePro"]; })
     dejavu_fonts
     powerline-fonts
-    # ruby language server
-    solargraph
+
     redo-apenwarr
     jq
     htop
@@ -118,51 +131,21 @@ in {
     ];
   };
 
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
-    withNodeJs = true;
-    withPython3 = true;
-    withRuby = true;
-
-    plugins = with pkgs.vimPlugins; [
-      # general
-      vim-which-key
-      neovim-sensible
-      vim-surround
-
-      # visuals
-
-      vim-airline
-      vim-devicons
-
-      # navigation
-      nerdtree
-      nerdtree-git-plugin
-
-      # intellisense
-      vim-nix
-      coc-nvim
-      coc-solargraph
-      coc-highlight
-      coc-tsserver
-
-      # git
-      vim-fugitive
-      vim-gitgutter
-    ];
-
-    extraConfig = builtins.readFile ./programs/neovim/init.vim;
-  };
-
   # Whether to enable fontconfig configuration.
   # This will, for example, allow fontconfig to discover fonts and
   # configurations installed through home.packages
   fonts.fontconfig.enable = true;
 
   home.file = {
+    ".SpaceVim.d/init.toml" = {
+      source = ./programs/spacevim/init.toml;
+      target = ".SpaceVim.d/init.toml";
+      onChange = "rm -rf ~/.cache/SpaceVim/conf";
+    } ;
+    ".config/nvim" = {
+      source = spacevim;
+      recursive = true;
+    };
     ".tmux.conf" = {
       source = ./programs/tmux/ohmytmux/.tmux.conf;
       target = ".tmux.conf";
