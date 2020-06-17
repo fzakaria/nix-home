@@ -24,7 +24,7 @@
     enable = true
 
 [[layers]]
-    name = "denite"
+    name = "fzf"
 
 [[layers]]
     name = "shell"

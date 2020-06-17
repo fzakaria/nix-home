@@ -56,6 +56,7 @@ setup_home-manager
 ./bin/generate-variables
 
 # run the installation
+source ~/.profile
 source install.sh
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
