@@ -49,6 +49,9 @@ setup_linux() {
     echo "> Linux detected"
 }
 
+git submodule init
+git submodule update
+
 setup_nix
 setup_home-manager
 
