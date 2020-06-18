@@ -92,6 +92,11 @@ in {
     enableAutosuggestions = true;
     enableCompletion = true;
     autocd = true;
+    history = {
+      ignoreDups = true;
+      ignoreSpace = true;
+      share = true;
+    };
     plugins = [
       {
         name = "zsh-autosuggestions";
@@ -123,6 +128,17 @@ in {
       }
     ];
     initExtraBeforeCompInit = builtins.readFile ./programs/zsh/zshrc;
+
+    initExtra = ''
+      # Figure out the closure size for a certain package
+      # ex. nix-closure-size $(which exa)
+      nix-closure-size() {
+        nix-store -q --size $(nix-store -qR $(readlink -e $1) ) | \
+        awk '{ a+=$1 } END { print a }' | \
+        ${pkgs.coreutils}/bin/numfmt --to=iec-i
+      }
+    '';
+
     shellAliases = {
       "cat" = "bat --style=plain";
       "l" = "exa";
@@ -134,6 +150,11 @@ in {
       enable = true;
       plugins = [ "git" "ssh-agent" "rake" ];
     };
+  };
+
+  programs.broot = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.fzf = {

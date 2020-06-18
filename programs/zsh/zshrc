@@ -17,8 +17,3 @@ fi
 eval "$(rbenv init -)"
 # Allow nodenv to function by adding the shims
 eval "$(nodenv init -)"
-
-
-# Figure out the closure size for a certain package
-# ex. nix-closure-size $(which exa)
-nix-closure-size() { nix-store -q --size $(nix-store -qR $(readlink -e $1) ) | awk '{ a+=$1 } END { print a }' | numfmt --to=iec-i }
