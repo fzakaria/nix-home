@@ -2,11 +2,11 @@
 #
 # This scripts aims to detect which system is running, and bootstrap
 # the home configuration accordingly. 
-#   
+#
 # So far the current setup are supported:
 # - Linux
 # - Mac OSX
-# 
+#
 # Inspiration from https://gitlab.com/vdemeester/home/-/blob/master/bootstrap.sh
 
 # -e: will cause a bash script to exit immediately when a command fails.
