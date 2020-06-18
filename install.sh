@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-home-manager switch --file ./home.nix
+home-manager switch --file ./home.nix $@
