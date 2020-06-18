@@ -17,12 +17,3 @@ fi
 eval "$(rbenv init -)"
 # Allow nodenv to function by adding the shims
 eval "$(nodenv init -)"	
-
-# Replace cat with bat; a much prettier version
-alias cat='bat --style=plain'
-
-# Replace ls with exa
-alias l='exa'
-alias la='exa -a'
-alias ll='exa -lah'
-alias ls='exa --color=auto'

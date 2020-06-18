@@ -2,19 +2,20 @@
 
 with pkgs;
 with lib.strings;
-let variables = import ./variables.nix;
-    spacevim = fetchFromGitHub {
-      owner = "SpaceVim";
-      repo = "SpaceVim";
-      rev = "v1.4.0";
-      sha256 = "0k29aljva5dbm9hlk6v144zi4m1912ga71j5aqcgzyw59baighlw";
-    };
-    comma = import (fetchFromGitHub {
-      owner = "Shopify";
-      repo = "comma";
-      rev = "4a62ec17e20ce0e738a8e5126b4298a73903b468";
-      sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
-    }) {};
+let
+  variables = import ./variables.nix;
+  spacevim = fetchFromGitHub {
+    owner = "SpaceVim";
+    repo = "SpaceVim";
+    rev = "v1.4.0";
+    sha256 = "0k29aljva5dbm9hlk6v144zi4m1912ga71j5aqcgzyw59baighlw";
+  };
+  comma = import (fetchFromGitHub {
+    owner = "Shopify";
+    repo = "comma";
+    rev = "4a62ec17e20ce0e738a8e5126b4298a73903b468";
+    sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
+  }) { };
 in {
   imports = if (hasInfix builtins.currentSystem "linux") then
     [ ./platforms/linux.nix ]
@@ -52,13 +53,17 @@ in {
     comma
 
     # spacevim
-    (neovim.override { withPython3 = true; vimAlias = true; viAlias = true; })
+    (neovim.override {
+      withPython3 = true;
+      vimAlias = true;
+      viAlias = true;
+    })
     ctags
     solargraph
     nodePackages.javascript-typescript-langserver
     nodePackages.typescript-language-server
     # fonts
-    (nerdfonts.override { fonts = ["SourceCodePro"]; })
+    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
     dejavu_fonts
     powerline-fonts
 
@@ -118,6 +123,13 @@ in {
       }
     ];
     initExtraBeforeCompInit = builtins.readFile ./programs/zsh/zshrc;
+    shellAliases = {
+      "cat" = "bat --style=plain";
+      "l" = "exa";
+      "la" = "exa -a";
+      "ll" = "exa -lah";
+      "ls" = "exa --color=auto";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "ssh-agent" "rake" ];
@@ -148,7 +160,7 @@ in {
       source = ./programs/spacevim/init.toml;
       target = ".SpaceVim.d/init.toml";
       onChange = "rm -rf ~/.cache/SpaceVim/conf";
-    } ;
+    };
     ".config/nvim" = {
       source = spacevim;
       recursive = true;
