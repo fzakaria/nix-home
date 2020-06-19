@@ -85,7 +85,10 @@ in {
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
   home.extraOutputsToInstall = [ "man" ];
-  home.sessionVariables = { BAT_CONFIG_PATH = "~/.batrc"; };
+  home.sessionVariables = {
+    BAT_CONFIG_PATH = "~/.batrc";
+    LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
+  };
 
   programs.zsh = {
     enable = true;
