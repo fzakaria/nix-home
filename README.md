@@ -40,7 +40,7 @@ It will take care of installing Nix.
 
 ### Updating
 
-Subsequent updating to the repository can be reflected in your system by simply running `./install.sh`
+Subsequent updating to the repository can be reflected in your system by simply running `./bin/switch`
 
 ### Uninstall
 
