@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+# set a sensible default
+export EDITOR="${EDITOR:=vim}"
+exec home-manager --file ./home.nix edit $@
