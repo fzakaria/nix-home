@@ -8,8 +8,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "rbenv";
     repo = "ruby-build";
-    rev = "v20200520";
-    sha256 = "1z24hid1jrbvqf5f42lw7rgs533jcmcj5xjrsvrnm2l9amh13d5j";
+    rev = "16421762a6a7901c1c12811940187e40f7dfc3b9";
+    sha256 = "1j4bf5x6v6i95rn667m7r1bfzfqlqyh4ml526jhac5vsavz0gjl0";
   };
 
   buildPhase = ''
