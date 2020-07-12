@@ -18,9 +18,7 @@ in {
   else
     [ ];
 
-  nixpkgs.overlays = [
-    (import ./overlay)
-  ];
+  nixpkgs.overlays = [ (import ./overlay) ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -65,6 +63,7 @@ in {
     dejavu_fonts
     powerline-fonts
 
+    ruby
     redo-apenwarr
     jq
     htop
@@ -86,6 +85,12 @@ in {
   home.sessionVariables = {
     BAT_CONFIG_PATH = "~/.batrc";
     LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableNixDirenvIntegration = true;
   };
 
   programs.zsh = {
@@ -218,6 +223,12 @@ in {
     ".batrc" = {
       source = ./programs/bat/batrc;
       target = ".batrc";
+    };
+    # Add our overlay to the system wide overlay
+    # so that it can be used with nix-env & nix-shell
+    ".config/nixpkgs/overlays/nix-home-overlay" = {
+      source = ./overlay;
+      target = ".config/nixpkgs/overlays/nix-home-overlay";
     };
   };
 

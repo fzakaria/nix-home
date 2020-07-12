@@ -1,4 +1,32 @@
-self: super: {
+self: super:
+let
+  buildNodejs =
+    super.callPackage <nixpkgs/pkgs/development/web/nodejs/nodejs.nix> { };
+in {
+  jruby_9_2_9_0 = super.jruby.overrideAttrs (oldAtrrs: rec {
+    version = "9.2.9.0";
+    src = super.fetchurl {
+      url =
+        "https://s3.amazonaws.com/jruby.org/downloads/${version}/jruby-bin-${version}.tar.gz";
+      sha256 = "04grdf57c1dgragm17yyjk69ak8mwiwfc1vjzskzcaag3fwgplyf";
+    };
+    # Apply this patch if you want the default GEM_HOME to be the user directory
+    #patches = [ ./pkgs/ruby/jruby-9.2.9.0.patch ];
+  });
+
+  jruby_9_2_12_0 = super.jruby.overrideAttrs (oldAtrrs: rec {
+    version = "9.2.12.0";
+    src = super.fetchurl {
+      url =
+        "https://s3.amazonaws.com/jruby.org/downloads/${version}/jruby-bin-${version}.tar.gz";
+      sha256 = "013c1q1n525y9ghp369z1jayivm9bw8c1x0g5lz7479hqhj62zrh";
+    };
+  });
+
+  nodejs-12_13_0 = buildNodejs {
+    version = "12.13.0";
+    sha256 = "0y5yd6h13fr34byi7h5xdjaivgcxiz0ykcmpk9nm5ra01b54fp2m";
+  };
 
   rbenv = super.callPackage ./pkgs/ruby/rbenv.nix { };
   ruby-build = super.callPackage ./pkgs/ruby/ruby-build.nix { };
