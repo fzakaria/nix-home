@@ -25,7 +25,7 @@ in {
 
   nodejs-12_13_0 = buildNodejs {
     version = "12.13.0";
-    sha256 = "0y5yd6h13fr34byi7h5xdjaivgcxiz0ykcmpk9nm5ra01b54fp2m";
+    sha256 = "1xmy73q3qjmy68glqxmfrk6baqk655py0cic22h1h0v7rx0iaax8";
   };
 
   rbenv = super.callPackage ./pkgs/ruby/rbenv.nix { };

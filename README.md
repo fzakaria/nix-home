@@ -35,7 +35,7 @@ mv ~/.vimrc ~/.vimrc.bak
 ```
 
 ### Bootstrap
-The first time using _nix-home_ you simply need to run `./bootstrap.sh` **once**.
+The first time using _nix-home_ you simply need to run `./bin/bootstrap` **once**.
 It will take care of installing Nix.
 
 ### Updating

@@ -85,6 +85,7 @@ in {
   home.sessionVariables = {
     BAT_CONFIG_PATH = "~/.batrc";
     LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
+    EDITOR = "vim";
   };
 
   programs.direnv = {
