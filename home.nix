@@ -63,6 +63,7 @@ in {
     dejavu_fonts
     powerline-fonts
 
+    jrnl
     asciinema
     ruby
     redo-apenwarr
@@ -72,10 +73,6 @@ in {
     nixfmt
     gitAndTools.delta
     gitAndTools.gitFull
-    rbenv
-    ruby-build
-    nodenv
-    node-build
   ];
 
   # otherwise typing `man` shows
