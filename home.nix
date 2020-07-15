@@ -63,6 +63,7 @@ in {
     dejavu_fonts
     powerline-fonts
 
+    cachix
     jrnl
     asciinema
     ruby
