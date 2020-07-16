@@ -41,6 +41,8 @@
 	submoduleSummary = true
 	# Recursively traverse untracked directories to display all contents
 	showUntrackedFiles = all
+[pull]
+	ff = only
 [interactive]
 	diffFilter = "delta --dark --color-only"
 [diff]

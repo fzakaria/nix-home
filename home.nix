@@ -219,12 +219,6 @@ in {
       source = ./programs/jrnl/jrnl_config;
       target = ".jrnl_config";
     };
-    # Add our overlay to the system wide overlay
-    # so that it can be used with nix-env & nix-shell
-    ".config/nixpkgs/overlays/nix-home-overlay" = {
-      source = ./overlay;
-      target = ".config/nixpkgs/overlays/nix-home-overlay";
-    };
   };
 
 }
