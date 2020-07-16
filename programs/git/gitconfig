@@ -42,6 +42,7 @@
 	# Recursively traverse untracked directories to display all contents
 	showUntrackedFiles = all
 [pull]
+	# this is the safest option. if you want to merge do so explicitly.
 	ff = only
 [interactive]
 	diffFilter = "delta --dark --color-only"
