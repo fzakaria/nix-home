@@ -19,6 +19,7 @@ in {
     [ ];
 
   nixpkgs.overlays = [ (import ./overlay) ];
+  nixpkgs.config.allowUnfree = true;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -63,6 +64,8 @@ in {
     dejavu_fonts
     powerline-fonts
 
+    teleconsole
+    discord
     cachix
     jrnl
     asciinema
