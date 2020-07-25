@@ -145,6 +145,7 @@ in {
       "la" = "exa -a";
       "ll" = "exa -lah";
       "ls" = "exa --color=auto";
+      "pbcopy" = "xsel --clipboard --input";
     };
     oh-my-zsh = {
       enable = true;

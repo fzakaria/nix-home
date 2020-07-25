@@ -66,4 +66,7 @@
     name = "lang#sh"
 [[layers]]
     name = 'lang#html'
-
+[[layers]]
+    name = 'lang#rust'
+    recommended-style = 1
+    format-autosave = 1
