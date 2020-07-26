@@ -50,10 +50,12 @@
 [[layers]]
     name = "lsp"
     filetypes = [
-        "ruby"
+        "ruby",
+        "rust"
     ]
     [layers.override_cmd]
         ruby = ["solargraph", "stdio"]
+        rust = ["rls"]
 [[layers]]
     name = "lang#ruby"
 [[layers]]
@@ -70,3 +72,5 @@
     name = 'lang#rust'
     recommended-style = 1
     format-autosave = 1
+    racer-cmd = "racer"
+    rustfmt-cmd = "rustfmt"
