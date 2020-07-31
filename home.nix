@@ -7,8 +7,8 @@ let
   spacevim = fetchFromGitHub {
     owner = "SpaceVim";
     repo = "SpaceVim";
-    rev = "v1.4.0";
-    sha256 = "0k29aljva5dbm9hlk6v144zi4m1912ga71j5aqcgzyw59baighlw";
+    rev = "280b0b9b9b909c0f311e3e2bfbd24ebff4535acf";
+    sha256 = "1nnnb6q7p2jziq96vdrb2iyl6wfh2qkrdhx8fx89w0lw7b5dkh69";
   };
 in {
   imports = if (hasInfix builtins.currentSystem "linux") then
