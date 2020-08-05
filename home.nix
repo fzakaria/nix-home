@@ -48,6 +48,7 @@ in {
     ripgrep
     bat
     comma
+    nix-index
 
     # spacevim
     (neovim.override {
@@ -146,6 +147,7 @@ in {
       "ll" = "exa -lah";
       "ls" = "exa --color=auto";
       "pbcopy" = "xsel --clipboard --input";
+      "idea"= "/opt/intellij-ue-stable/bin/idea.sh \"$@\" >/dev/null 2>&1";
     };
     oh-my-zsh = {
       enable = true;
