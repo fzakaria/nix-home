@@ -12,3 +12,7 @@ fi
 # seems to fail since the library is not present. When I have a better understanding of Nix
 # let's fix this.
 [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
+
+# https://github.com/zimbatm/h
+# setup h
+eval "$(h --setup ~/code)"

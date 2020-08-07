@@ -49,6 +49,9 @@ in {
     bat
     comma
     nix-index
+    nix-diff
+    # https://github.com/zimbatm/h
+    h
 
     # spacevim
     (neovim.override {
