@@ -52,6 +52,7 @@ in {
     nix-diff
     # https://github.com/zimbatm/h
     h
+    autojump
 
     # spacevim
     (neovim.override {
