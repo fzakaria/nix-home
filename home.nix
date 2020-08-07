@@ -142,6 +142,9 @@ in {
         awk '{ a+=$1 } END { print a }' | \
         ${pkgs.coreutils}/bin/numfmt --to=iec-i
       }
+
+      # setup autojump
+      . ${pkgs.autojump}/share/autojump/autojump.zsh
     '';
 
     shellAliases = {
