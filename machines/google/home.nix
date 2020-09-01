@@ -3,7 +3,6 @@
 with pkgs;
 with lib.strings;
 let
-  variables = import ./variables.nix;
   spacevim = fetchFromGitHub {
     owner = "SpaceVim";
     repo = "SpaceVim";
@@ -16,7 +15,7 @@ in {
   else if (hasInfix builtins.currentSystem "darwin") then
     [ ../../modules/platforms/darwin.nix ]
   else
-    [ ]) ++ [ ../../modules/common.nix];
+    [ ]) ++ [ ../../modules/common.nix ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -131,7 +130,7 @@ in {
         file = "powerlevel10k.zsh-theme";
       }
     ];
-    initExtraBeforeCompInit = builtins.readFile ./programs/zsh/zshrc;
+    initExtraBeforeCompInit = builtins.readFile ../../programs/zsh/zshrc;
 
     initExtra = ''
       # Figure out the closure size for a certain package
@@ -187,7 +186,7 @@ in {
 
   home.file = {
     ".SpaceVim.d/init.toml" = {
-      source = ./programs/spacevim/init.toml;
+      source = ../../programs/spacevim/init.toml;
       target = ".SpaceVim.d/init.toml";
       onChange = "rm -rf ~/.cache/SpaceVim/conf";
     };
@@ -196,39 +195,39 @@ in {
       recursive = true;
     };
     ".tmux.conf" = {
-      source = ./programs/tmux/ohmytmux/.tmux.conf;
+      source = ../../programs/tmux/ohmytmux/.tmux.conf;
       target = ".tmux.conf";
     };
     ".tmux.conf.local" = {
-      source = ./programs/tmux/ohmytmux/.tmux.conf.local;
+      source = ../../programs/tmux/ohmytmux/.tmux.conf.local;
       target = ".tmux.conf.local";
     };
     ".gitconfig" = {
       source = pkgs.substituteAll {
-        src = ./programs/git/gitconfig;
-        full_name = "${variables.full_name}";
-        email = "${variables.email}";
+        src = ../../programs/git/gitconfig;
+        full_name = "Farid Zakaria";
+        email = "fmzakari@google.com";
       };
       target = ".gitconfig";
     };
     ".gitignore_global" = {
-      source = ./programs/git/gitignore_global;
+      source = ../../programs/git/gitignore_global;
       target = ".gitignore_global";
     };
     ".ssh/config" = {
-      source = ./programs/ssh/config;
+      source = ../../programs/ssh/config;
       target = ".ssh/config";
     };
     ".p10k.zsh" = {
-      source = ./programs/zsh/p10k.zsh;
+      source = ../../programs/zsh/p10k.zsh;
       target = ".p10k.zsh";
     };
     ".batrc" = {
-      source = ./programs/bat/batrc;
+      source = ../../programs/bat/batrc;
       target = ".batrc";
     };
     ".jrnl_config" = {
-      source = ./programs/jrnl/jrnl_config;
+      source = ../../programs/jrnl/jrnl_config;
       target = ".jrnl_config";
     };
   };
