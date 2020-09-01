@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 let
   sources = import ../../nix/sources.nix;
-  nixpkgs = sources.nixos;
+  nixpkgs' = sources.nixos;
   home-manager = sources.home-manager;
 in {
 
@@ -10,8 +10,8 @@ in {
   ];
 
   nixpkgs = {
-    pkgs = import "${nixpkgs}" { inherit (config.nixpkgs) config; };
-    nixPath = [ "nixpkgs=${nixpkgs}" ];
+    pkgs = import "${nixpkgs'}" { inherit (config.nixpkgs) config; };
+    nixPath = [ "nixpkgs=${nixpkgs'}" ];
   };
 
   # useful NixOS home-manager settings
