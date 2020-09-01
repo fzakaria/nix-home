@@ -5,14 +5,13 @@ let
   home-manager = sources.home-manager;
 in {
 
-  imports = [
-    (home-manager + "/nixos")
-  ];
+  imports = [ (home-manager + "/nixos") ];
 
   nixpkgs = {
     pkgs = import "${nixpkgs'}" { inherit (config.nixpkgs) config; };
-    nixPath = [ "nixpkgs=${nixpkgs'}" ];
   };
+
+  nix = { nixPath = [ "nixpkgs=${nixpkgs'}" ]; };
 
   # useful NixOS home-manager settings
   # https://rycee.gitlab.io/home-manager/index.html#sec-install-nixos-module
