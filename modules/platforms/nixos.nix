@@ -11,7 +11,10 @@ in {
     pkgs = import "${nixpkgs'}" { inherit (config.nixpkgs) config; };
   };
 
-  nix = { nixPath = [ "nixpkgs=${nixpkgs'}" ]; };
+  nix = {
+    nixPath =
+      [ "nixpkgs=${nixpkgs'}" "nixos-config=/etc/nixos/configuration.nix" ];
+  };
 
   # useful NixOS home-manager settings
   # https://rycee.gitlab.io/home-manager/index.html#sec-install-nixos-module
