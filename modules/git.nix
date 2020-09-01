@@ -1,1 +1,6 @@
-{ config, pkgs, ... }: { programs.git = { enable = true; }; }
+{ config, pkgs, ... }: {
+  programs.git = {
+    enable = true;
+    ignores = [ "*~" "*.swp" "*.orig" ];
+  };
+}
