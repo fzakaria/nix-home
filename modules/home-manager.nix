@@ -1,4 +1,5 @@
 { config, pkgs, ... }: {
+
   # Place packages here that are
   home.packages = with pkgs; [
     # Rust CLI Tools! I love rust.
@@ -13,10 +14,6 @@
     # https://github.com/zimbatm/h
     h
     autojump
-    # fonts
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
-    dejavu_fonts
-    powerline-fonts
     teleconsole
     cachix
     jrnl
