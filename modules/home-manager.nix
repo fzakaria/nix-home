@@ -1,7 +1,7 @@
 # Place common home-manager setup here
 { config, pkgs, ... }: {
 
-  imports = [ ./git.nix ./zsh.nix];
+  imports = [ ./git.nix ./zsh.nix ];
 
   # Place packages here that are
   home.packages = with pkgs; [
