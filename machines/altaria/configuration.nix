@@ -1,4 +1,4 @@
-let nixpkgs = (import ./nix/sources.nix).nixos;
+let nixpkgs = (import ../../nix/sources.nix).nixos;
 in {
   imports = [
     (nixpkgs + "/nixos/modules/virtualisation/amazon-image.nix")
