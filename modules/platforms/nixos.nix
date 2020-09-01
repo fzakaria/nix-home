@@ -1,6 +1,13 @@
 { config, pkgs, ... }:
-let nixpkgs = (import ../../nix/sources.nix).nixos;
+let
+  sources = import ../../nix/sources.nix;
+  nixpkgs = sources.nixos;
+  home-manager = sources.home-manager;
 in {
+
+  imports = [
+    (home-manager + "/nixos")
+  ];
 
   nixpkgs = {
     pkgs = import "${nixpkgs}" { inherit (config.nixpkgs) config; };
