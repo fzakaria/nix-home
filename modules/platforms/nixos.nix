@@ -28,4 +28,12 @@ in {
     # To instead use the global pkgs that is configured via the system level nixpkgs options, set
     useGlobalPkgs = true;
   };
+
+  security = {
+    sudo = {
+      # Whether users of the wheel group must
+      # provide a password to run commands as super 
+      wheelNeedsPassword = false;
+    };
+  };
 }
