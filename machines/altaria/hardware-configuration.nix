@@ -1,3 +1,1 @@
-{ ... }: {
-	ec2.hvm = true;
-}
+{ ... }: { ec2.hvm = true; }
