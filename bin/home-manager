@@ -2,4 +2,4 @@
 
 set -euxo pipefail
 
-exec home-manager --file ./home.nix $@
+exec home-manager $@

@@ -11,14 +11,13 @@ let
     sha256 = "1nnnb6q7p2jziq96vdrb2iyl6wfh2qkrdhx8fx89w0lw7b5dkh69";
   };
 in {
-  imports = if (hasInfix builtins.currentSystem "linux") then
-    [ ./platforms/linux.nix ]
+  imports = (if (hasInfix builtins.currentSystem "linux") then
+    [ ../../modules/platforms/linux.nix ]
   else if (hasInfix builtins.currentSystem "darwin") then
-    [ ./platforms/darwin.nix ]
+    [ ../../modules/platforms/darwin.nix ]
   else
-    [ ];
+    [ ]) ++ [ ../../modules/common.nix];
 
-  nixpkgs.overlays = [ (import ./overlay) ];
   nixpkgs.config.allowUnfree = true;
 
   # Let Home Manager install and manage itself.
@@ -53,6 +52,8 @@ in {
     # https://github.com/zimbatm/h
     h
     autojump
+    # github cli
+    gitAndTools.gh
 
     # spacevim
     (neovim.override {
@@ -154,7 +155,7 @@ in {
       "ll" = "exa -lah";
       "ls" = "exa --color=auto";
       "pbcopy" = "xsel --clipboard --input";
-      "idea"= "/opt/intellij-ue-stable/bin/idea.sh \"$@\" >/dev/null 2>&1";
+      "idea" = ''/opt/intellij-ue-stable/bin/idea.sh "$@" >/dev/null 2>&1'';
     };
     oh-my-zsh = {
       enable = true;

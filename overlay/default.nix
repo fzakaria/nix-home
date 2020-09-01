@@ -1,10 +1,4 @@
 self: super: {
-  rbenv = super.callPackage ./pkgs/ruby/rbenv.nix { };
-  ruby-build = super.callPackage ./pkgs/ruby/ruby-build.nix { };
-
-  nodenv = super.callPackage ./pkgs/node/nodenv.nix { };
-  node-build = super.callPackage ./pkgs/node/node-build.nix { };
-
   comma = import (super.fetchFromGitHub {
     owner = "Shopify";
     repo = "comma";
@@ -12,5 +6,6 @@ self: super: {
     sha256 = "0n5a3rnv9qnnsrl76kpi6dmaxmwj1mpdd2g0b4n1wfimqfaz6gi1";
   }) { };
 
-  cachix = (import (fetchTarball "https://cachix.org/api/v1/install") {}).cachix;
+  cachix =
+    (import (fetchTarball "https://cachix.org/api/v1/install") { }).cachix;
 }
