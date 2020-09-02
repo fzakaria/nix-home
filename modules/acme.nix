@@ -10,11 +10,13 @@
       "altaria.fzakaria.com" = {
         forceSSL = true;
         enableACME = true;
-        # All serverAliases will be added as extra domains on the certificate.
-        serverAliases = [ "bar.example.com" ];
         locations."/" = { root = "/var/www"; };
       };
     };
   };
 
+  # Set the group to acme and that anyone in the group can read the keys
+  users.groups = [ "acme" ];
+  security.acme.cert."altaria.fzakaria.com".allowKeysForGroup = true;
+  security.acme.cert."altaria.fzakaria.com".group = "acme";
 }
