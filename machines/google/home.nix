@@ -10,83 +10,28 @@ let
     sha256 = "1nnnb6q7p2jziq96vdrb2iyl6wfh2qkrdhx8fx89w0lw7b5dkh69";
   };
 in {
-  imports = (if (hasInfix builtins.currentSystem "linux") then
-    [ ../../modules/platforms/linux.nix ]
-  else if (hasInfix builtins.currentSystem "darwin") then
-    [ ../../modules/platforms/darwin.nix ]
-  else
-    [ ]) ++ [ ../../modules/common.nix ];
+  imports = [
+    ../../modules/common.nix
+    ../../modules/platforms/linux.nix
+    ../../users/fmzakari
+  ];
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  # Place packages here that you would like only on this laptop
+  home.packages = with pkgs; [ ];
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = builtins.getEnv "USER";
-  home.homeDirectory = builtins.getEnv "HOME";
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
-  home.stateVersion = "20.09";
-
-  # Place packages here that are
-  home.packages = with pkgs; [
-    # Rust CLI Tools! I love rust.
-    exa
-    fd
-    fzf
-    ripgrep
-    bat
-    comma
-    nix-index
-    nix-diff
-    # https://github.com/zimbatm/h
-    h
-    autojump
-    # github cli
-    gitAndTools.gh
-
-    # spacevim
-    (neovim.override {
-      withPython3 = true;
-      vimAlias = true;
-      viAlias = true;
-    })
-    ctags
-    solargraph
-    nodePackages.javascript-typescript-langserver
-    nodePackages.typescript-language-server
-    # fonts
-    (nerdfonts.override { fonts = [ "SourceCodePro" ]; })
-    dejavu_fonts
-    powerline-fonts
-
-    teleconsole
-    discord
-    cachix
-    jrnl
-    asciinema
-    ruby
-    redo-apenwarr
-    jq
-    htop
-    tmux
-    nixfmt
-    gitAndTools.delta
-    gitAndTools.gitFull
-  ];
+  # This must match the users.users module value
+  home.username = "fmzakari";
+  home.homeDirectory = /home/fmzakari;
 
   # otherwise typing `man` shows
   # > ~/.nix-profile/bin/man: can't set the locale; make sure $LC_* and $LANG are correct
   # https://github.com/rycee/home-manager/issues/432
   programs.man.enable = false;
-  home.extraOutputsToInstall = [ "man" ];
   home.sessionVariables = {
     BAT_CONFIG_PATH = "~/.batrc";
     LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
