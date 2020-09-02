@@ -8,4 +8,8 @@ in {
     ../../modules/platforms/nixos.nix
     ../../modules/users.nix
   ];
+
+  networking = {
+  	hostName = "altaria.fzakaria.com";
+  };
 }
