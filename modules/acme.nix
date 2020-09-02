@@ -16,7 +16,9 @@
   };
 
   # Set the group to acme and that anyone in the group can read the keys
-  users.groups = [ "acme" ];
+  users.groups = {
+    acme = {};
+  };
   security.acme.certs."altaria.fzakaria.com".allowKeysForGroup = true;
   security.acme.certs."altaria.fzakaria.com".group = "acme";
 }
