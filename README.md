@@ -13,11 +13,6 @@ If you want the official explanation on what Nix does better please read [why yo
 ## Getting Started
 
 You can git clone this repository wherever you'd like!
-Don't forget to update the submodules
-```bash
-git submodule init 
-git submodule update
-```
 
 ### Backup Files
 Athough this tool will **try it's best** not to clobber any files outside it's management; it's best just to backup any files before on-boarding.
@@ -31,12 +26,8 @@ mv ~/.config/htop/htoprc ~/.config/htop/htoprc.bak
 mv ~/.ssh/config ~/.ssh/config.bak
 mv ~/.tmux.conf ~/.tmux.conf.bak
 mv ~/.tmux.conf.local ~/.tmux.conf.local.bak
-mv ~/.vimrc ~/.vimrc.bak 
+mv ~/.vimrc ~/.vimrc.bak
 ```
-
-### Bootstrap
-The first time using _nix-home_ you simply need to run `./bin/bootstrap` **once**.
-It will take care of installing Nix.
 
 ### Updating
 
