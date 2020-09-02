@@ -21,4 +21,12 @@ with lib.strings; {
   # https://github.com/rycee/home-manager/issues/1471
   home.homeDirectory = "/home/fmzakari";
   home.email = "fmzakari@google.com";
+
+  home.file = {
+    ".ssh/config" = {
+      source = ./ssh/config;
+      target = ".ssh/config";
+    };
+  };
+
 }

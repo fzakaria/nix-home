@@ -1,5 +1,5 @@
 { config, pkgs, lib, ... }: {
-  home.packages = with pkgs; [ git gitAndTools.delta];
+  home.packages = with pkgs; [ git gitAndTools.delta ];
 
   home.file = {
     ".gitconfig" = {
