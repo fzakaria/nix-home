@@ -1,12 +1,13 @@
 # Place common home-manager setup here
-{ config, pkgs, lib, ... }: with lib; {
+{ config, pkgs, lib, ... }:
+with lib; {
 
   imports = [ ./git ./zsh ./broot.nix ./direnv.nix ./fzf.nix ./tmux ];
 
   options.home.email = mkOption {
-      type = types.str;
-      default = "farid.m.zakaria@gmail.com";
-      description = "The email to associate primarily with my user.";
+    type = types.str;
+    default = "farid.m.zakaria@gmail.com";
+    description = "The email to associate primarily with my user.";
   };
 
   config = {
@@ -43,9 +44,6 @@
       # ripgrep recursively searches directories for a regex pattern
       # https://github.com/BurntSushi/ripgrep
       ripgrep
-      # A cat clone written in rust
-      # https://github.com/sharkdp/bat
-      bat
       comma
       # Quickly locate nix packages with specific files
       # https://github.com/bennofs/nix-index
