@@ -10,7 +10,7 @@
 
   home.file = {
     ".batrc" = {
-      source = ./programs/bat/batrc;
+      source = ./batrc;
       target = ".batrc";
     };
   };
