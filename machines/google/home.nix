@@ -20,5 +20,5 @@ with lib.strings; {
   home.username = "fmzakari";
   # https://github.com/rycee/home-manager/issues/1471
   home.homeDirectory = builtins.getEnv "HOME";
-
+  home.email = "fmzakari@google.com";
 }
