@@ -7,7 +7,7 @@
     enable = true;
     requireSSL = true;
     certificateFile =
-      "${security.acme.certs."altaria.fzakaria.com".directory}/full.pem";
+      "${config.security.acme.certs."altaria.fzakaria.com".directory}/full.pem";
     interfaces = [ "0.0.0.0" ];
   };
 
