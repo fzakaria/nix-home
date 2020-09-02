@@ -10,6 +10,7 @@ in {
   ];
 
   networking = {
-  	hostName = "altaria.fzakaria.com";
+  	hostName = "altaria";
+  	domain = "fzakaria.com";
   };
 }
