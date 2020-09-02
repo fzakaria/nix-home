@@ -7,10 +7,12 @@ in {
     ../../modules/common.nix
     ../../modules/platforms/nixos.nix
     ../../modules/users.nix
+    ../../modules/quassel.nix
   ];
 
   networking = {
-  	hostName = "altaria";
-  	domain = "fzakaria.com";
+    hostName = "altaria";
+    domain = "fzakaria.com";
   };
+
 }
