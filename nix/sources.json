@@ -1,4 +1,16 @@
 {
+    "ohmytmux": {
+        "branch": "master",
+        "description": "🇫🇷 Oh My Tmux! Pretty & versatile tmux configuration made with ❤️",
+        "homepage": "",
+        "owner": "gpakosz",
+        "repo": ".tmux",
+        "rev": "d6f0f647dd68561ed010f83d8d226383aebfb805",
+        "sha256": "1jbfjwajnyb8j886fmjbf57qfnj9swv0prj3lfdd61zv8hikn5li",
+        "type": "tarball",
+        "url": "https://github.com/gpakosz/.tmux/archive/d6f0f647dd68561ed010f83d8d226383aebfb805.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "home-manager": {
         "branch": "master",
         "description": "Manage a user environment using Nix",

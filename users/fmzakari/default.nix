@@ -1,7 +1,7 @@
 # Place common home-manager setup here
 { config, pkgs, ... }: {
 
-  imports = [ ./git.nix ./zsh.nix ];
+  imports = [ ./git.nix ./zsh ./broot.nix ./direnv.nix ./fzf.nix ./tmux ];
 
   # List of additional package outputs of the packages home.packages
   # that should be installed into the user environment.
@@ -15,6 +15,12 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "20.09";
+
+  home.sessionVariables = {
+    BAT_CONFIG_PATH = "~/.batrc";
+    LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
+    EDITOR = "vim";
+  };
 
   # Place packages here that are
   home.packages = with pkgs; [
@@ -48,9 +54,6 @@
     # https://github.com/gravitational/teleconsole
     teleconsole
     cachix
-    # Collect your thoughts and notes without leaving the command line.
-    # https://github.com/jrnl-org/jrnl
-    jrnl
     # Terminal session recorder
     # https://github.com/asciinema/asciinema
     asciinema
@@ -61,7 +64,6 @@
     # htop is an interactive text-mode process viewe
     # https://github.com/hishamhm/htop
     htop
-    tmux
     # A formatter for Nix code
     # https://github.com/serokell/nixfmt
     nixfmt
