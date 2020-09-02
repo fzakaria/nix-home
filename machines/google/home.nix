@@ -19,6 +19,6 @@ with lib.strings; {
   # This must match the users.users module value
   home.username = "fmzakari";
   # https://github.com/rycee/home-manager/issues/1471
-  home.homeDirectory = builtins.getEnv "HOME";
+  home.homeDirectory = "/home/fmzakari";
   home.email = "fmzakari@google.com";
 }
