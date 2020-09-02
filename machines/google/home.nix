@@ -12,7 +12,7 @@ with lib.strings; {
   programs.home-manager.enable = true;
 
   # Place packages here that you would like only on this laptop
-  home.packages = with pkgs; [ ];
+  home.packages = with pkgs; [ quasselClient ];
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.

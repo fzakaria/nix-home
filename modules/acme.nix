@@ -1,6 +1,6 @@
 { config, pkgs, ... }: {
 
-  # We will run quassel behind Nginx
+  # We will setup HTTP authentication to receive our ACME (Let's encrypt) certificate
   # https://nixos.org/manual/nixos/stable/#module-security-acme-nginx
   security.acme.acceptTerms = true;
   security.acme.email = "acme+farid.m.zakaria@gmail.com";
@@ -16,13 +16,5 @@
       };
     };
   };
-  # Quassel IRC is a modern, cross-platform, distributed IRC client.
-  # https://nixos.wiki/wiki/Quassel
-  services.quassel = {
-    enable = true;
-    interfaces = [ "0.0.0.0" ];
-  };
-
-  networking.firewall.allowedTCPPorts = [ 4242 ];
 
 }
