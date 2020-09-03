@@ -37,6 +37,7 @@ with lib; {
     home.sessionVariables = {
       LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
       EDITOR = "vim";
+      LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     };
 
     # Place packages here that are
