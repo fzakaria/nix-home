@@ -2,8 +2,17 @@
 { config, pkgs, lib, ... }:
 with lib; {
 
-  imports =
-    [ ./git ./zsh ./broot.nix ./direnv.nix ./fzf.nix ./tmux ./bat ./jrnl ];
+  imports = [
+    ./git
+    ./zsh
+    ./broot.nix
+    ./direnv.nix
+    ./fzf.nix
+    ./tmux
+    ./bat
+    ./jrnl
+    ./fonts.nix
+  ];
 
   options.home.email = mkOption {
     type = types.str;
