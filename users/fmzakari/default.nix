@@ -37,6 +37,7 @@ with lib; {
     home.sessionVariables = {
       LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
       EDITOR = "vim";
+      # https://nixos.org/manual/nixpkgs/stable/#locales
       LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     };
 
