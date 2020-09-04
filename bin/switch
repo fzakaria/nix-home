@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-if [[ $(uname -v) == "NixOS"* ]]; then
+if [[ $(uname -v) == *NixOS* ]]; then
 	sudo nixos-rebuild
 else
 	./bin/home-manager switch "$@"
