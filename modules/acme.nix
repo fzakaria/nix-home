@@ -10,7 +10,8 @@
       "altaria.fzakaria.com" = {
         forceSSL = true;
         enableACME = true;
-        locations."/" = { root = "/var/www"; };
+        # for now just return HTTP 302 which is moved temporarily
+        locations."/" = { return = "302 https://fzakaria.com"; };
       };
     };
   };
