@@ -2,4 +2,8 @@
 
 set -euxo pipefail
 
-./bin/home-manager switch "$@"
+if [[ $(uname -v) == "NixOS"* ]]; then
+	sudo nixos-rebuild
+else
+	./bin/home-manager switch "$@"
+fi
