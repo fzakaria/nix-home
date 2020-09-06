@@ -1,11 +1,11 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, ... }: {
   home.packages = with pkgs; [ git gitAndTools.delta ];
 
   home.file = {
     ".gitconfig" = {
       source = pkgs.substituteAll {
         src = ./gitconfig;
-        email = "${lib.traceVal config.home.email}";
+        email = "${config.home.email}";
       };
       target = ".gitconfig";
     };
