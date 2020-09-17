@@ -6,6 +6,7 @@
     ../../modules/users.nix
     ../../modules/acme.nix
     ../../modules/quassel.nix
+    ../../modules/vpn.nix
   ];
 
   networking = {
