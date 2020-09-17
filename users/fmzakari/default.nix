@@ -43,6 +43,11 @@ with lib; {
 
     # Place packages here that are
     home.packages = with pkgs; [
+      # a tool to help review other nixpkgs PR requests
+      nixpkgs-review
+      # age is a simple, modern and secure file encryption tool, format, and library.
+      # https://github.com/FiloSottile/age
+      age
       # A modern version of ls written in rust
       # https://github.com/ogham/exa
       exa
@@ -83,6 +88,9 @@ with lib; {
       # A formatter for Nix code
       # https://github.com/serokell/nixfmt
       nixfmt
+      # Tailscale -- A deadsimple VPN & Wireguard solution
+      tailscale
     ];
+
   };
 }
