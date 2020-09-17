@@ -1,4 +1,8 @@
-self: super: {
+self: super:
+# this tracks the unstable branch
+let nixpkgs = import (import ../nix/sources.nix).nixpkgs {};
+in
+{
   comma = import (super.fetchFromGitHub {
     owner = "Shopify";
     repo = "comma";
@@ -8,4 +12,6 @@ self: super: {
 
   cachix =
     (import (fetchTarball "https://cachix.org/api/v1/install") { }).cachix;
+
+  tailscale = nixpkgs.tailscale;
 }
