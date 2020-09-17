@@ -1,26 +1,14 @@
 {
-    "ohmytmux": {
-        "branch": "master",
-        "description": "🇫🇷 Oh My Tmux! Pretty & versatile tmux configuration made with ❤️",
-        "homepage": "",
-        "owner": "gpakosz",
-        "repo": ".tmux",
-        "rev": "d6f0f647dd68561ed010f83d8d226383aebfb805",
-        "sha256": "1jbfjwajnyb8j886fmjbf57qfnj9swv0prj3lfdd61zv8hikn5li",
-        "type": "tarball",
-        "url": "https://github.com/gpakosz/.tmux/archive/d6f0f647dd68561ed010f83d8d226383aebfb805.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "home-manager": {
         "branch": "master",
         "description": "Manage a user environment using Nix",
         "homepage": "https://rycee.gitlab.io/home-manager/",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "4b702bf6b79843ebd3d6165362ce17f9a1327c9b",
-        "sha256": "0ldlgrr0dg3nrj8majfiabcws86bfv2003rsm8p4li22i1zlghj3",
+        "rev": "472ca211cac604efdf621337067a237be9df389e",
+        "sha256": "1gbfsnd7zsxwqryxd4r6jz9sgdz6ghlkapws1cdxshrbxlwhqad1",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/4b702bf6b79843ebd3d6165362ce17f9a1327c9b.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/472ca211cac604efdf621337067a237be9df389e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -29,10 +17,10 @@
         "homepage": "https://github.com/nmattia/niv",
         "owner": "nmattia",
         "repo": "niv",
-        "rev": "fad2a6cbfb2e7cdebb7cb0ad2f5cc91e2c9bc06b",
-        "sha256": "0mghc1j0rd15spdjx81bayjqr0khc062cs25y5dcfzlxk4ynyc6m",
+        "rev": "29ddaaf4e099c3ac0647f5b652469dfc79cd3b53",
+        "sha256": "1va6myp07gkspgxfch8z3rs9nyvys6jmgzkys6a2c4j09qxp1bs0",
         "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/fad2a6cbfb2e7cdebb7cb0ad2f5cc91e2c9bc06b.tar.gz",
+        "url": "https://github.com/nmattia/niv/archive/29ddaaf4e099c3ac0647f5b652469dfc79cd3b53.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixos": {
@@ -41,10 +29,10 @@
         "homepage": null,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ff6a070b4efdb7c4a37efef42d24a226565342d4",
-        "sha256": "1xw6xqv4wr6ljnlp401bynw9hrcirq4jf59x1zyiyxf146gy9pg6",
+        "rev": "5177665caf1c642913d506faeb163838dc845bb7",
+        "sha256": "1pcwigqjvcfpy31pg7wzzx6ag2nh4dfgqiw802kn967wpg09iwxp",
         "type": "tarball",
-        "url": "https://github.com/nixos/nixpkgs/archive/ff6a070b4efdb7c4a37efef42d24a226565342d4.tar.gz",
+        "url": "https://github.com/nixos/nixpkgs/archive/5177665caf1c642913d506faeb163838dc845bb7.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
@@ -53,10 +41,22 @@
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f9567594d5af2926a9d5b96ae3bada707280bec6",
-        "sha256": "0vr2di6z31c5ng73f0cxj7rj9vqvlvx3wpqdmzl0bx3yl3wr39y6",
+        "rev": "6d4b93323e7f78121f8d6db6c59f3889aa1dd931",
+        "sha256": "0g2j41cx2w2an5d9kkqvgmada7ssdxqz1zvjd7hi5vif8ag0v5la",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/f9567594d5af2926a9d5b96ae3bada707280bec6.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6d4b93323e7f78121f8d6db6c59f3889aa1dd931.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "ohmytmux": {
+        "branch": "master",
+        "description": "🇫🇷 Oh My Tmux! Pretty & versatile tmux configuration made with ❤️",
+        "homepage": "",
+        "owner": "gpakosz",
+        "repo": ".tmux",
+        "rev": "17b9a7a59a008879f504be853ea3e6aa95250993",
+        "sha256": "15l4nj7rc1hx04xhcjwvs0ipds0k1cbzdyng1c9yq2v7r0mp5adi",
+        "type": "tarball",
+        "url": "https://github.com/gpakosz/.tmux/archive/17b9a7a59a008879f504be853ea3e6aa95250993.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
