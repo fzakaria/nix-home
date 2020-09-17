@@ -11,5 +11,5 @@ in {
 
   networking.firewall.allowedUDPPorts = [ 41641 ];
 
-  environment.systemPackages = [ tailscale ];
+  environment.systemPackages = [ nixpkgs.tailscale ];
 }
