@@ -88,8 +88,6 @@ with lib; {
       # A formatter for Nix code
       # https://github.com/serokell/nixfmt
       nixfmt
-      # Tailscale -- A deadsimple VPN & Wireguard solution
-      tailscale
     ];
 
   };
