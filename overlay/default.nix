@@ -1,8 +1,7 @@
 self: super:
 # this tracks the unstable branch
-let nixpkgs = import (import ../nix/sources.nix).nixpkgs {};
-in
-{
+let nixpkgs = import (import ../nix/sources.nix).nixpkgs { };
+in {
   comma = import (super.fetchFromGitHub {
     owner = "Shopify";
     repo = "comma";
