@@ -8,4 +8,6 @@ in {
   services.tailscale = {
   	enable = true;
   };
+
+  networking.firewall.allowedTCPPorts = [ 41641 ];
 }
