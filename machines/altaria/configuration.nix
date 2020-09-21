@@ -14,4 +14,6 @@
     domain = "fzakaria.com";
   };
 
+  # testing lametun
+  networking.firewall.allowedUDPPorts = [ 1234 ];
 }
