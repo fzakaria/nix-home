@@ -5,10 +5,10 @@
         "homepage": "https://rycee.gitlab.io/home-manager/",
         "owner": "rycee",
         "repo": "home-manager",
-        "rev": "a98ec6ec158686387d66654ea96153ec06be33d7",
-        "sha256": "05yvpywhpnnsr55asp6m1chrfd6yf0njy49j3wc9d6qm3dipgwmc",
+        "rev": "cde1d33e6149e671fda33b6b6a9f43552a38c5fa",
+        "sha256": "19q3nnyax06f8hzz6y2jiw8yck8a7c0vbabqpzirba6rci45hzrs",
         "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/a98ec6ec158686387d66654ea96153ec06be33d7.tar.gz",
+        "url": "https://github.com/rycee/home-manager/archive/cde1d33e6149e671fda33b6b6a9f43552a38c5fa.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "niv": {
@@ -36,15 +36,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
-        "branch": "nixpkgs-unstable",
+        "branch": "nixos-20.09",
         "description": "Nix Packages collection",
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f4254fba4f27cbbafd6ed889dfe21b6e7f3bec6b",
-        "sha256": "1lgygr2bnqil2mh6fxscn5yb7ynfa62g6qhwnslrxnj90cyys9g0",
+        "rev": "29e9c10750e2b35a0e47db55f36c685ef9219f4e",
+        "sha256": "0bbqmip233mqvk2q46pbhjw3djr68p9m120kl37kw2758a5kggay",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/f4254fba4f27cbbafd6ed889dfe21b6e7f3bec6b.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/29e9c10750e2b35a0e47db55f36c685ef9219f4e.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "ohmytmux": {
