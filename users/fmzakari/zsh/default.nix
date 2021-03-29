@@ -60,6 +60,9 @@
     oh-my-zsh = {
       enable = true;
       plugins = [ "git" "ssh-agent" "rake" ];
+      extraConfig = ''
+        zstyle :omz:plugins:ssh-agent agent-forwarding on
+      '';
     };
   };
 
