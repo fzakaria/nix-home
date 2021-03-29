@@ -12,3 +12,8 @@ Host *
   ControlMaster auto
   ControlPath /tmp/master-%r@%n:%p
   ControlPersist 60m
+
+Host ripper
+	HostName alakwan.enotuniq.org
+	User fzakaria
+	Port 3000
