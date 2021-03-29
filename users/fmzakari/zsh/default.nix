@@ -42,6 +42,10 @@
       }
       # setup autojump
       . ${pkgs.autojump}/share/autojump/autojump.zsh
+
+      # https://github.com/zimbatm/h
+      # setup h
+      eval "$(${pkgs.h}/bin/h --setup ~/code)"
     '';
 
     shellAliases = {

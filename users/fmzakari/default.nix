@@ -64,7 +64,10 @@ with lib; {
       # Quickly locate nix packages with specific files
       # https://github.com/bennofs/nix-index
       nix-index
-      nix-diff
+
+      # currently borked on unstable
+      # nix-diff
+
       # faster shell navigation of projects
       # https://github.com/zimbatm/h
       h
