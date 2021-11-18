@@ -2,7 +2,7 @@
   programs.zsh = {
     enable = true;
     enableAutosuggestions = true;
-    enableCompletion = true;
+    enableCompletion = false;
     autocd = true;
     history = {
       ignoreDups = true;
