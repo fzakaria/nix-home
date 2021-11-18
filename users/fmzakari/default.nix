@@ -91,6 +91,8 @@ with lib; {
       # A formatter for Nix code
       # https://github.com/serokell/nixfmt
       nixfmt
+
+      niv
     ];
 
   };
