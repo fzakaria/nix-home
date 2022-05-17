@@ -14,6 +14,14 @@ If you want the official explanation on what Nix does better please read [why yo
 
 You can git clone this repository wherever you'd like!
 
+```console
+$ nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+$ nix-channel --update
+# add to your shell startup
+$ export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels${NIX_PATH:+:$NIX_PATH}
+$ nix-shell '<home-manager>' -A install
+```
+
 ### Backup Files
 Athough this tool will **try it's best** not to clobber any files outside it's management; it's best just to backup any files before on-boarding.
 

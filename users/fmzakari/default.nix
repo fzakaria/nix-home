@@ -76,7 +76,9 @@ with lib; {
       autojump
       # Command line tool to share your UNIX terminal and forward local TCP ports to people you trust.
       # https://github.com/gravitational/teleconsole
-      teleconsole
+      # archived by upstream
+      #teleconsole
+      
       cachix
       # Terminal session recorder
       # https://github.com/asciinema/asciinema

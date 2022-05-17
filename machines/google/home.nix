@@ -27,7 +27,7 @@ with lib.strings; {
   # This must match the users.users module value
   home.username = "fmzakari";
   # https://github.com/rycee/home-manager/issues/1471
-  home.homeDirectory = "/home/fmzakari";
+  home.homeDirectory = "/usr/local/google/home/fmzakari";
   home.email = "fmzakari@google.com";
 
   home.file = {
