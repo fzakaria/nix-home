@@ -95,6 +95,8 @@ with lib; {
       nixfmt
 
       niv
+      
+      buildifier
     ];
 
   };
