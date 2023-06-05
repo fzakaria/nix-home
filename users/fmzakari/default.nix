@@ -97,6 +97,10 @@ with lib; {
       niv
       
       buildifier
+
+      just
+
+      bazelisk
     ];
 
   };
