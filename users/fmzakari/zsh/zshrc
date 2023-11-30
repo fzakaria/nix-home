@@ -11,4 +11,37 @@ fi
 # FIXME: SSH or tooling that requires libnss-cache (https://github.com/google/libnss-cache)
 # seems to fail since the library is not present. When I have a better understanding of Nix
 # let's fix this.
-[[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
+# Looks like they either fixed this and moved to a GRTE version of libnss
+# [[ ! -f /lib/x86_64-linux-gnu/libnss_cache.so.2 ]] || export LD_PRELOAD=/lib/x86_64-linux-gnu/libnss_cache.so.2:$LD_PRELOAD
+
+# Got this sweet function from HackerNews
+function frg {
+    result=$(rg --ignore-case --color=always --line-number --no-heading "$@" |
+      fzf --ansi \
+          --color 'hl:-1:underline,hl+:-1:underline:reverse' \
+          --delimiter ':' \
+          --preview "bat --color=always {1} --theme='Solarized (light)' --highlight-line {2}" \
+          --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
+    file=${result%%:*}
+    linenumber=$(echo "${result}" | cut -d: -f2)
+    if [[ -n "$file" ]]; then
+            $EDITOR +"${linenumber}" "$file"
+    fi
+  }
+
+# go/hi-guide
+# TODO(fmzakari): only include this on google machines
+source /etc/bash.bashrc.d/shell_history_forwarder.sh
+if [[ -f /etc/bash_completion.d/g4d ]]; then
+  source /etc/bash_completion.d/p4
+  source /etc/bash_completion.d/g4d
+fi
+if [[ -f /etc/bash_completion.d/hgd ]]; then
+  source /etc/bash_completion.d/hgd
+fi
+if [[ -f /etc/bash_completion.d/blaze ]]; then
+  source /etc/bash_completion.d/blaze
+fi
+if [[ -f /etc/bash_completion.d/bazel ]]; then
+  source /etc/bash_completion.d/bazel
+fi

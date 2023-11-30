@@ -100,7 +100,7 @@ with lib; {
 
       just
 
-      bazelisk
+      arcanist
     ];
 
   };
