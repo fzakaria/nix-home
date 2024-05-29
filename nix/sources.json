@@ -1,62 +1,14 @@
 {
-    "home-manager": {
-        "branch": "master",
-        "description": "Manage a user environment using Nix",
-        "homepage": "https://rycee.gitlab.io/home-manager/",
-        "owner": "rycee",
-        "repo": "home-manager",
-        "rev": "76dd6c66190db0d46ac6b3ca816cc17b581df42c",
-        "sha256": "0ws6a5haas0i9sxgvcad94kr661wngbci1sbkx88vfsv1i0j3r8d",
-        "type": "tarball",
-        "url": "https://github.com/rycee/home-manager/archive/76dd6c66190db0d46ac6b3ca816cc17b581df42c.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "niv": {
-        "branch": "master",
-        "description": "Easy dependency management for Nix projects",
-        "homepage": "https://github.com/nmattia/niv",
-        "owner": "nmattia",
-        "repo": "niv",
-        "rev": "914aba08a26cb10538b84d00d6cfb01c9776d80c",
-        "sha256": "0gx316gc7prjay5b0cr13x4zc2pdbiwxkfkpjvrlb2rml80lm4pm",
-        "type": "tarball",
-        "url": "https://github.com/nmattia/niv/archive/914aba08a26cb10538b84d00d6cfb01c9776d80c.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "nixos": {
-        "branch": "nixos-22.11",
-        "description": "Nix Packages collection",
-        "homepage": null,
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
-        "sha256": "1xi53rlslcprybsvrmipm69ypd3g3hr7wkxvzc73ag8296yclyll",
-        "type": "tarball",
-        "url": "https://github.com/nixos/nixpkgs/archive/ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "nixpkgs": {
-        "branch": "nixos-22.11",
+        "branch": "nixos-unstable",
         "description": "Nix Packages collection",
         "homepage": null,
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b",
-        "sha256": "1xi53rlslcprybsvrmipm69ypd3g3hr7wkxvzc73ag8296yclyll",
+        "rev": "9ca3f649614213b2aaf5f1e16ec06952fe4c2632",
+        "sha256": "1753bcq3c30fd570jllkya3v5wqb8zibf840sdsfghw1jmpw6igc",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/ea4c80b39be4c09702b0cb3b42eab59e2ba4f24b.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "ohmytmux": {
-        "branch": "master",
-        "description": "🇫🇷 Oh My Tmux! Pretty & versatile tmux configuration made with ❤️",
-        "homepage": "",
-        "owner": "gpakosz",
-        "repo": ".tmux",
-        "rev": "fd1bbb56148101f4b286ddafd98f2ac2dcd69cd8",
-        "sha256": "100x8hbh73vhag5yj5gdaaz37kb7d70bx0whg0npng1vvdci2jif",
-        "type": "tarball",
-        "url": "https://github.com/gpakosz/.tmux/archive/fd1bbb56148101f4b286ddafd98f2ac2dcd69cd8.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/9ca3f649614213b2aaf5f1e16ec06952fe4c2632.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
