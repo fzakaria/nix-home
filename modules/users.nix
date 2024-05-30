@@ -11,4 +11,8 @@
     description = "Farid Zakaria";
   };
 
+  security.sudo.extraConfig = ''
+    Defaults timestamp_timeout=60 # only ask for password every 1h
+  '';
+
 }

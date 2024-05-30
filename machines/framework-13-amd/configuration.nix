@@ -9,6 +9,8 @@
       ../../modules/users.nix
       ../../modules/nix-index.nix
       ../../modules/zsh.nix
+      ../../modules/autojump.nix
+      ../../modules/fonts.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -38,7 +40,6 @@
   services.hardware.bolt.enable = true;
   services.yubikey-agent.enable = true;
   programs.ssh.startAgent = false;
-  programs.zsh.enable = true;
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
@@ -82,6 +83,8 @@
      pstree
      niv
      ripgrep
+     bat
+     warp-terminal
    ];
 
   # List services that you want to enable:

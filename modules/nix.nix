@@ -15,6 +15,12 @@ in
   nix = {
     nixPath =
       [ "nixpkgs=/etc/nixpkgs" "nixos-config=/etc/nixos/configuration.nix" ];
+
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 14d";
+      dates = "daily";
+    };
   };
 
 }
