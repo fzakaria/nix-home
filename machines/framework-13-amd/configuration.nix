@@ -11,6 +11,7 @@
       ../../modules/zsh.nix
       ../../modules/autojump.nix
       ../../modules/fonts.nix
+      ../../modules/fzf.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -85,6 +86,8 @@
      ripgrep
      bat
      warp-terminal
+     fd
+     eza
    ];
 
   # List services that you want to enable:

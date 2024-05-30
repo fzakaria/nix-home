@@ -1,14 +1,19 @@
 { config, pkgs, ... }: {
   programs.fzf = {
-    enable = true;
-    enableZshIntegration = true;
-    changeDirWidgetCommand =
+    fuzzyCompletion = true;
+    keybindings = true;
+  };
+
+  environment.variables = {
+    FZF_ALT_C_COMMAND =
       "fd --color always --hidden --follow --exclude .git --type d";
-    changeDirWidgetOptions =
-      [ "--ansi --preview 'exa --color always --tree {} | head -500'" ];
-    fileWidgetCommand =
+    FZF_ALT_C_OPTS =
+      [ "--ansi --preview 'eza --color always --tree {} | head -500'" ];
+
+    FZF_CTRL_T_COMMAND =
       "fd --color always --type f --hidden --follow --exclude .git";
-    fileWidgetOptions = [
+
+    FZF_CTRL_T_OPTS = [
       "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
     ];
   };
