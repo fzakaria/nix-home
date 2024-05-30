@@ -18,7 +18,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.initrd.luks.devices."luks-1b9f570b-04ee-40f2-b5c1-4966d5b6c573".device = "/dev/disk/by-uuid/1b9f570b-04ee-40f2-b5c1-4966d5b6c573";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixie"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -63,28 +63,47 @@
     git
     emacs
     niv
+    pinentry
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+
+  # enable gnupg
+  programs.gnupg.agent = {
+     enable = true;
+  };
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
+  hardware.pulseaudio.enable = true;
   services.xserver.enable = true;
   services.fwupd.enable = true;
   programs.ssh.startAgent = true;
   programs.zsh.enable = true;
+
+  # TODO - this is the default, do you need it?
+  services.logind.lidSwitch = "suspend";
+
+  # Use libinput to disable tap-to-click and move emulated buttons to
+  # the bottom of the trackpad.
+  services.libinput.enable = true;
+  services.libinput.touchpad.tapping = false;
+  services.libinput.touchpad.clickMethod = "clickfinger";
+
   services.xserver.displayManager.lightdm.enable = true;
+  # Emulate an old-fashioned session
+  # https://github.com/NixOS/nixpkgs/issues/177555#issuecomment-1263498702
+  # https://github.com/dwf/dotfiles/blob/eb783902a03a5c0259bb28843101746db31c5623/nixos/modules/user-xsession.nix
+  services.xserver.displayManager.session = [
+    {
+      manage = "desktop";
+      name = "normal-user-session";
+      start = ''exec $HOME/.xsessionrc'';
+    }
+  ];
   services.xserver.windowManager.xmonad.enable = true;
   services.xserver.windowManager.xmonad.enableContribAndExtras = true;
-
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

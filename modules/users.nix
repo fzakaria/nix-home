@@ -23,21 +23,20 @@
     extraGroups = [ "wheel" "networkmanager" ];
     description = "Mark Williams";
     packages = with pkgs; [
-	haskellPackages.xmonad
-	polybarFull
-	dmenu
-	rxvt-unicode
-
-	pass
-	firefox
-
-	emacs
-
-	discord
-	signal-desktop
-
-	docker
-	python3
+        discord
+        dmenu
+        docker
+        emacs
+        firefox
+        haskellPackages.xmonad
+        killall
+        pass
+        pavucontrol
+        polybarFull
+        python3
+        rxvt-unicode
+        signal-desktop
+        virtualenv
     ];
   };
 }
