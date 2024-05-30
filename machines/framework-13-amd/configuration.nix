@@ -88,6 +88,7 @@
      warp-terminal
      fd
      eza
+     gnome.gnome-tweaks
    ];
 
   # List services that you want to enable:
