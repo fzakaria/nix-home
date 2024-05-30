@@ -11,8 +11,16 @@
     description = "Farid Zakaria";
   };
 
+
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=60 # only ask for password every 1h
   '';
 
+
+  users.extraUsers.mrw = {
+    isNormalUser = true;
+    shell = pkgs.bash;
+    extraGroups = [ "wheel" "networkmanager" ];
+    description = "Mark Williams";
+  };
 }
