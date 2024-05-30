@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-# if no time is set default to 14 days
-default_time="-14 days"
-time=${1:-$default_time}
-./bin/home-manager  expire-generations "${time}"

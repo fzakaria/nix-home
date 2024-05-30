@@ -1,16 +1,25 @@
 { config, pkgs, ... }: {
+
   programs.zsh = {
     enable = true;
-    autosuggestion.enable = true;
-    enableCompletion = true;
-    autocd = true;
-    history = {
-      ignoreDups = true;
-      ignoreSpace = true;
-      share = true;
+
+    shellAliases = {
+
     };
-    syntaxHighlighting.enable = true;
-    plugins = [
+
+    setOptions = lib.mkForce [
+      "auto_cd"
+      "auto_pushd"
+      "beep"
+      "correct"
+      "dvorak"
+      "extended_glob"
+      "extended_history"
+      "hist_fcntl_lock"
+      "hist_ignore_dups"
+      "hist_no_store"
+      "hist_reduce_blanks"
+      "interactive_comments"
     ];
 
     initExtra = ''

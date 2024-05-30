@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-if [[ $(uname -v) == *NixOS* ]]; then
-	sudo nixos-rebuild switch
-else
-	./bin/home-manager switch "$@"
-fi

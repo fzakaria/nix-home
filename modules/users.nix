@@ -11,5 +11,4 @@
     description = "Farid Zakaria";
   };
 
-  home-manager.users.fmzakari = import ../users/fmzakari;
 }

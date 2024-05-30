@@ -5,8 +5,8 @@ in
 
   nixpkgs = {
     # Add the global overlay for all machines
-    overlays = [ (import ../nixpkgs/overlay.nix) ];
-    config = import ../nixpkgs/config.nix;
+    overlays = [ (import ./nixpkgs/overlay.nix) ];
+    config = import ./nixpkgs/config.nix;
   };
 
   # Put nixpkgs into /etc/nixpkgs for convenience

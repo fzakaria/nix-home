@@ -1,16 +1,4 @@
 {
-    "home-manager": {
-        "branch": "master",
-        "description": "Manage a user environment using Nix  [maintainer=@rycee] ",
-        "homepage": "https://nix-community.github.io/home-manager/",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "1b589257f72c9c54e92d1d631e988e5346156736",
-        "sha256": "1gjiik79i6nyvpzrgvcs5n1h26g6g0vrn9m936g7g2in5pvaz72y",
-        "type": "tarball",
-        "url": "https://github.com/nix-community/home-manager/archive/1b589257f72c9c54e92d1d631e988e5346156736.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "nix-index-database": {
         "branch": "main",
         "description": "Weekly updated nix-index database [maintainer=@Mic92]",

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-# set a sensible default
-export EDITOR="${EDITOR:=vim}"
-./bin/home-manager edit "$@"

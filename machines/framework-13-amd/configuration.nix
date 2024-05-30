@@ -5,9 +5,10 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/common.nix
-      ../../modules/platforms/nixos.nix
+      ../../modules/nix.nix
       ../../modules/users.nix
+      ../../modules/nix-index.nix
+      ../../modules/zsh.nix
     ];
 
   # Use the systemd-boot EFI boot loader.

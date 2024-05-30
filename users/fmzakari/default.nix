@@ -5,6 +5,8 @@ with lib; {
   imports = [
     ./zsh
     ./eza.nix
+    ./bat.nix
+    ./fonts.nix
   ];
 
   options.home.email = mkOption {
@@ -55,7 +57,8 @@ with lib; {
       ripgrep
       # Quickly locate nix packages with specific files
       # https://github.com/bennofs/nix-index
-      nix-index
+      # TODO(fzakaria): We bring it in with nix-index-database as a NixOS module
+      # nix-index
       # faster shell navigation of projects
       # https://github.com/zimbatm/h
       h

@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-set -euxo pipefail
-
-rm -rf $HOME/{.nix-channels,.nix-defexpr,.nix-profile,.config/nixpkgs}
-rm -rf /nix
-echo "remove the [. \"$HOME/.nix-profile/etc/profile.d/nix.sh\"'] line in your ~/.profile or ~/.bash_profile"
