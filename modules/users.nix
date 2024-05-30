@@ -22,5 +22,22 @@
     shell = pkgs.bash;
     extraGroups = [ "wheel" "networkmanager" ];
     description = "Mark Williams";
+    packages = with pkgs; [
+	haskellPackages.xmonad
+	polybarFull
+	dmenu
+	rxvt-unicode
+
+	pass
+	firefox
+
+	emacs
+
+	discord
+	signal-desktop
+
+	docker
+	python3
+    ];
   };
 }

@@ -8,6 +8,9 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/nix.nix
+      ../../modules/users.nix
+      ../../modules/nix-index.nix
     ];
 
   # Bootloader.
@@ -49,22 +52,17 @@
     xkbVariant = "";
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.mrw = {
-    isNormalUser = true;
-    description = "Mark Williams";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    git
+    emacs
+    niv
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -78,6 +76,14 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
+  services.xserver.enable = true;
+  services.fwupd.enable = true;
+  programs.ssh.startAgent = true;
+  programs.zsh.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver.windowManager.xmonad.enable = true;
+  services.xserver.windowManager.xmonad.enableContribAndExtras = true;
+
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
