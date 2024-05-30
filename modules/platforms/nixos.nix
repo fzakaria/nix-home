@@ -1,23 +1,15 @@
 { config, pkgs, ... }:
-let
-  sources = import ../../nix/sources.nix;
-  nixpkgs' = sources.nixos;
-  home-manager = sources.home-manager;
-in {
+let sources = import ../../nix/sources.nix;
+in
+{
 
-  imports = [ (home-manager + "/nixos") ];
-
-  nixpkgs = {
-    pkgs = import "${nixpkgs'}" { inherit (config.nixpkgs) config; };
-  };
-
-  nix = {
-    nixPath =
-      [ "nixpkgs=${nixpkgs'}" "nixos-config=/etc/nixos/configuration.nix" ];
-  };
+  imports = [ 
+    (sources.home-manager + "/nixos") 
+    (sources.nix-index-database + "/nixos-module.nix")
+  ];
 
   # useful NixOS home-manager settings
-  # https://rycee.gitlab.io/home-manager/index.html#sec-install-nixos-module
+  # https://nix-community.github.io/home-manager/index.xhtml#sec-install-nixos-module
   home-manager = {
     # By default packages will be installed to $HOME/.nix-profile
     # but they can be installed to /etc/profiles if useUserPackages is true
@@ -29,11 +21,11 @@ in {
     useGlobalPkgs = true;
   };
 
-  security = {
-    sudo = {
-      # Whether users of the wheel group must
-      # provide a password to run commands as super 
-      wheelNeedsPassword = false;
-    };
-  };
+  # lets enable nix-index
+  # this is needed for the nix-index-database nixos module since we are not using flakes
+  _module.args.databases = import (sources.nix-index-database + "/packages.nix");
+  programs.nix-index-database.comma.enable = true;
+  # nix-index provides it's own command-not-found functionality
+  programs.command-not-found.enable = false;
+
 }

@@ -11,6 +11,5 @@
     description = "Farid Zakaria";
   };
 
-  # disable home-manager now while we set it up
-  # home-manager.users.fmzakari = import ../users/fmzakari;
+  home-manager.users.fmzakari = import ../users/fmzakari;
 }

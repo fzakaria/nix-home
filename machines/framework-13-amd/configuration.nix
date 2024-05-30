@@ -5,9 +5,10 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ../../modules/common.nix
+      ../../modules/platforms/nixos.nix
       ../../modules/users.nix
     ];
-
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -79,23 +80,8 @@
      yubikey-manager
      pstree
      niv
+     ripgrep
    ];
-
-  nixpkgs.config.allowUnfree = true;
-
-
-  nixpkgs.overlays = [
-    # We want to use the yubikey-agent so disable gnome's ssh-agent
-    (self: super: {
-      gnome = super.gnome.overrideScope (gfinal: gprev: {
-        gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
-          configureFlags = oldAttrs.configureFlags or [ ] ++ [
-            "--disable-ssh-agent"
-          ];
-        });
-      });
-    })
-  ];
 
   # List services that you want to enable:
 

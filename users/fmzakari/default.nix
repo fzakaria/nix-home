@@ -3,15 +3,8 @@
 with lib; {
 
   imports = [
-    ./git
     ./zsh
-    ./broot.nix
-    ./direnv.nix
-    ./fzf.nix
-    ./tmux
-    ./bat
-    ./jrnl
-    ./fonts.nix
+    ./eza.nix
   ];
 
   options.home.email = mkOption {
@@ -49,8 +42,8 @@ with lib; {
       # https://github.com/FiloSottile/age
       age
       # A modern version of ls written in rust
-      # https://github.com/ogham/exa
-      exa
+      # https://github.com/eza-community/eza
+      eza
       # A simple, fast and user-friendly alternative to 'find'
       # https://github.com/sharkdp/fd
       fd
@@ -60,14 +53,9 @@ with lib; {
       # ripgrep recursively searches directories for a regex pattern
       # https://github.com/BurntSushi/ripgrep
       ripgrep
-      comma
       # Quickly locate nix packages with specific files
       # https://github.com/bennofs/nix-index
       nix-index
-
-      # currently borked on unstable
-      # nix-diff
-
       # faster shell navigation of projects
       # https://github.com/zimbatm/h
       h
@@ -78,12 +66,10 @@ with lib; {
       # https://github.com/gravitational/teleconsole
       # archived by upstream
       #teleconsole
-      
       cachix
       # Terminal session recorder
       # https://github.com/asciinema/asciinema
       asciinema
-      redo-apenwarr
       # Command-line JSON processor
       # https://github.com/stedolan/jq
       jq
@@ -91,8 +77,8 @@ with lib; {
       # https://github.com/hishamhm/htop
       htop
       # A formatter for Nix code
-      # https://github.com/serokell/nixfmt
-      nixfmt
+      # https://github.com/NixOS/nixfmt
+      nixfmt-rfc-style
 
       niv
       
