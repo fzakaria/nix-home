@@ -88,9 +88,9 @@
 
   # Use libinput to disable tap-to-click and move emulated buttons to
   # the bottom of the trackpad.
-  services.libinput.enable = true;
-  services.libinput.touchpad.tapping = false;
-  services.libinput.touchpad.clickMethod = "clickfinger";
+  services.xserver.libinput.enable = true;
+  services.xserver.libinput.touchpad.tapping = false;
+  services.xserver.libinput.touchpad.clickMethod = "clickfinger";
 
   services.xserver.displayManager.lightdm.enable = true;
   # Emulate an old-fashioned session
