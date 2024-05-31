@@ -7,8 +7,8 @@
     aliases = {
       # List available aliases
       aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
-	    # get a diff not fancy!
-	    patch = "!git --no-pager diff --no-color";
+      # get a diff not fancy!
+      patch = "!git --no-pager diff --no-color";
       co = "checkout";
       st = "status";
       ci = "commit";

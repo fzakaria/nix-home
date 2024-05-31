@@ -72,7 +72,7 @@
     homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
+    # Available through 'nixos-rebuild switch --flake .#your-hostname'
     # You can also build them individually using
     # 'nix build .#nixosConfigurations.nyx.config.system.build.toplevel'
     nixosConfigurations = {
@@ -82,16 +82,28 @@
 
     # Uncomment when we want to support individual home-manager
     # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username'
+    # Available through 'home-manager switch --flake .#your-username'
     homeConfigurations = {
-     "fzakaria" = home-manager.lib.homeManagerConfiguration {
-       pkgs = nixpkgs.legacyPackages."aarch64-darwin";
-       extraSpecialArgs = {inherit inputs outputs;};
-       modules = [
-         # > Our main home-manager configuration file <
-         ./users/fmzakari
-       ];
-     };
+      "fzakaria" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."aarch64-darwin";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          # > Our main home-manager configuration file <
+          ./users/fmzakari
+          (
+            {
+              config,
+              pkgs,
+              lib,
+              ...
+            }: {
+              home.username = lib.mkForce "fzakaria";
+              home.homeDirectory = lib.mkForce "/Users/fzakaria";
+              programs.git.userEmail = lib.mkForce "fzakaria@confluent.io";
+            }
+          )
+        ];
+      };
     };
   };
 }
