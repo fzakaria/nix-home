@@ -45,9 +45,6 @@
     # age is a simple, modern and secure file encryption tool, format, and library.
     # https://github.com/FiloSottile/age
     age
-    # A modern version of ls written in rust
-    # https://github.com/eza-community/eza
-    eza
     # A simple, fast and user-friendly alternative to 'find'
     # https://github.com/sharkdp/fd
     fd
@@ -116,6 +113,16 @@
       enable = true;
       config = {
       };
+    };
+
+    # A modern version of ls written in rust
+    # https://github.com/eza-community/eza
+    eza = {
+      enable = true;
+      icons = true;
+      git = true;
+      # TODO(fzakaria): Removed in newer home-manager
+      enableAliases = true;
     };
 
     direnv = {
