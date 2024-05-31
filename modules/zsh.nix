@@ -1,5 +1,8 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   programs.zsh = {
     enable = true;
 
@@ -88,5 +91,4 @@
       "pbcopy" = "xsel --clipboard --input";
     };
   };
-
 }

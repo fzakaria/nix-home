@@ -1,5 +1,31 @@
-{ config, pkgs, ... }: {
+{
+  inputs,
+  outputs,
+  config,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Import home-manager's NixOS module
+    inputs.home-manager.nixosModules.home-manager
+  ];
 
+  # useful NixOS home-manager settings
+  home-manager = {
+    # By default packages will be installed to $HOME/.nix-profile
+    # but they can be installed to /etc/profiles if useUserPackages is true
+    # This is necessary if, for example, you wish to use nixos-rebuild build-vm
+    useUserPackages = true;
+
+    # By default, Home Manager uses a private pkgs instance that is configured via the home-manager.users.<name>.nixpkgs options.
+    # To instead use the global pkgs that is configured via the system level nixpkgs options, set
+    useGlobalPkgs = true;
+
+    # make inputs and outputs available to home-manager
+    extraSpecialArgs = {inherit inputs outputs;};
+  };
+
+  # TODO(fzakaria): Eventually we want to make this declarative
   # users.mutableUsers = false;
 
   users.extraUsers.fmzakari = {
@@ -7,36 +33,36 @@
     # home to /home/username, useDefaultShell to true, and isSystemUser to false
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = ["wheel" "networkmanager"];
     description = "Farid Zakaria";
   };
 
+  home-manager.users.fmzakari = import ../users/fmzakari;
 
   security.sudo.extraConfig = ''
     Defaults timestamp_timeout=60 # only ask for password every 1h
   '';
 
-
   users.extraUsers.mrw = {
     isNormalUser = true;
     shell = pkgs.bash;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = ["wheel" "networkmanager"];
     description = "Mark Williams";
     packages = with pkgs; [
-        discord
-        dmenu
-        docker
-        emacs
-        firefox
-        haskellPackages.xmonad
-        killall
-        pass
-        pavucontrol
-        polybarFull
-        python3
-        rxvt-unicode
-        signal-desktop
-        virtualenv
+      discord
+      dmenu
+      docker
+      emacs
+      firefox
+      haskellPackages.xmonad
+      killall
+      pass
+      pavucontrol
+      polybarFull
+      python3
+      rxvt-unicode
+      signal-desktop
+      virtualenv
     ];
   };
 }

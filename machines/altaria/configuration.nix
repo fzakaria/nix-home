@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/common.nix
@@ -15,5 +20,5 @@
   };
 
   # testing lametun
-  networking.firewall.allowedUDPPorts = [ 1234 ];
+  networking.firewall.allowedUDPPorts = [1234];
 }

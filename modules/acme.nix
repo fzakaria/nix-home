@@ -1,5 +1,8 @@
-{ config, pkgs, ... }: {
-
+{
+  config,
+  pkgs,
+  ...
+}: {
   # We will setup HTTP authentication to receive our ACME (Let's encrypt) certificate
   # https://nixos.org/manual/nixos/stable/#module-security-acme-nginx
   security.acme.acceptTerms = true;
@@ -11,12 +14,12 @@
         forceSSL = true;
         enableACME = true;
         # for now just return HTTP 302 which is moved temporarily
-        locations."/" = { return = "302 https://fzakaria.com"; };
+        locations."/" = {return = "302 https://fzakaria.com";};
       };
     };
   };
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  networking.firewall.allowedTCPPorts = [80 443];
   # Set the group to acme and that anyone in the group can read the keys
-  users.groups = { acme = { }; };
+  users.groups = {acme = {};};
   security.acme.certs."altaria.fzakaria.com".group = "acme";
 }

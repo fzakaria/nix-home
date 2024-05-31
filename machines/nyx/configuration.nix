@@ -1,27 +1,31 @@
-
-{ config, lib, pkgs, ... }:
-
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ../../modules/nix.nix
-      ../../modules/users.nix
-      ../../modules/nix-index.nix
-      ../../modules/zsh.nix
-      ../../modules/autojump.nix
-      ../../modules/fonts.nix
-      ../../modules/fzf.nix
-    ];
+  inputs,
+  outputs,
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ../../modules/nix.nix
+    ../../modules/users.nix
+    ../../modules/nix-index.nix
+    ../../modules/zsh.nix
+    ../../modules/autojump.nix
+    ../../modules/fonts.nix
+    ../../modules/fzf.nix
+  ];
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nyx"; # Define your hostname.
   # Pick only one of the below networking options.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -44,7 +48,6 @@
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
 
   # Configure keymap in X11
   # services.xserver.xkb.layout = "us";
@@ -72,24 +75,25 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-   environment.systemPackages = with pkgs; [
-     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-     wget
-     vscode
-     git
-     google-chrome
-     yubikey-personalization
-     yubikey-manager-qt
-     yubikey-manager
-     pstree
-     niv
-     ripgrep
-     bat
-     warp-terminal
-     fd
-     eza
-     gnome.gnome-tweaks
-   ];
+  environment.systemPackages = with pkgs; [
+    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    wget
+    vscode
+    git
+    google-chrome
+    yubikey-personalization
+    yubikey-manager-qt
+    yubikey-manager
+    pstree
+    niv
+    ripgrep
+    bat
+    warp-terminal
+    fd
+    eza
+    gnome.gnome-tweaks
+    htop
+  ];
 
   # List services that you want to enable:
 
@@ -101,7 +105,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
@@ -120,6 +123,4 @@
   #
   # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "23.11";
-
 }
-

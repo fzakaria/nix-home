@@ -1,7 +1,11 @@
-{ config, pkgs, ... }: {
-  services.tailscale = { enable = true; };
+{
+  config,
+  pkgs,
+  ...
+}: {
+  services.tailscale = {enable = true;};
 
-  networking.firewall.allowedUDPPorts = [ 41641 ];
+  networking.firewall.allowedUDPPorts = [41641];
 
   # Disable SSH access through the firewall
   # Only way into the machine will be through
@@ -10,5 +14,5 @@
   # Better to rely on EC2 SecurityGroups
   # services.openssh.openFirewall = false;
 
-  environment.systemPackages = [ pkgs.tailscale ];
+  environment.systemPackages = [pkgs.tailscale];
 }

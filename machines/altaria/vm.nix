@@ -1,5 +1,6 @@
 let
-  sources = (import ../../nix/sources.nix);
+  sources = import ../../nix/sources.nix;
   nixos =
-    import (sources.nixpkgs + "/nixos") { configuration = import ./configuration.nix; };
-in nixos.vm
+    import (sources.nixpkgs + "/nixos") {configuration = import ./configuration.nix;};
+in
+  nixos.vm
