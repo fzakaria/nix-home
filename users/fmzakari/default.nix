@@ -1,5 +1,6 @@
 # Place common home-manager setup here
 {
+  inputs,
   config,
   pkgs,
   lib,
@@ -8,6 +9,7 @@
   imports = [
     ./git.nix
     ./zsh
+    inputs.h.homeModules.default
   ];
 
   home = {
@@ -58,12 +60,6 @@
     # https://github.com/bennofs/nix-index
     # TODO(fzakaria): We bring it in with nix-index-database as a NixOS module
     # nix-index
-    # faster shell navigation of projects
-    # https://github.com/zimbatm/h
-    h
-    # A cd command that learns - easily navigate directories from the command line
-    # https://github.com/wting/autojump
-    autojump
     # Command line tool to share your UNIX terminal and forward local TCP ports to people you trust.
     # https://github.com/gravitational/teleconsole
     # archived by upstream
@@ -90,4 +86,17 @@
 
     arcanist
   ];
+
+  programs = {
+    # https://github.com/zimbatm/h
+    # Faster code checkout
+    h = {
+      codeRoot = "~/code";
+    };
+    # A cd command that learns - easily navigate directories from the command line
+    # https://github.com/wting/autojump
+    autojump = {
+      enable = true;
+    };
+  };
 }

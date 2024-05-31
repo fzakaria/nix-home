@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "h": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1711279222,
+        "narHash": "sha256-NoqgCeLCD1FFuVzFaNsdxjnswtYagWlX5x8ImZ/yrOg=",
+        "owner": "zimbatm",
+        "repo": "h",
+        "rev": "b03fea6a3aedfb1a125664505c6284315f69b0cd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zimbatm",
+        "ref": "master",
+        "repo": "h",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -91,6 +112,7 @@
     },
     "root": {
       "inputs": {
+        "h": "h",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",

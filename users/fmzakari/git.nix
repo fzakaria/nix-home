@@ -5,6 +5,10 @@
     userName = "Farid Zakaria";
     userEmail = "farid.m.zakaria@gmail.com";
     aliases = {
+      # List available aliases
+      aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
+	    # get a diff not fancy!
+	    patch = "!git --no-pager diff --no-color";
       co = "checkout";
       st = "status";
       ci = "commit";
@@ -22,6 +26,34 @@
       untrack = "rm --cache --";
       # Print recent branches used
       brv = "branch --sort=-committerdate -vvv";
+    };
+
+    delta = {
+      enable = true;
+      options = {
+      };
+    };
+
+    ignores = [
+      "*~"
+      "*.swp"
+      "*.orig"
+    ];
+
+    extraConfig = {
+      color = {
+        # # Enable colors in color-supporting terminals
+        ui = "auto";
+      };
+      core = {
+        # Don't consider trailing space change as a cause for merge conflicts
+        whitespace = "-trailing-space";
+        editor = "vim";
+      };
+      pull = {
+        # this is the safest option. if you want to merge do so explicitly.
+        ff = "only";
+      };
     };
   };
 }

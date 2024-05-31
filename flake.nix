@@ -21,6 +21,10 @@
 
     # nixos-hardware
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    # h
+    h.url = "github:zimbatm/h/master";
+    h.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
