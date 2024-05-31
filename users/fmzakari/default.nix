@@ -7,6 +7,7 @@
 }: {
   imports = [
     ./git.nix
+    ./zsh
   ];
 
   home = {

@@ -3,16 +3,17 @@
   pkgs,
   ...
 }: {
+  # so that home-manager zsh can get completion
+  environment.pathsToLink = ["/share/zsh"];
+
   programs.zsh = {
     enable = true;
-
     # Enable zsh completion for all interactive zsh shells.
     enableCompletion = true;
     # Enable compatibility with bash's programmable completion system.
     enableBashCompletion = true;
     # Enable extra colors in directory listings (used by `ls` and `tree`).
     enableLsColors = true;
-
     # zsh-autosuggestions
     autosuggestions.enable = true;
     # zsh-syntax-highlighting.
@@ -51,44 +52,9 @@
     ];
 
     promptInit = ''
-      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
     '';
 
     shellInit = ''
-      # Stop new-user prompting if there is no zshrc in the user directory
-      zsh-newuser-install () {}
-
-      # Figure out the closure size for a certain package
-      # ex. nix-closure-size $(which exa)
-      nix-closure-size() {
-        nix-store -q --size $(nix-store -qR $(readlink -e $1) ) | \
-        awk '{ a+=$1 } END { print a }' | \
-        ${pkgs.coreutils}/bin/numfmt --to=iec-i
-      }
-
-      # Got this sweet function from HackerNews
-      function frg {
-          result=$(rg --ignore-case --color=always --line-number --no-heading "$@" |
-            fzf --ansi \
-                --color 'hl:-1:underline,hl+:-1:underline:reverse' \
-                --delimiter ':' \
-                --preview "bat --color=always {1} --theme='Solarized (light)' --highlight-line {2}" \
-                --preview-window 'up,60%,border-bottom,+{2}+3/3,~3')
-          file=''${result%%:*}
-          linenumber=$(echo "''${result}" | cut -d: -f2)
-          if [[ -n "$file" ]]; then
-                  $EDITOR +"''${linenumber}" "$file"
-          fi
-        }
-
-      # https://github.com/zimbatm/h
-      # setup h
-      eval "$(${pkgs.h}/bin/h --setup ~/code)"
     '';
-
-    shellAliases = {
-      "cat" = "bat --style=plain";
-      "pbcopy" = "xsel --clipboard --input";
-    };
   };
 }
