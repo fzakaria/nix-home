@@ -2,6 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -10,6 +11,7 @@
 }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
 
   boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
@@ -17,6 +19,17 @@
   boot.kernelModules = ["kvm-amd"];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModulePackages = [];
+  boot.kernelParams = [
+  # Turn on adaptive brightness management
+  # https://community.frame.work/t/adaptive-backlight-management-abm/41055/31
+  #  "amdgpu.abmlevel=0"
+  ];
+
+  # enable Mesa
+  hardware.opengl.enable = true; 
+  # enable Vulkan                                                                                                                                                                                  
+  hardware.opengl.driSupport = true;
+  
 
   fileSystems."/" = {
     device = "/dev/disk/by-label/nixos";
@@ -41,5 +54,7 @@
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  
+  hardware.enableRedistributableFirmware = true;
+  hardware.cpu.amd.updateMicrocode = true;
 }

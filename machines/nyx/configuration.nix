@@ -30,16 +30,13 @@
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  #   useXkbConfig = true; # use xkb.options in tty.
-  # };
+  fonts.packages = with pkgs; [
+    nerdfonts
+  ];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = ["amdgpu"];
 
   services.fwupd.enable = true;
   services.hardware.bolt.enable = true;
@@ -47,6 +44,7 @@
   programs.ssh.startAgent = false;
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
+  services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
@@ -81,6 +79,7 @@
     vscode
     git
     google-chrome
+    firefox
     yubikey-personalization
     yubikey-manager-qt
     yubikey-manager
@@ -93,6 +92,7 @@
     eza
     gnome.gnome-tweaks
     htop
+    amdgpu_top
   ];
 
   # List services that you want to enable:
@@ -105,6 +105,7 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
