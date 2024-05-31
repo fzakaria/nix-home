@@ -10,36 +10,46 @@
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
     inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = [];
-  boot.kernelModules = ["kvm-amd"];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.extraModulePackages = [];
-  boot.kernelParams = [
-  # Turn on adaptive brightness management
-  # https://community.frame.work/t/adaptive-backlight-management-abm/41055/31
-  #  "amdgpu.abmlevel=0"
-  ];
-
-  # enable Mesa
-  hardware.opengl.enable = true; 
-  # enable Vulkan                                                                                                                                                                                  
-  hardware.opengl.driSupport = true;
-  
-
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
-    fsType = "ext4";
+  boot = {
+    initrd = {
+      availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
+      kernelModules = [];
+    };
+    kernelModules = ["kvm-amd"];
+    kernelPackages = pkgs.linuxPackages_latest;
+    extraModulePackages = [];
+    kernelParams = [
+      # Turn on adaptive brightness management
+      # https://community.frame.work/t/adaptive-backlight-management-abm/41055/31
+      #  "amdgpu.abmlevel=0"
+    ];
   };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
-    fsType = "vfat";
-    options = ["fmask=0077" "dmask=0077"];
+  hardware = {
+    opengl = {
+      # enable Mesa
+      enable = true;
+      # enable Vulkan
+      driSupport = true;
+    };
+
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = true;
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
+    };
+    "boot" = {
+      device = "/dev/disk/by-label/boot";
+      fsType = "vfat";
+      options = ["fmask=0077" "dmask=0077"];
+    };
   };
 
   swapDevices = [
@@ -54,7 +64,4 @@
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  
-  hardware.enableRedistributableFirmware = true;
-  hardware.cpu.amd.updateMicrocode = true;
 }

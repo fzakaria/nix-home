@@ -44,7 +44,7 @@
   programs.ssh.startAgent = false;
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  
+
   # TODO(fzakaria): google-chrome doesn't respect fractional scaling
   # when wayland is toggled. Disable for now.
   services.xserver.displayManager.gdm.wayland = false;
@@ -108,7 +108,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
