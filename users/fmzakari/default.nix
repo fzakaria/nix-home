@@ -115,8 +115,24 @@
     bat = {
       enable = true;
       config = {
-        
       };
+    };
+
+    direnv = {
+      enable = true;
+      config = {
+      };
+      nix-direnv.enable = true;
+    };
+
+    ssh = {
+      enable = true;
+      forwardAgent = true;
+      # TODO(fzakaria): Doesn't exist in 23.05 nixos release
+      # addKeysToAgent = "confirm";
+      serverAliveInterval = 0;
+      controlMaster = "auto";
+      controlPersist = "60m";
     };
   };
 }
