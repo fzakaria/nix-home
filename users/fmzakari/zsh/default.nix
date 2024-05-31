@@ -35,15 +35,18 @@
 
     oh-my-zsh = {
       enable = true;
-      theme = "powerlevel10k/powerlevel10k";
+      # since we are using powerlevel10k the theme is not used
+      theme = "";
       plugins = [];
     };
 
-    initExtra = builtins.readFile ./zshrc;
+    initExtraFirst = builtins.readFile ./zshrc;
 
     shellAliases = {
       "cat" = "bat --style=plain";
       "pbcopy" = "xsel --clipboard --input";
     };
   };
+
+  home.file.".p10k.zsh".source = ./p10k.zsh;
 }
