@@ -51,9 +51,6 @@
     # A simple, fast and user-friendly alternative to 'find'
     # https://github.com/sharkdp/fd
     fd
-    # A command-line fuzzy finder
-    # https://github.com/junegunn/fzf
-    fzf
     # ripgrep recursively searches directories for a regex pattern
     # https://github.com/BurntSushi/ripgrep
     ripgrep
@@ -89,6 +86,10 @@
   ];
 
   programs = {
+    # Let Home Manager install and manage itself.
+    home-manager = {
+      enable = true;
+    };
     # https://github.com/zimbatm/h
     # Faster code checkout
     h = {
@@ -98,6 +99,24 @@
     # https://github.com/wting/autojump
     autojump = {
       enable = true;
+    };
+    # A command-line fuzzy finder
+    # https://github.com/junegunn/fzf
+    fzf = {
+      enable = true;
+      changeDirWidgetCommand = "fd --color always --hidden --follow --exclude .git --type d";
+      changeDirWidgetOptions = ["--ansi --preview 'exa --color always --tree {} | head -500'"];
+      fileWidgetCommand = "fd --color always --type f --hidden --follow --exclude .git";
+      fileWidgetOptions = [
+        "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
+      ];
+    };
+
+    bat = {
+      enable = true;
+      config = {
+        
+      };
     };
   };
 }
