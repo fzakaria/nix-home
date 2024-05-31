@@ -9,8 +9,8 @@
     ../../modules/common.nix
     ../../modules/platforms/nixos.nix
     ../../modules/users.nix
-    ../../modules/acme.nix
-    ../../modules/quassel.nix
+    ./acme.nix
+    ./uassel.nix
     ../../modules/vpn.nix
   ];
 

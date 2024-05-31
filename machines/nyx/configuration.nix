@@ -10,7 +10,7 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/nix.nix
-    ../../modules/users.nix
+    ../../users
     ../../modules/nix-index.nix
     ../../modules/zsh.nix
     ../../modules/autojump.nix
