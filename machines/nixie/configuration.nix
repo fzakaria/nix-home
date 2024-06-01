@@ -84,6 +84,7 @@
 
   hardware.pulseaudio.enable = true;
   services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "amdgpu" ];
   services.fwupd.enable = true;
   programs.ssh.startAgent = true;
   programs.zsh.enable = true;
