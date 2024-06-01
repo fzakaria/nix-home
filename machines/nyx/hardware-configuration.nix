@@ -31,7 +31,7 @@
   hardware = {
     # Plenty of the opengl settings are set in nixos-hardware
     # for common/amd/gpu
-    opengl.eable = true;
+    opengl.enable = true;
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
   };
