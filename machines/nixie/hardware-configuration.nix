@@ -2,6 +2,7 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -9,17 +10,30 @@
   ...
 }: {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+    inputs.nixos-hardware.nixosModules.framework-13-7040-amd
   ];
 
-  boot.initrd.availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
-  boot.initrd.kernelModules = ["amdgpu"];
-  boot.kernelModules = ["kvm-amd"];
-  boot.extraModulePackages = [];
+  boot = {
+    initrd = {
+      availableKernelModules = ["nvme" "xhci_pci" "thunderbolt" "usb_storage" "sd_mod"];
+      kernelModules = [];
+    };
+    kernelModules = ["kvm-amd"];
+    kernelPackages = pkgs.linuxPackages_latest;
+    extraModulePackages = [];
+    kernelParams = [
+      # Turn on adaptive brightness management
+      # https://community.frame.work/t/adaptive-backlight-management-abm/41055/31
+      #  "amdgpu.abmlevel=0"
+    ];
+  };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/8cdbf627-cdfc-4137-b3fe-0c038ecf9045";
-    fsType = "ext4";
+  hardware = {
+    # Plenty of the opengl settings are set in nixos-hardware
+    # for common/amd/gpu
+    opengl.enable = true;
+    enableRedistributableFirmware = true;
+    cpu.amd.updateMicrocode = true;
   };
 
   boot.initrd.luks.devices."luks-893a3ca8-c752-4aac-bc15-0e7cc315c236".device = "/dev/disk/by-uuid/893a3ca8-c752-4aac-bc15-0e7cc315c236";
@@ -28,6 +42,11 @@
     device = "/dev/disk/by-uuid/FE00-BD0D";
     fsType = "vfat";
     options = ["fmask=0022" "dmask=0022"];
+  };
+
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/8cdbf627-cdfc-4137-b3fe-0c038ecf9045";
+    fsType = "ext4";
   };
 
   swapDevices = [
@@ -42,5 +61,4 @@
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
