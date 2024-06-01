@@ -18,14 +18,18 @@
     ../../modules/fzf.nix
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Use the systemd-boot EFI boot loader
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
-  networking.hostName = "nyx"; # Define your hostname.
-  # Pick only one of the below networking options.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-  networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
+  networking = {
+    hostName = "nyx";
+    networkmanager.enable = true;
+  };
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -34,45 +38,30 @@
     nerdfonts
   ];
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["amdgpu"];
+  services = {
+    # Enable the X11 windowing system.
+    xserver = {
+      enable = true;
+      displayManager = {
+        gnome.enable = true;
+        # Enable the GNOME Desktop Environment
+        gdm = {
+          enable = true;
 
-  services.fwupd.enable = true;
-  services.hardware.bolt.enable = true;
-  services.yubikey-agent.enable = true;
-  programs.ssh.startAgent = false;
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
+          # TODO(fzakaria): google-chrome doesn't respect fractional scaling
+          # when wayland is toggled. Disable for now.
+          wayland = false;
+        };
+      };
+    };
+    fwupd.enable = true;
+    hardware.bolt.enable = true;
+    yubikey-agent.enable = true;
+  };
 
-  # TODO(fzakaria): google-chrome doesn't respect fractional scaling
-  # when wayland is toggled. Disable for now.
-  services.xserver.displayManager.gdm.wayland = false;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  # services.xserver.xkb.layout = "us";
-  # services.xserver.xkb.options = "eurosign:e,caps:escape";
-
-  # Enable CUPS to print documents.
-  # services.printing.enable = true;
-
-  # Enable sound.
-  # sound.enable = true;
-  # hardware.pulseaudio.enable = true;
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     firefox
-  #     tree
-  #   ];
-  # };
+  programs = {
+    ssh.startAgent = false;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -97,17 +86,6 @@
     htop
     amdgpu_top
   ];
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.

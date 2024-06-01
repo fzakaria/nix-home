@@ -29,13 +29,9 @@
   };
 
   hardware = {
-    opengl = {
-      # enable Mesa
-      enable = true;
-      # enable Vulkan
-      driSupport = true;
-    };
-
+    # Plenty of the opengl settings are set in nixos-hardware
+    # for common/amd/gpu
+    opengl.eable = true;
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
   };
