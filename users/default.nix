@@ -58,13 +58,18 @@
     extraGroups = ["wheel" "networkmanager"];
     description = "Mark Williams";
     packages = with pkgs; [
+      brightnessctl
       discord
       dmenu
       docker
       emacs
       firefox
-      haskellPackages.xmonad
+      (haskellPackages.ghcWithPackages (hpkgs: [
+             hpkgs.xmonad
+             hpkgs.xmonad-contrib
+      ]))
       killall
+      xcalib
       pass
       pavucontrol
       polybarFull
