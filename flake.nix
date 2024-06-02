@@ -25,12 +25,16 @@
     # h
     h.url = "github:zimbatm/h/master";
     h.inputs.nixpkgs.follows = "nixpkgs";
+
+    # impermanence
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
+    impermanence,
     nixos-hardware,
     ...
   } @ inputs: let
@@ -77,7 +81,13 @@
     # 'nix build .#nixosConfigurations.nyx.config.system.build.toplevel'
     nixosConfigurations = {
       nyx = machine "nyx";
-      nixie = machine "nixie";
+      nixie = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            impermanence.nixosModules.impermanence
+            ./machines/nixie/configuration.nix
+          ];
+      };
     };
 
     # Uncomment when we want to support individual home-manager

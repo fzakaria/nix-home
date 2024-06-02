@@ -38,13 +38,19 @@
 
   boot.initrd.luks.devices."luks-893a3ca8-c752-4aac-bc15-0e7cc315c236".device = "/dev/disk/by-uuid/893a3ca8-c752-4aac-bc15-0e7cc315c236";
 
+  filesystems."/" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "defaults" "size=25%" "mode=755" ];
+  };
+
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/FE00-BD0D";
     fsType = "vfat";
     options = ["fmask=0022" "dmask=0022"];
   };
 
-  fileSystems."/" = {
+  fileSystems."/persistent" = {
     device = "/dev/disk/by-uuid/8cdbf627-cdfc-4137-b3fe-0c038ecf9045";
     fsType = "ext4";
   };

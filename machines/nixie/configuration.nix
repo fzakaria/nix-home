@@ -61,6 +61,23 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  environment.persistence."/persistent" = {
+    hideMounts = true;
+    directories = [
+      "/home"
+      "/tmp"
+      "/var/tmp"
+      "/var/lib/systemd"
+      "/etc/nixos"
+      "/var/lib/nixos"
+    ];
+    files = [
+      "/etc/adjtime"
+      "/etc/machine-id"
+      "/etc/passwd"
+    ];
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
