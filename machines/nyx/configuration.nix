@@ -13,7 +13,6 @@
     ../../users
     ../../modules/nix-index.nix
     ../../modules/zsh.nix
-    ../../modules/autojump.nix
     ../../modules/fonts.nix
     ../../modules/fzf.nix
   ];

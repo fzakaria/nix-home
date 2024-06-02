@@ -40,7 +40,9 @@
       plugins = [];
     };
 
-    initExtraFirst = builtins.readFile ./zshrc;
+    initExtraFirst = ''
+      fpath=( ${pkgs.autojump}/share/zsh/site-functions $fpath)
+    '' + builtins.readFile ./zshrc;
 
     shellAliases = {
       "cat" = "bat --style=plain";

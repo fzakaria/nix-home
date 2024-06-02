@@ -28,6 +28,13 @@
   # TODO(fzakaria): Eventually we want to make this declarative
   # users.mutableUsers = false;
 
+  # enable Zsh for users that use it
+  # so that home-manager zsh can get completion
+  environment.pathsToLink = ["/share/zsh"];
+  programs.zsh = {
+    enable = true;
+  };
+
   users.extraUsers.fmzakari = {
     # This automatically sets group to users, createHome to true,
     # home to /home/username, useDefaultShell to true, and isSystemUser to false
