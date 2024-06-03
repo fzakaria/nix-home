@@ -29,25 +29,27 @@
   # users.mutableUsers = false;
 
   # enable Zsh for users that use it
-  # so that home-manager zsh can get completion
-  environment.pathsToLink = ["/share/zsh"];
-  programs.zsh = {
-    enable = true;
+  # so that home-manager shells can get completion
+  environment.pathsToLink = ["/share/zsh" "/share/fish"];
+  programs = {
+    zsh.enable = true;
+    fish.enable = true;
   };
 
   users.extraUsers.fmzakari = {
     # This automatically sets group to users, createHome to true,
     # home to /home/username, useDefaultShell to true, and isSystemUser to false
     isNormalUser = true;
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     extraGroups = ["wheel" "networkmanager"];
     description = "Farid Zakaria";
   };
 
   home-manager.users.fmzakari = import ../users/fmzakari;
 
+  # only ask for password every 1h
   security.sudo.extraConfig = ''
-    Defaults timestamp_timeout=60 # only ask for password every 1h
+    Defaults timestamp_timeout=60
   '';
 
   users.extraUsers.mrw = {

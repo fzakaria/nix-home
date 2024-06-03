@@ -8,7 +8,7 @@
 }: {
   imports = [
     ./git.nix
-    ./zsh
+    ./fish.nix
     inputs.h.homeModules.default
   ];
 
@@ -72,14 +72,15 @@
     # A formatter for Nix code
     # https://github.com/kamadorueda/alejandra
     alejandra
+    # A command-line fuzzy finder
+    # https://github.com/junegunn/fzf
+    fzf
 
     niv
 
     buildifier
 
     just
-
-    arcanist
   ];
 
   programs = {
@@ -97,17 +98,6 @@
     autojump = {
       enable = true;
     };
-    # A command-line fuzzy finder
-    # https://github.com/junegunn/fzf
-    fzf = {
-      enable = true;
-      changeDirWidgetCommand = "fd --color always --hidden --follow --exclude .git --type d";
-      changeDirWidgetOptions = ["--ansi --preview 'exa --color always --tree {} | head -500'"];
-      fileWidgetCommand = "fd --color always --type f --hidden --follow --exclude .git";
-      fileWidgetOptions = [
-        "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
-      ];
-    };
 
     bat = {
       enable = true;
@@ -119,7 +109,7 @@
     # https://github.com/eza-community/eza
     eza = {
       enable = true;
-      icons = true;
+      icons = false;
       git = true;
       # TODO(fzakaria): Removed in newer home-manager
       enableAliases = true;

@@ -12,9 +12,7 @@
     ../../modules/nix.nix
     ../../users
     ../../modules/nix-index.nix
-    ../../modules/zsh.nix
     ../../modules/fonts.nix
-    ../../modules/fzf.nix
   ];
 
   # Use the systemd-boot EFI boot loader
