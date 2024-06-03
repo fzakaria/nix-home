@@ -75,6 +75,18 @@
     # A command-line fuzzy finder
     # https://github.com/junegunn/fzf
     fzf
+    # TUI: Interactively browse dependency graphs of Nix derivations
+    # https://github.com/utdemir/nix-tree
+    nix-tree
+    # Get additional information while building.
+    # https://github.com/maralorn/nix-output-monitor
+    nix-output-monitor
+    # Add readelf and other common utilities
+    binutils
+    # Add patchelf
+    patchelf
+    # Add gnumake
+    gnumake
 
     niv
 

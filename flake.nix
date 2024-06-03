@@ -83,25 +83,14 @@
     # Uncomment when we want to support individual home-manager
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager switch --flake .#your-username'
+    # You can test a build via 'nix build .#homeConfigurations.your-username.activationPackage'
     homeConfigurations = {
       "fzakaria" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           # > Our main home-manager configuration file <
-          ./users/fmzakari
-          (
-            {
-              config,
-              pkgs,
-              lib,
-              ...
-            }: {
-              home.username = lib.mkForce "fzakaria";
-              home.homeDirectory = lib.mkForce "/Users/fzakaria";
-              programs.git.userEmail = lib.mkForce "fzakaria@confluent.io";
-            }
-          )
+          ./users/fzakaria
         ];
       };
     };
