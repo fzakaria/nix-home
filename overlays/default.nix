@@ -7,6 +7,7 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
+
     # We want to use the yubikey-agent so disable gnome's ssh-agent
     gnome = prev.gnome.overrideScope (gfinal: gprev: {
       gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {

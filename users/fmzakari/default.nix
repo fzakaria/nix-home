@@ -9,6 +9,7 @@
   imports = [
     ./git.nix
     ./fish.nix
+    ../../modules/nixpkgs.nix
     inputs.h.homeModules.default
   ];
 
@@ -107,6 +108,9 @@
     };
     # A cd command that learns - easily navigate directories from the command line
     # https://github.com/wting/autojump
+    # TODO(fzakaria): Completion does not seem to work.
+    # I include sourcing the zsh autocomplete fucntions but it produces double underscore
+    # https://github.com/wting/autojump/issues/692
     autojump = {
       enable = true;
     };
