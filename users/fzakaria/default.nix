@@ -14,8 +14,22 @@
     homeDirectory = lib.mkForce "/Users/fzakaria";
   };
 
+  home.packages = with pkgs; [
+  ];
+
   programs = {
-    zsh.enable = lib.mkForce true;
+    zsh = {
+      enable = lib.mkForce true;
+      initExtraFirst = ''
+        source ~/code/github.com/confluentinc/cc-dotfiles/caas.sh
+        #TODO(fzakaria): This should be from nixpkgs assume
+        alias assume="source /opt/homebrew/bin/assume"
+
+        export PYENV_ROOT="$HOME/.pyenv"
+        [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+        eval "$(pyenv init -)"
+      '';
+    };
 
     git.userEmail = lib.mkForce "fzakaria@confluent.io";
     # A command-line fuzzy finder
@@ -30,4 +44,6 @@
       ];
     };
   };
+
+  
 }
