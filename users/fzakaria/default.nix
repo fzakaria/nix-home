@@ -6,6 +6,7 @@
 }: {
   imports = [
     ../fmzakari
+    ../fmzakari/zsh
   ];
 
   home = {
@@ -14,7 +15,7 @@
   };
 
   programs = {
-    zsh.enable = true;
+    zsh.enable = lib.mkForce true;
 
     git.userEmail = lib.mkForce "fzakaria@confluent.io";
     # A command-line fuzzy finder
