@@ -60,7 +60,6 @@
     fwupd.enable = true;
     hardware.bolt.enable = true;
     yubikey-agent.enable = true;
-    zw.tailscale.enable = true;
   };
 
   programs = {
