@@ -58,7 +58,7 @@
       discord
       dmenu
       docker
-      emacs
+      emacs29
       firefox
       (haskellPackages.ghcWithPackages (hpkgs: [
         hpkgs.xmonad
