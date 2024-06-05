@@ -60,6 +60,9 @@
     shell = pkgs.bash;
     extraGroups = ["wheel" "networkmanager"];
     description = "Mark Williams";
+    openssh.authorizedKeys.keyFiles = [
+      ./mrw/keys
+    ];
     packages = with pkgs; [
       brightnessctl
       discord
