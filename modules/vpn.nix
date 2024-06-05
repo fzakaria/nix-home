@@ -1,18 +1,28 @@
 {
   config,
+  lib,
   pkgs,
   ...
-}: {
-  services.tailscale = {enable = true;};
+}:
+with lib;
+let
+  cfg = config.services.zw.tailscale;
+in {
+  # zw = [zakaria williams];
+  options.services.zw.tailscale = {
+    enable = mkEnableOption "ZW Tailscale";
 
-  networking.firewall.allowedUDPPorts = [41641];
+    allowedUDPPorts = mkOption {
+      type = types.listOf types.int;
+      default = [41641];
+      description = ''UDP ports your firewall has to allow
+      for Tailscale to work.'';
+    };
+  };
 
-  # Disable SSH access through the firewall
-  # Only way into the machine will be through
-  # This may cause a chicken & egg problem since you need to register a machine
-  # first using `tailscale up`
-  # Better to rely on EC2 SecurityGroups
-  # services.openssh.openFirewall = false;
-
-  environment.systemPackages = [pkgs.tailscale];
+  config = mkIf cfg.enable {
+    services.tailscale.enable = true;
+    networking.firewall.allowedUDPPorts = cfg.allowedUDPPorts;
+    environment.systemPackages = [pkgs.tailscale];
+  };
 }
