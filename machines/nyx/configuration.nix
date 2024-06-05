@@ -13,6 +13,7 @@
     ../../users
     ../../modules/nix-index.nix
     ../../modules/fonts.nix
+    ../../modules/vpn.nix
   ];
 
   # Use the systemd-boot EFI boot loader
@@ -56,6 +57,7 @@
     fwupd.enable = true;
     hardware.bolt.enable = true;
     yubikey-agent.enable = true;
+    zw.tailscale.enable = true;
   };
 
   programs = {
