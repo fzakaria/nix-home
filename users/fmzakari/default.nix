@@ -88,6 +88,9 @@
     patchelf
     # Add gnumake
     gnumake
+    # https://github.com/sharkdp/hyperfine
+    # CLI benchmarking tool
+    hyperfine
 
     niv
 
