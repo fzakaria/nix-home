@@ -9,7 +9,6 @@
   imports = [
     ./git.nix
     ./fish.nix
-    ../../modules/nixpkgs.nix
     inputs.h.homeModules.default
   ];
 

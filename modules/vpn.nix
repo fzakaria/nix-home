@@ -4,8 +4,7 @@
   pkgs,
   ...
 }:
-with lib;
-let
+with lib; let
   cfg = config.services.zw.tailscale;
 in {
   # zw = [zakaria williams];
@@ -15,8 +14,8 @@ in {
     allowedUDPPorts = mkOption {
       type = types.int;
       default = 41641;
-      description = ''UDP ports your firewall has to allow
-      for Tailscale to work.'';
+      description = ''        UDP ports your firewall has to allow
+              for Tailscale to work.'';
     };
   };
 
