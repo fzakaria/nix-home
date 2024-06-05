@@ -5,23 +5,26 @@
   ...
 }:
 with lib; let
-  cfg = config.services.zw.tailscale;
+  cfg = config.vpn;
 in {
-  # zw = [zakaria williams];
-  options.services.zw.tailscale = {
-    enable = mkEnableOption "ZW Tailscale";
+  options.vpn = {
+    # zw = [zakaria williams];
+    enable = mkEnableOption "ZW Tailscale VPN";
 
-    allowedUDPPorts = mkOption {
+    udpPort = mkOption {
       type = types.int;
       default = 41641;
-      description = ''        UDP ports your firewall has to allow
-              for Tailscale to work.'';
+      description = ''
+        The UDP port tailscale is using.
+      '';
     };
+
+    package = mkPackageOption pkgs "tailscale" {};
   };
 
   config = mkIf cfg.enable {
     services.tailscale.enable = true;
-    networking.firewall.allowedUDPPorts = [cfg.allowedUDPPorts];
-    environment.systemPackages = [pkgs.tailscale];
+    networking.firewall.allowedUDPPorts = [cfg.udpPort];
+    environment.systemPackages = [cfg.package];
   };
 }

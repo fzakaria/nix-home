@@ -112,7 +112,7 @@
     }
   ];
 
-  services.zw.tailscale.enable = true;
+  services.vpn.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

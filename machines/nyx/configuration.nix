@@ -38,6 +38,8 @@
   ];
 
   services = {
+    # Enable the tailscale VPN
+    vpn.enable = true;
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
