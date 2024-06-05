@@ -7,7 +7,7 @@
 with lib; let
   cfg = config.vpn;
 in {
-  options.vpn = {
+  options.services.vpn = {
     # zw = [zakaria williams];
     enable = mkEnableOption "ZW Tailscale VPN";
 
