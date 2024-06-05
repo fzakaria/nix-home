@@ -17,10 +17,6 @@
     # This is necessary if, for example, you wish to use nixos-rebuild build-vm
     useUserPackages = true;
 
-    # By default, Home Manager uses a private pkgs instance that is configured via the home-manager.users.<name>.nixpkgs options.
-    # To instead use the global pkgs that is configured via the system level nixpkgs options, set
-    useGlobalPkgs = true;
-
     # make inputs and outputs available to home-manager
     extraSpecialArgs = {inherit inputs outputs;};
   };
