@@ -43,6 +43,10 @@
     shell = pkgs.fish;
     extraGroups = ["wheel" "networkmanager"];
     description = "Farid Zakaria";
+    openssh.authorizedKeys.keyFiles = [
+      import
+      ./users/fmzakari/keys
+    ];
   };
 
   home-manager.users.fmzakari = import ../users/fmzakari;

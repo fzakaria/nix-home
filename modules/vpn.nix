@@ -5,7 +5,7 @@
   ...
 }:
 with lib; let
-  cfg = config.vpn;
+  cfg = config.services.vpn;
 in {
   options.services.vpn = {
     # zw = [zakaria williams];
