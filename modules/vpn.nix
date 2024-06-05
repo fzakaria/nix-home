@@ -13,8 +13,8 @@ in {
     enable = mkEnableOption "ZW Tailscale";
 
     allowedUDPPorts = mkOption {
-      type = types.listOf types.int;
-      default = [41641];
+      type = types.int;
+      default = 41641;
       description = ''UDP ports your firewall has to allow
       for Tailscale to work.'';
     };
@@ -22,7 +22,7 @@ in {
 
   config = mkIf cfg.enable {
     services.tailscale.enable = true;
-    networking.firewall.allowedUDPPorts = cfg.allowedUDPPorts;
+    networking.firewall.allowedUDPPorts = [cfg.allowedUDPPorts];
     environment.systemPackages = [pkgs.tailscale];
   };
 }
