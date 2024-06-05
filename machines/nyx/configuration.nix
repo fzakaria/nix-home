@@ -60,6 +60,16 @@
     fwupd.enable = true;
     hardware.bolt.enable = true;
     yubikey-agent.enable = true;
+    openssh = {
+      enable = true;
+      startWhenNeeded = true;
+      banner = ''
+        Welcome to my Framework AMD laptop. Happy hacking!
+      '';
+      settings = {
+        PasswordAuthentication = false;
+      };
+    };
   };
 
   programs = {
