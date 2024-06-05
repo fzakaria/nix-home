@@ -99,6 +99,7 @@
     htop
     amdgpu_top
     signal-desktop
+    linuxPackages_latest.perf
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

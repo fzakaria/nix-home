@@ -13,7 +13,7 @@
     gc = {
       automatic = true;
       options = "--delete-older-than 14d";
-      dates = "daily";
+      dates = "weekly";
     };
 
     settings = {
