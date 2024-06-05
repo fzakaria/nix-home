@@ -15,6 +15,7 @@
     ../../modules/nix.nix
     ../../users
     ../../modules/nix-index.nix
+    ../../modules/vpn.nix
   ];
 
   # Bootloader.
@@ -109,6 +110,8 @@
       start = ''exec $HOME/.xsessionrc'';
     }
   ];
+
+  services.zw.tailscale.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
