@@ -71,6 +71,12 @@
     # These are usually stuff you would upstream into home-manager
     homeManagerModules = import ./modules/home-manager;
 
+    # By default, Home Manager uses a private pkgs instance that is configured via the home-manager.users.<name>.nixpkgs options.
+    # To instead use the global pkgs that is configured via the system level nixpkgs options, set
+    home-manager.useGlobalPkgs = true;
+    # useGlobalPkgs in the flake so that it's evaluated before the
+    # machine configurations below, which reference nixpkgs.
+
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild switch --flake .#your-hostname'
     # You can also build them individually using
