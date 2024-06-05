@@ -44,8 +44,7 @@
     extraGroups = ["wheel" "networkmanager"];
     description = "Farid Zakaria";
     openssh.authorizedKeys.keyFiles = [
-      import
-      ./users/fmzakari/keys
+      ./fmzakari/keys
     ];
   };
 
