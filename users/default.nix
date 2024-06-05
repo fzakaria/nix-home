@@ -65,8 +65,8 @@
       emacs
       firefox
       (haskellPackages.ghcWithPackages (hpkgs: [
-             hpkgs.xmonad
-             hpkgs.xmonad-contrib
+        hpkgs.xmonad
+        hpkgs.xmonad-contrib
       ]))
       killall
       xcalib

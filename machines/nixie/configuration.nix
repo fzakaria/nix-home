@@ -50,7 +50,7 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Configure keymap in X11
   services.xserver = {
@@ -84,7 +84,7 @@
 
   hardware.pulseaudio.enable = true;
   services.xserver.enable = true;
-  services.xserver.videoDrivers = [ "amdgpu" ];
+  services.xserver.videoDrivers = ["amdgpu"];
   services.fwupd.enable = true;
   programs.ssh.startAgent = true;
   programs.zsh.enable = true;
