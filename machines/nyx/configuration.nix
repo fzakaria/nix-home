@@ -14,7 +14,8 @@
     ../../users
     ../../modules/nix-index.nix
     ../../modules/fonts.nix
-    ../../modules/vpn.nix
+    outputs.nixosModules.vpn
+    outputs.nixosModules.fprint-laptop-lid
   ];
 
   # Use the systemd-boot EFI boot loader
@@ -38,6 +39,8 @@
   ];
 
   services = {
+    # Enable turning off fingerprint reader when laptop lid is closd
+    fprint-laptop-lid.enable = true;
     # Enable the tailscale VPN
     vpn.enable = true;
     # Enable the X11 windowing system.
