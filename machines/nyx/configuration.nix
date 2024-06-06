@@ -40,7 +40,7 @@
 
   services = {
     # Enable turning off fingerprint reader when laptop lid is closd
-    fprint-laptop-lid.enable = true;
+    disable-fingerprint-reader-on-laptop-lid.enable = true;
     # Enable the tailscale VPN
     vpn.enable = true;
     # Enable the X11 windowing system.
@@ -105,6 +105,7 @@
     signal-desktop
     linuxPackages_latest.perf
     bc
+    gdb
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
