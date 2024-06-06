@@ -85,16 +85,24 @@
     # Available through 'home-manager switch --flake .#your-username'
     # You can test a build via 'nix build .#homeConfigurations.your-username.activationPackage'
     homeConfigurations = {
-        "fmzakari@alakwan" = home-manager.lib.homeManagerConfiguration {
+      "fmzakari@alakwan" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
           ./users/fmzakari
           # > Our main home-manager configuration file <
           ./modules/nixpkgs.nix
+          (
+            {lib, ...}: {
+              home = {
+                username = lib.mkForce "fzakaria";
+                homeDirectory = lib.mkForce "/Users/fzakaria";
+              };
+            }
+          )
         ];
       };
-      "fzakaria" = home-manager.lib.homeManagerConfiguration {
+      "fzakaria@confluent.io" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
