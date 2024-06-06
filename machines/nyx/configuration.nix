@@ -100,9 +100,11 @@
     eza
     gnome.gnome-tweaks
     htop
+    btop
     amdgpu_top
     signal-desktop
     linuxPackages_latest.perf
+    bc
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
