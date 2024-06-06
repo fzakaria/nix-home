@@ -89,6 +89,7 @@
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [
+          ./users/fmzakari
           # > Our main home-manager configuration file <
           ./modules/nixpkgs.nix
         ];
