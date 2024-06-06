@@ -96,7 +96,7 @@
             {lib, ...}: {
               home = {
                 username = lib.mkForce "fzakaria";
-                homeDirectory = lib.mkForce "/Users/fzakaria";
+                homeDirectory = lib.mkForce "/home/fzakaria";
               };
             }
           )
