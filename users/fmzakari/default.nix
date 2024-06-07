@@ -90,7 +90,8 @@
     # https://github.com/sharkdp/hyperfine
     # CLI benchmarking tool
     hyperfine
-
+    # get copy and paste working for X11
+    xclip
     niv
 
     buildifier
@@ -103,13 +104,14 @@
     home-manager = {
       enable = true;
     };
-    
+
     zellij = {
       enable = true;
       enableFishIntegration = true;
       enableZshIntegration = true;
       settings = {
         theme = "dracula";
+        copy_command = "xclip -selection clipboard";
       };
     };
 
