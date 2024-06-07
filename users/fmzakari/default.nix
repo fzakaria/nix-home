@@ -103,6 +103,15 @@
     home-manager = {
       enable = true;
     };
+
+    zellij = {
+      enableFishIntegration = true;
+      enableZshIntegration = true;
+      settings = {
+        theme = "dracula";
+      };
+    };
+
     # https://github.com/zimbatm/h
     # Faster code checkout
     h = {
