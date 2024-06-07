@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: {
   programs.fish = {
@@ -10,6 +11,18 @@
     };
 
     functions = {
+      # TODO(fzakaria): This can be removed when https://github.com/zimbatm/h/pull/12 is landed
+      h = {
+        body = ''
+          set _h_dir $(${pkgs.h}/bin/h --resolve $(path resolve ${config.programs.h.codeRoot}) $argv)
+          set _h_ret $status
+          if test "$_h_dir" != "$PWD"
+            cd "$_h_dir"
+          end
+          return $_h_ret
+        '';
+        wraps = "h";
+      };
       # disable welcome message
       fish_greeting = "";
       nix-closure-size = {
