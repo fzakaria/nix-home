@@ -107,8 +107,10 @@
 
     zellij = {
       enable = true;
-      enableFishIntegration = true;
-      enableZshIntegration = true;
+      # Turns out starting Zellij on creation is kind of annoying
+      # disable it.
+      enableFishIntegration = false;
+      enableZshIntegration = false;
       settings = {
         theme = "dracula";
         copy_command = "xclip -selection clipboard";
