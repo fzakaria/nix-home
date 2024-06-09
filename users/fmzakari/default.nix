@@ -97,6 +97,9 @@
     buildifier
 
     just
+
+    # Git client
+    sublime-merge
   ];
 
   programs = {
