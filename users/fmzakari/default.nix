@@ -100,6 +100,8 @@
 
     # Git client
     sublime-merge
+    # Add compiler tools
+    gcc
   ];
 
   programs = {
