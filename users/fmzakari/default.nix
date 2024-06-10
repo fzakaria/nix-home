@@ -82,7 +82,8 @@
     # https://github.com/maralorn/nix-output-monitor
     nix-output-monitor
     # Add readelf and other common utilities
-    binutils
+    # Add higher priority because it has some collisions with GCC on Darwin
+    (lib.hiPrio binutils)
     # Add patchelf
     patchelf
     # Add gnumake
@@ -97,9 +98,6 @@
     buildifier
 
     just
-
-    # Git client
-    sublime-merge
     # Add compiler tools
     gcc
   ];
