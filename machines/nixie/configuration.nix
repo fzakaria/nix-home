@@ -15,8 +15,7 @@
     ../../modules/nix.nix
     ../../modules/nixpkgs.nix
     ../../users
-    ../../modules/nix-index.nix
-    ../../modules/vpn.nix
+    outputs.nixosModules.vpn
   ];
 
   # Bootloader.

@@ -12,8 +12,6 @@
     ../../modules/nix.nix
     ../../modules/nixpkgs.nix
     ../../users
-    ../../modules/nix-index.nix
-    ../../modules/fonts.nix
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
   ];

@@ -10,6 +10,7 @@
     ./git.nix
     ./fish.nix
     inputs.h.homeModules.default
+    inputs.nix-index-database.hmModules.nix-index
   ];
 
   home = {
@@ -166,5 +167,9 @@
       controlMaster = "auto";
       controlPersist = "60m";
     };
+
+    # nix-index provides it's own command-not-found functionality
+    nix-index.enable = true;
+    nix-index-database.comma.enable = true;
   };
 }
