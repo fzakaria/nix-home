@@ -54,6 +54,14 @@
         # this is the safest option. if you want to merge do so explicitly.
         ff = "only";
       };
+      merge = {
+        tool = "smerge";
+      };
+      mergetool = {
+        smerge.cmd = "smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"";
+        keepBackup = false;
+        trustExitCode = true;
+      };
     };
   };
 }
