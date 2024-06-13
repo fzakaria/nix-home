@@ -148,8 +148,7 @@
       enable = true;
       icons = false;
       git = true;
-      # TODO(fzakaria): Removed in newer home-manager
-      enableAliases = true;
+      enableFishIntegration = true;
     };
 
     direnv = {

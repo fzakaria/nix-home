@@ -54,9 +54,9 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Configure keymap in X11
-  services.xserver = {
+  services.xserver.xkb = {
     layout = "us";
-    xkbVariant = "";
+    variant = "";
   };
 
   # Allow unfree packages
@@ -95,9 +95,13 @@
 
   # Use libinput to disable tap-to-click and move emulated buttons to
   # the bottom of the trackpad.
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.touchpad.tapping = false;
-  services.xserver.libinput.touchpad.clickMethod = "clickfinger";
+  services.libinput = {
+    enable = true;
+    touchpad = {
+      tapping = false;
+      clickMethod = "clickfinger";
+    };
+  };
 
   services.xserver.displayManager.lightdm.enable = true;
   # Emulate an old-fashioned session
