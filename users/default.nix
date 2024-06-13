@@ -65,24 +65,30 @@
     ];
     packages = with pkgs; [
       brightnessctl
+      comma
       discord
       dmenu
       docker
       emacs29
       firefox
+      flameshot
       (haskellPackages.ghcWithPackages (hpkgs: [
         hpkgs.xmonad
         hpkgs.xmonad-contrib
       ]))
       killall
-      xcalib
+      man-pages
       pass
       pavucontrol
       polybarFull
       python3
       rxvt-unicode
+      rustup
       signal-desktop
       virtualenv
+      wmctrl
+      vscode
+      xcalib
     ];
   };
 }
