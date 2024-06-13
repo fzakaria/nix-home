@@ -59,7 +59,9 @@
       };
     };
     fwupd.enable = true;
-    hardware.bolt.enable = true;
+    hardware = {
+      bolt.enable = true;
+    };
     yubikey-agent.enable = true;
     openssh = {
       enable = true;

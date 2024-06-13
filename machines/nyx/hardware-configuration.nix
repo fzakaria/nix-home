@@ -34,6 +34,11 @@
     opengl.enable = true;
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
+    bluetooth = {
+      enable = true;
+      powerOnBoot = true;
+    };
+    pulseaudio.enable = true;
   };
 
   fileSystems = {
