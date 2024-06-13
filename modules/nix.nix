@@ -14,6 +14,7 @@
       automatic = true;
       options = "--delete-older-than 3d";
       dates = "weekly";
+      persistent = true;
     };
 
     settings = {
