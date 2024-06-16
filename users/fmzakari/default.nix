@@ -166,6 +166,13 @@
       serverAliveInterval = 0;
       controlMaster = "auto";
       controlPersist = "60m";
+      
+      matchBlocks = {
+        "alakwan" = {
+          hostname = "alakwan.tail9f4b5.ts.net";
+          user = "fzakaria";
+        };
+      };
     };
 
     # nix-index provides it's own command-not-found functionality
