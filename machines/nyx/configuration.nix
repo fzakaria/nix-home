@@ -123,7 +123,6 @@
     niv
     ripgrep
     bat
-    warp-terminal
     fd
     eza
     gnome.gnome-tweaks
@@ -135,6 +134,8 @@
     bc
     gdb
     sublime-merge
+    python3
+    sqlite-interactive
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
