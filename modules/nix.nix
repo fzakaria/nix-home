@@ -19,7 +19,10 @@
 
     settings = {
       experimental-features = ["nix-command" "flakes"];
-
+      trusted-users = [
+        "fmzakari"
+        "mrw"
+      ];
       substituters = [
         "http://fzakaria.cachix.org"
         "https://nix-community.cachix.org"

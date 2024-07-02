@@ -75,6 +75,12 @@
     };
   };
 
+  virtualisation = {
+    docker = {
+      enable = true;
+    };
+  };
+
   security = {
     # This is to fix GDM prompting for fingerprint right away.
     # TODO(fzakaria): understand it.
