@@ -50,6 +50,9 @@
         whitespace = "-trailing-space";
         editor = "vim";
       };
+      init = {
+        defaultBranch = "main";
+      };
       pull = {
         # this is the safest option. if you want to merge do so explicitly.
         ff = "only";

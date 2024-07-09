@@ -1,7 +1,6 @@
 # Place common home-manager setup here
 {
   inputs,
-  config,
   pkgs,
   lib,
   ...
@@ -17,6 +16,13 @@
     username = "fmzakari";
     homeDirectory = "/home/fmzakari";
   };
+
+  # nix-shell uses config.nix file, ideally we should keep it in sync
+  # with config.nixpkgs.config but accessing osConfig from home-manager won't
+  # work nicely on non-NixOS systems
+  xdg.configFile."nixpkgs/config.nix".text = ''
+    { allowUnfree = true; }
+  '';
 
   # List of additional package outputs of the packages home.packages
   # that should be installed into the user environment.
