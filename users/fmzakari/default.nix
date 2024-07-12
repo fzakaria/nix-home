@@ -107,6 +107,12 @@
     just
     # Add compiler tools
     gcc
+    # encryption tool
+    # https://github.com/FiloSottile/age
+    age
+    # Use age with yubikey
+    # https://github.com/str4d/age-plugin-yubikey
+    age-plugin-yubikey
   ];
 
   programs = {
@@ -172,7 +178,7 @@
       serverAliveInterval = 0;
       controlMaster = "auto";
       controlPersist = "60m";
-      
+
       matchBlocks = {
         "alakwan" = {
           hostname = "alakwan.tail9f4b5.ts.net";
