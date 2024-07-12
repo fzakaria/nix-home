@@ -30,11 +30,12 @@
       substituters = [
         "http://fzakaria.cachix.org"
         "https://nix-community.cachix.org"
-        "https://cache.nixos.org/"
+        "ssh://eu.nixbuild.net"
       ];
       trusted-public-keys = [
         "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+        "nixbuild.net/CTXWZJ-1:3DyqleLsr3uIu6A6FvOZxMacNpvMkQWFIg3fTJjsi2g="
       ];
     };
   };

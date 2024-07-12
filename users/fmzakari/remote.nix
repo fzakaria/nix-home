@@ -1,7 +1,13 @@
 {config, ...}: {
   programs.ssh = {
     # Community builder for Linux
-    knownHosts."build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
+    knownHosts = {
+      "build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
+      nixbuild = {
+        hostNames = [ "eu.nixbuild.net" ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+      };
+    };
 
     # nix remote builders don't work with Yubikey and on NixOS the builder runs as root
     # so what we do is tell it the user to login as but give it the identity agent to connect
@@ -9,6 +15,12 @@
     extraConfig = ''
       Host build-box.nix-community.org
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IPQoS throughput
+        IdentityFile ${config.age.secrets."nixbuild.key".path}
     '';
   };
 
@@ -31,6 +43,11 @@
     settings.builders-use-substitutes = true;
 
     buildMachines = [
+      { hostName = "eu.nixbuild.net";
+        systems = ["x86_64-linux"];
+        maxJobs = 100;
+        supportedFeatures = [ "benchmark" "big-parallel" ];
+      }
       {
         protocol = "ssh-ng";
         hostName = "build-box.nix-community.org";
