@@ -4,7 +4,7 @@
     knownHosts = {
       "build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
       nixbuild = {
-        hostNames = [ "eu.nixbuild.net" ];
+        hostNames = ["eu.nixbuild.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
       };
     };
@@ -43,10 +43,11 @@
     settings.builders-use-substitutes = true;
 
     buildMachines = [
-      { hostName = "eu.nixbuild.net";
+      {
+        hostName = "eu.nixbuild.net";
         systems = ["x86_64-linux"];
         maxJobs = 100;
-        supportedFeatures = [ "benchmark" "big-parallel" ];
+        supportedFeatures = ["benchmark" "big-parallel"];
       }
       {
         protocol = "ssh-ng";
