@@ -10,8 +10,10 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/nix.nix
+    ../../users/fmzakari/remote.nix
     ../../modules/nixpkgs.nix
     ../../users
+    inputs.agenix.nixosModules.default
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
   ];
@@ -142,6 +144,7 @@
     sublime-merge
     python3
     sqlite-interactive
+    inputs.agenix.packages.x86_64-linux.default
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

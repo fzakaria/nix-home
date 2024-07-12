@@ -25,6 +25,10 @@
     # h
     h.url = "github:zimbatm/h/master";
     h.inputs.nixpkgs.follows = "nixpkgs";
+
+    # agenix
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -32,6 +36,7 @@
     nixpkgs,
     home-manager,
     nixos-hardware,
+    agenix,
     ...
   } @ inputs: let
     inherit (self) outputs;
