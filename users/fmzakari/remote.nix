@@ -3,6 +3,10 @@
     # Community builder for Linux
     knownHosts = {
       "build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
+      alakwan = {
+        hostNames = ["alakwan.tail9f4b5.ts.net"];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaKbJEmMQmSCYMngka0Z8b+hNw12u1ad7xb4AXBRq0C";
+      };
       nixbuild = {
         hostNames = ["eu.nixbuild.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
@@ -14,6 +18,9 @@
     # to for my (fmzakari) user. A bit of a hack but....not sure a better alternative.
     extraConfig = ''
       Host build-box.nix-community.org
+        IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host alakwan.tail9f4b5.ts.net
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host eu.nixbuild.net
@@ -44,6 +51,14 @@
 
     buildMachines = [
       {
+        protocol = "ssh-ng";
+        hostName = "alakwan.tail9f4b5.ts.net";
+        systems = ["x86_64-linux"];
+        maxJobs = 192;
+        supportedFeatures = ["benchmark" "big-parallel"];
+        sshUser = "fzakaria";
+      }
+      {
         hostName = "eu.nixbuild.net";
         systems = ["x86_64-linux"];
         maxJobs = 100;
@@ -63,5 +78,16 @@
         sshUser = "fmzakari";
       }
     ];
+
+    settings = {
+      substituters = [
+        "ssh://fzakaria@alakwan.tail9f4b5.ts.net"
+        "ssh://eu.nixbuild.net"
+      ];
+      trusted-public-keys = [
+        "alakwan:GhRcMcFDJwOfHPLHZR7oze7n4ty2AuOnoWaZP6n0okM="
+        "nixbuild.net/CTXWZJ-1:3DyqleLsr3uIu6A6FvOZxMacNpvMkQWFIg3fTJjsi2g="
+      ];
+    };
   };
 }
