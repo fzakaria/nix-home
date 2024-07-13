@@ -23,7 +23,7 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     # h
-    h.url = "github:zimbatm/h/master";
+    h.url = "github:zimbatm/h/main";
     h.inputs.nixpkgs.follows = "nixpkgs";
 
     # agenix
