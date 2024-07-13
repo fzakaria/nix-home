@@ -1,4 +1,4 @@
-{config, lib, ...}: {
+{config, ...}: {
   programs.ssh = {
     # Community builder for Linux
     knownHosts = {
@@ -79,15 +79,18 @@
       }
     ];
 
-    settings = {
-      substituters = lib.mkAfter [
-        "ssh://fzakaria@alakwan.tail9f4b5.ts.net"
-        "ssh://eu.nixbuild.net"
-      ];
-      trusted-public-keys = lib.mkAfter [
-        "alakwan:GhRcMcFDJwOfHPLHZR7oze7n4ty2AuOnoWaZP6n0okM="
-        "nixbuild.net/CTXWZJ-1:3DyqleLsr3uIu6A6FvOZxMacNpvMkQWFIg3fTJjsi2g="
-      ];
-    };
+    # TODO(fzakaria): Can't set priority for SSH substitutes
+    # which means they get picked always before NixOS public cache.
+    # https://github.com/NixOS/nix/issues/5166
+    # settings = {
+    #   substituters = [
+    #     "ssh://fzakaria@alakwan.tail9f4b5.ts.net"
+    #     "ssh://eu.nixbuild.net"
+    #   ];
+    #   trusted-public-keys = [
+    #     "alakwan:GhRcMcFDJwOfHPLHZR7oze7n4ty2AuOnoWaZP6n0okM="
+    #     "nixbuild.net/CTXWZJ-1:3DyqleLsr3uIu6A6FvOZxMacNpvMkQWFIg3fTJjsi2g="
+    #   ];
+    # };
   };
 }
