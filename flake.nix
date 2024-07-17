@@ -29,6 +29,10 @@
     # agenix
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
+
+    # vscode-extensions
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -37,6 +41,7 @@
     home-manager,
     nixos-hardware,
     agenix,
+    nix-vscode-extensions,
     ...
   } @ inputs: let
     inherit (self) outputs;

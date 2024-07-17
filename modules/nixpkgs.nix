@@ -1,4 +1,5 @@
 {
+  inputs,
   outputs,
   config,
   ...
@@ -10,6 +11,7 @@
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
+      inputs.nix-vscode-extensions.overlays.default
     ];
     config = {
       # Allow non open source software

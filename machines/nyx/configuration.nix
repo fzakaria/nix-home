@@ -118,9 +118,9 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    vscode
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    vscode
     git
     google-chrome
     firefox
@@ -145,6 +145,9 @@
     python3
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default
+    jetbrains.clion
+    file
+    element-desktop
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

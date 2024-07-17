@@ -8,6 +8,7 @@
   imports = [
     ./git.nix
     ./fish.nix
+    ./vscode.nix
     inputs.h.homeModules.default
     inputs.nix-index-database.hmModules.nix-index
   ];
@@ -113,6 +114,8 @@
     # Use age with yubikey
     # https://github.com/str4d/age-plugin-yubikey
     age-plugin-yubikey
+    # clangd and other tools
+    clang-tools
   ];
 
   programs = {

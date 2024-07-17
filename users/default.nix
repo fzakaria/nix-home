@@ -30,7 +30,7 @@
 
   # enable Zsh for users that use it
   # so that home-manager shells can get completion
-  environment.pathsToLink = ["/share/zsh" "/share/fish"];
+  environment.pathsToLink = ["/share/zsh" "/share/fish" "/share/bash"];
   programs = {
     zsh.enable = true;
     fish.enable = true;
@@ -40,7 +40,10 @@
     # This automatically sets group to users, createHome to true,
     # home to /home/username, useDefaultShell to true, and isSystemUser to false
     isNormalUser = true;
-    shell = pkgs.fish;
+    # I actually want to use fish but I have gotten bitten too many times at this
+    # point with fish incompatibilities since many things default to SHELL
+    # Let's have our login shell be bash and just manually enter fish :(
+    shell = pkgs.bash;
     extraGroups = ["wheel" "networkmanager"];
     description = "Farid Zakaria";
     openssh.authorizedKeys.keyFiles = [
