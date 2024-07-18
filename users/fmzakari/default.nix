@@ -193,5 +193,17 @@
     # nix-index provides it's own command-not-found functionality
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
+
+    bash = {
+      enable = true;
+      initExtra = ''
+        # I have had so much trouble running fish as my login shell
+        # instead run bash as my default login shell but just exec into it.
+        # Check if the shell is interactive.
+        if [[ $- == *i* && -z "$NO_FISH_BASH" ]]; then
+          exec ${pkgs.fish}/bin/fish
+        fi
+      '';
+    };
   };
 }

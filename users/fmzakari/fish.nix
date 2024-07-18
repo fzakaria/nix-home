@@ -11,6 +11,15 @@
     };
 
     functions = {
+      # to avoid going into a loop from bash -> fish -> bash
+      # set the environment variable which stops that.
+      bash = {
+        body = ''
+          NO_FISH_BASH="1" command bash $argv
+        '';
+        wraps = "bash";
+      };
+
       # disable welcome message
       fish_greeting = "fish_prompt";
       nix-closure-size = {
