@@ -21,7 +21,7 @@
     historySubstringSearch = {
       enable = true;
     };
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     sessionVariables = {
     };
 

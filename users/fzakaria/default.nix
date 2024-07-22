@@ -18,6 +18,14 @@
   ];
 
   programs = {
+
+    # FIXME: vscode extensions used don't support aarch64-darwin
+    # disable it for now.
+    vscode.enable = lib.mkForce false;
+    # On MacOS we only use Zsh.
+    # Bash is used on other configurations to play nice with fish shell.
+    bash.enable = lib.mkForce false;
+
     zsh = {
       enable = lib.mkForce true;
       initExtraFirst = ''
