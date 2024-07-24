@@ -52,6 +52,13 @@ in {
         ms-vscode.cpptools-themes
         ms-vscode.cmake-tools
         llvm-vs-code-extensions.vscode-clangd
+        # python
+        ms-python.python
+        ms-python.vscode-pylance
+        ms-python.debugpy
+        ms-python.mypy-type-checker
+        ms-python.isort
+        ms-python.black-formatter
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
