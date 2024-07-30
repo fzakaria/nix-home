@@ -4,7 +4,7 @@
   # List your module files here
   # my-module = import ./my-module.nix;
 
-  fprint-laptop-lid = import ./fprint-laptop-lid.nix;
+  fprint-laptop-lid = ./fprint-laptop-lid.nix;
 
-  vpn = import ./vpn.nix;
+  vpn = ./vpn.nix;
 }
