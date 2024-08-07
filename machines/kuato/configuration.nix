@@ -58,13 +58,8 @@
   };
 
   networking = {
-    networkmanager.enable = false;
+    networkmanager.enable = true;
     hostName = "kuato";
-    wireless = {
-      enable = true;
-      networks."Moose's Castle".psk = "blah";
-      interfaces = ["wlan0"];
-    };
   };
 
   # Set your time zone.
