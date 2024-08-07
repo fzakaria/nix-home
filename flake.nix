@@ -89,6 +89,9 @@
     nixosConfigurations = {
       nyx = machine "nyx";
       nixie = machine "nixie";
+      # As this is a raspberrypi, you might want to build the sdImage
+      # nix build '.#nixosConfigurations.kuato.config.system.build.sdImage'
+      kuato = machine "kuato";
     };
 
     # Uncomment when we want to support individual home-manager

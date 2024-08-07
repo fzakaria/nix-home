@@ -10,6 +10,8 @@
     # We want to use the yubikey-agent so disable gnome's ssh-agent
     gnome = prev.gnome.overrideScope (gfinal: gprev: {
       gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
+        enableParallelBuilding = true;
+
         configureFlags =
           oldAttrs.configureFlags
           or []
