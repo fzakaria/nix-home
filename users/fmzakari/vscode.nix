@@ -21,6 +21,18 @@
     "C_Cpp.intelliSenseEngine" = "disabled";
     "cmake.configureOnOpen" = false;
   };
+  nix = {
+    "nix.enableLanguageServer" = true;
+    "nix.serverPath" = "nixd";
+    "nix.formatterPath" = "alejandra";
+    "nix.serverSettings" = {
+      "nixd" = {
+        "formatting" = {
+          "command" = ["alejandra"];
+        };
+      };
+    };
+  };
   telemetry = {
     "redhat.telemetry.enabled" = false;
     "telemetry.telemetryLevel" = "off";
@@ -44,7 +56,7 @@ in {
       ])
       ++ (with pkgs.vscode-marketplace; [
         # nix extensions
-        bbenoist.nix
+        jnoortheen.nix-ide
         # general extensions
         christian-kohler.path-intellisense
         # c++ extensions
@@ -74,6 +86,7 @@ in {
       // editor
       // telemetry
       // window
+      // nix
       // cpp;
   };
 }

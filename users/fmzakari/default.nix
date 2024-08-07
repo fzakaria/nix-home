@@ -102,20 +102,18 @@
     # get copy and paste working for X11
     xclip
     niv
-
     buildifier
-
     just
     # Add compiler tools
     gcc
-    # encryption tool
-    # https://github.com/FiloSottile/age
-    age
     # Use age with yubikey
     # https://github.com/str4d/age-plugin-yubikey
     age-plugin-yubikey
     # clangd and other tools
     clang-tools
+    # Language Server for Nix
+    # https://github.com/nix-community/nixd
+    unstable.nixd
   ];
 
   programs = {
