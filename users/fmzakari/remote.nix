@@ -40,7 +40,11 @@
   };
 
   nix = {
-    distributedBuilds = true;
+    # TODO(fzakaria): None of these build machines are reliable enough
+    # or nixbuild is too far (Europe) to have this on all the time.
+    # Disable for now and figure out a better solution or how to turn it on
+    # individually.
+    distributedBuilds = false;
 
     # Nix will instruct remote build machines to use their own binary substitutes if available.
     # In practical terms, this means that remote hosts will fetch as many build dependencies as
