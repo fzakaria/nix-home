@@ -24,6 +24,8 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    # Let's emulate aarch64-linux so we can build our raspberry pi images
+    binfmt.emulatedSystems = ["aarch64-linux"];
   };
 
   networking = {

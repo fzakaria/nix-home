@@ -34,6 +34,10 @@
     # vscode-extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+
+    # tailscale
+    tailscale-golink.url = "github:tailscale/golink";
+    tailscale-golink.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -89,6 +93,11 @@
     nixosConfigurations = {
       nyx = machine "nyx";
       nixie = machine "nixie";
+      # As this is a raspberrypi, you might want to build the sdImage
+      # nix build '.#nixosConfigurations.kuato.config.system.build.sdImage'
+      # Alternatively, you can deploy it as follows:
+      # nixos-rebuild switch --flake .#kuato --target-host fmzakari@kuato --use-remote-sudo
+      kuato = machine "kuato";
     };
 
     # Uncomment when we want to support individual home-manager
