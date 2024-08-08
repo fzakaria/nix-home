@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   inputs,
   outputs,
@@ -16,6 +17,8 @@
     # Feedback from Matrix was to disable this and it's unecessary unless you are using
     # some esoteric hardware.
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
+    inputs.agenix.nixosModules.default
+    inputs.tailscale-golink.nixosModules.default
   ];
 
   # let's not build ZFS for the Raspberry Pi 4
@@ -70,6 +73,7 @@
     git
     libraspberrypi
     raspberrypi-eeprom
+    firefox
   ];
 
   services = {
@@ -85,6 +89,10 @@
         PasswordAuthentication = false;
       };
     };
+    golink = {
+      enable = true;
+      tailscaleAuthKeyFile = config.age.secrets."tailscale.key".path;
+    };
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
@@ -95,6 +103,9 @@
         # Enable the GNOME Desktop Environment
         gdm = {
           enable = true;
+
+          # wayland is still too finicky for me.
+          wayland = false;
         };
       };
     };
@@ -112,6 +123,14 @@
     ];
     # Allow the graphical user to login without password
     initialHashedPassword = "";
+  };
+
+  age.secrets = {
+    "tailscale.key" = {
+      file = ../../users/fmzakari/secrets/tailscale.key.age;
+      owner = config.services.golink.user;
+      group = config.services.golink.group;
+    };
   };
 
   security = {
