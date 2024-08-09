@@ -81,21 +81,28 @@
         "type": "github"
       }
     },
-    "flake-utils_2": {
+    "gomod2nix": {
       "inputs": {
-        "systems": "systems_3"
+        "flake-utils": [
+          "tailscale-tclip",
+          "utils"
+        ],
+        "nixpkgs": [
+          "tailscale-tclip",
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1709126324,
-        "narHash": "sha256-q6EQdSeUZOG26WelxqkmR7kArjgWCdw5sfJVHPH/7j8=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "d465f4819400de7c8d874d50b982301f28a84605",
+        "lastModified": 1717050755,
+        "narHash": "sha256-C9IEHABulv2zEDFA+Bf0E1nmfN4y6MIUe5eM2RCrDC0=",
+        "owner": "tweag",
+        "repo": "gomod2nix",
+        "rev": "31b6d2e40b36456e792cd6cf50d5a8ddd2fa59a1",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
+        "owner": "tweag",
+        "repo": "gomod2nix",
         "type": "github"
       }
     },
@@ -164,7 +171,9 @@
     "nix-vscode-extensions": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils": "flake-utils",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -234,6 +243,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "flake-utils": "flake-utils",
         "h": "h",
         "home-manager": "home-manager",
         "nix-index-database": "nix-index-database",
@@ -241,7 +251,8 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
-        "tailscale-golink": "tailscale-golink"
+        "tailscale-golink": "tailscale-golink",
+        "tailscale-tclip": "tailscale-tclip"
       }
     },
     "systems": {
@@ -291,7 +302,9 @@
     },
     "tailscale-golink": {
       "inputs": {
-        "flake-utils": "flake-utils_2",
+        "flake-utils": [
+          "flake-utils"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -307,6 +320,46 @@
       "original": {
         "owner": "tailscale",
         "repo": "golink",
+        "type": "github"
+      }
+    },
+    "tailscale-tclip": {
+      "inputs": {
+        "gomod2nix": "gomod2nix",
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1722742911,
+        "narHash": "sha256-9+Z/HfHRrUTWU1nL3MynuRqIbaFWArDbWAwWhWmRfmo=",
+        "owner": "tailscale-dev",
+        "repo": "tclip",
+        "rev": "3de85c3be730a0587fb1515a3b4bb4b40e95208f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tailscale-dev",
+        "repo": "tclip",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     }

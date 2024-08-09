@@ -11,6 +11,9 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
 
+    # Flake Utils, added so we can dedupe it.
+    flake-utils.url = "github:numtide/flake-utils";
+
     # Home manager
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -34,10 +37,17 @@
     # vscode-extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
 
-    # tailscale
+    # tailscale golink
     tailscale-golink.url = "github:tailscale/golink";
     tailscale-golink.inputs.nixpkgs.follows = "nixpkgs";
+    tailscale-golink.inputs.flake-utils.follows = "flake-utils";
+
+    # tailscale tclip
+    tailscale-tclip.url = "github:tailscale-dev/tclip";
+    # Could not follow as nixpkgs; had to use nixpkgs-unstable
+    tailscale-tclip.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = {
@@ -62,12 +72,14 @@
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
 
-    machine = name:
+    machine = name: modules:
       nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./machines/${name}/configuration.nix
-        ];
+        modules =
+          [
+            ./machines/${name}/configuration.nix
+          ]
+          ++ modules;
       };
   in {
     # Your custom packages
@@ -91,13 +103,16 @@
     # You can also build them individually using
     # 'nix build .#nixosConfigurations.nyx.config.system.build.toplevel'
     nixosConfigurations = {
-      nyx = machine "nyx";
-      nixie = machine "nixie";
+      nyx = machine "nyx" [];
+      nixie = machine "nixie" [];
       # As this is a raspberrypi, you might want to build the sdImage
       # nix build '.#nixosConfigurations.kuato.config.system.build.sdImage'
       # Alternatively, you can deploy it as follows:
-      # nixos-rebuild switch --flake .#kuato --target-host fmzakari@kuato --use-remote-sudo
-      kuato = machine "kuato";
+      # nixos-rebuild switch --flake .#kuato \
+      #                      --target-host fmzakari@kuato 
+      #                      --use-remote-sudo \
+      #                      --fast
+      kuato = machine "kuato" [];
     };
 
     # Uncomment when we want to support individual home-manager

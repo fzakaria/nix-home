@@ -7,4 +7,6 @@
   fprint-laptop-lid = ./fprint-laptop-lid.nix;
 
   vpn = ./vpn.nix;
+
+  tclip = ./tclip.nix;
 }

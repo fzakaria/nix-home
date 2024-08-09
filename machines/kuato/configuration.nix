@@ -14,6 +14,7 @@
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     ../../modules/nix.nix
     outputs.nixosModules.vpn
+    outputs.nixosModules.tclip
     # Feedback from Matrix was to disable this and it's unecessary unless you are using
     # some esoteric hardware.
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -74,11 +75,13 @@
     libraspberrypi
     raspberrypi-eeprom
     firefox
+    chromium
   ];
 
   services = {
     # Enable the tailscale VPN
     vpn.enable = true;
+
     openssh = {
       enable = true;
       startWhenNeeded = true;
@@ -91,7 +94,11 @@
     };
     golink = {
       enable = true;
-      tailscaleAuthKeyFile = config.age.secrets."tailscale.key".path;
+      tailscaleAuthKeyFile = config.age.secrets."tailscale-golink.key".path;
+    };
+    tclip = {
+      enable = true;
+      tailscaleAuthKeyFile = config.age.secrets."tailscale-tclip.key".path;
     };
     # Enable the X11 windowing system.
     xserver = {
@@ -104,8 +111,9 @@
         gdm = {
           enable = true;
 
-          # wayland is still too finicky for me.
-          wayland = false;
+          # FIXME: I want to disable wayland but the touch screen seems
+          # to not work otherwise.
+          # wayland = false;
         };
       };
     };
@@ -126,10 +134,15 @@
   };
 
   age.secrets = {
-    "tailscale.key" = {
-      file = ../../users/fmzakari/secrets/tailscale.key.age;
+    "tailscale-golink.key" = {
+      file = ../../users/fmzakari/secrets/tailscale-golink.key.age;
       owner = config.services.golink.user;
       group = config.services.golink.group;
+    };
+    "tailscale-tclip.key" = {
+      file = ../../users/fmzakari/secrets/tailscale-tclip.key.age;
+      owner = config.services.tclip.user;
+      group = config.services.tclip.group;
     };
   };
 

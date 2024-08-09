@@ -10,5 +10,6 @@ let
   allSystems = builtins.attrValues systems;
 in {
   "nixbuild.key.age".publicKeys = allUsers ++ [systems.nyx];
-  "tailscale.key.age".publicKeys = allUsers ++ [systems.kuato];
+  "tailscale-golink.key.age".publicKeys = allUsers ++ [systems.kuato];
+  "tailscale-tclip.key.age".publicKeys = allUsers ++ [systems.kuato];
 }
