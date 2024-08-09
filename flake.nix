@@ -139,7 +139,7 @@
         matchingSystemConfigurations = nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations;
 
         # Map each matching configuration to its top-level system derivation
-        toplevelDerivations = nixpkgs.lib.mapAttrs (_: c: c.activationPackage) matchingSystemConfigurations;
+        toplevelDerivations = nixpkgs.lib.mapAttrs (_: c: c.config.system.build.toplevel) matchingSystemConfigurations;
       in
         toplevelDerivations
     );
@@ -150,7 +150,7 @@
           {
           }
           # Add all our homemanager configurations
-          // (nixpkgs.lib.mapAttrs (_: c: c.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.homeConfigurations))
+          // (nixpkgs.lib.mapAttrs (_: c: c.activationPackage) (nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.homeConfigurations))
       )
       // self.nixosMachines;
   };
