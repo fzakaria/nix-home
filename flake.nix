@@ -132,5 +132,26 @@
         ];
       };
     };
+
+    nixosMachines = forAllSystems (
+      system: let
+        # Filter the configurations to those that match the current system
+        matchingSystemConfigurations = nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations;
+
+        # Map each matching configuration to its top-level system derivation
+        toplevelDerivations = nixpkgs.lib.mapAttrs (_: c: c.activationPackage) matchingSystemConfigurations;
+      in
+        toplevelDerivations
+    );
+
+    checks =
+      forAllSystems (
+        system:
+          {
+          }
+          # Add all our homemanager configurations
+          // (nixpkgs.lib.mapAttrs (_: c: c.config.system.build.toplevel) (nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.homeConfigurations))
+      )
+      // self.nixosMachines;
   };
 }
