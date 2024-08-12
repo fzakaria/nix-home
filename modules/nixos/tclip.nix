@@ -16,7 +16,7 @@ in {
       description = ''
         tclip package to use
       '';
-      default = inputs.tailscale-tclip.packages."${pkgs.system}".tclipd;
+      default = pkgs.tclipd;
     };
 
     dataDir = mkOption {
@@ -61,7 +61,7 @@ in {
   };
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      inputs.tailscale-tclip.packages."${pkgs.system}".tclip
+      pkgs.tclip
     ];
 
     users.users."${cfg.user}" = {
@@ -79,7 +79,7 @@ in {
       script = let
         args =
           [
-            "--data-dir"
+            "--data-location"
             cfg.dataDir
             "--hostname"
             cfg.hostname

@@ -50,6 +50,17 @@
         makeModulesClosure = x:
           super.makeModulesClosure (x // {allowMissing = true;});
       })
+
+      (final: super: {
+        # TODO(fzakaria): These should from an overlay from the flake.
+        # Checkphase with emulation takes a very long time. For now disable it.
+        tclip = inputs.tailscale-tclip.packages."${super.system}".tclip.overrideAttrs (oldAttrs: {
+          doCheck = false;
+        });
+        tclipd = inputs.tailscale-tclip.packages."${super.system}".tclipd.overrideAttrs (oldAttrs: {
+          doCheck = false;
+        });
+      })
     ];
   };
 
@@ -99,6 +110,7 @@
     tclip = {
       enable = true;
       tailscaleAuthKeyFile = config.age.secrets."tailscale-tclip.key".path;
+      funnel = true;
     };
     # Enable the X11 windowing system.
     xserver = {
