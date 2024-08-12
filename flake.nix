@@ -109,7 +109,7 @@
       # nix build '.#nixosConfigurations.kuato.config.system.build.sdImage'
       # Alternatively, you can deploy it as follows:
       # nixos-rebuild switch --flake .#kuato \
-      #                      --target-host fmzakari@kuato 
+      #                      --target-host fmzakari@kuato
       #                      --use-remote-sudo \
       #                      --fast
       kuato = machine "kuato" [];
