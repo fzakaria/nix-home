@@ -12,4 +12,5 @@ in {
   "nixbuild.key.age".publicKeys = allUsers ++ [systems.nyx];
   "tailscale-golink.key.age".publicKeys = allUsers ++ [systems.kuato];
   "tailscale-tclip.key.age".publicKeys = allUsers ++ [systems.kuato];
+  "tailscale-grafana.key.age".publicKeys = allUsers ++ [systems.kuato];
 }

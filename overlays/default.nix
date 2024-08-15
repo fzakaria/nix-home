@@ -20,6 +20,23 @@
           ];
       });
     });
+
+    tailscale = prev.tailscale.overrideAttrs (old: {
+      subPackages =
+        old.subPackages
+        ++ [
+          "cmd/proxy-to-grafana"
+        ];
+    });
+
+    # TODO(fzakaria): These should from an overlay from the flake.
+    # Checkphase with emulation takes a very long time. For now disable it.
+    tclip = inputs.tailscale-tclip.packages."${prev.system}".tclip.overrideAttrs (oldAttrs: {
+      doCheck = false;
+    });
+    tclipd = inputs.tailscale-tclip.packages."${prev.system}".tclipd.overrideAttrs (oldAttrs: {
+      doCheck = false;
+    });
   };
 
   # When applied, the unstable nixpkgs set (declared in the flake inputs) will

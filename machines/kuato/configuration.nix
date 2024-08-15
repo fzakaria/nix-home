@@ -15,6 +15,7 @@
     ../../modules/nix.nix
     outputs.nixosModules.vpn
     outputs.nixosModules.tclip
+    outputs.nixosModules.grafana
     # Feedback from Matrix was to disable this and it's unecessary unless you are using
     # some esoteric hardware.
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
@@ -38,28 +39,13 @@
       allowUnfree = true;
     };
     overlays = [
-      (final: _prev: {
-        unstable = import inputs.nixpkgs-unstable {
-          system = final.system;
-          config.allowUnfree = true;
-        };
-      })
+      outputs.overlays.modifications
+      outputs.overlays.unstable-packages
       # Workaround: https://github.com/NixOS/nixpkgs/issues/154163
       # modprobe: FATAL: Module sun4i-drm not found in directory
       (final: super: {
         makeModulesClosure = x:
           super.makeModulesClosure (x // {allowMissing = true;});
-      })
-
-      (final: super: {
-        # TODO(fzakaria): These should from an overlay from the flake.
-        # Checkphase with emulation takes a very long time. For now disable it.
-        tclip = inputs.tailscale-tclip.packages."${super.system}".tclip.overrideAttrs (oldAttrs: {
-          doCheck = false;
-        });
-        tclipd = inputs.tailscale-tclip.packages."${super.system}".tclipd.overrideAttrs (oldAttrs: {
-          doCheck = false;
-        });
       })
     ];
   };
@@ -92,6 +78,38 @@
   services = {
     # Enable the tailscale VPN
     vpn.enable = true;
+
+    grafana-proxy = {
+      enable = true;
+      tailscaleAuthKeyFile = config.age.secrets."tailscale-grafana.key".path;
+    };
+
+    # Right now this is not exported via a Tailscale host like Grafana
+    # but we can access it via http://kuato:9001/
+    # do we care to to do that? Not sure right now.
+    # We can re-use grafana-to-proxy for this if so.
+    # https://github.com/teevik/Config/blob/c1ac3d3f55d7c67077aa59ac8a5b2774b4ca36a2/modules/nixos/services/tailscale-proxy/default.nix#L9
+    prometheus = {
+      enable = true;
+      port = 9001;
+      exporters = {
+        node = {
+          enable = true;
+          enabledCollectors = ["systemd"];
+          port = 9002;
+        };
+      };
+      scrapeConfigs = [
+        {
+          job_name = config.networking.hostName;
+          static_configs = [
+            {
+              targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+            }
+          ];
+        }
+      ];
+    };
 
     openssh = {
       enable = true;
@@ -155,6 +173,11 @@
       file = ../../users/fmzakari/secrets/tailscale-tclip.key.age;
       owner = config.services.tclip.user;
       group = config.services.tclip.group;
+    };
+    "tailscale-grafana.key" = {
+      file = ../../users/fmzakari/secrets/tailscale-grafana.key.age;
+      owner = config.services.grafana-proxy.user;
+      group = config.services.grafana-proxy.group;
     };
   };
 

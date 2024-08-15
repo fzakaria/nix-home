@@ -112,6 +112,8 @@
       #                      --target-host fmzakari@kuato
       #                      --use-remote-sudo \
       #                      --fast
+      # To biuld this remotely as it's aarch64-linux add:
+      # --builders "@/etc/nix/machines" --max-jobs 0
       kuato = machine "kuato" [];
     };
 

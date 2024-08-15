@@ -9,4 +9,6 @@
   vpn = ./vpn.nix;
 
   tclip = ./tclip.nix;
+
+  grafana = ./grafana.nix;
 }

@@ -3,6 +3,7 @@
     # Community builder for Linux
     knownHosts = {
       "build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
+      "aarch64.nixos.community".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMUTz5i9u5H2FHNAmZJyoJfIGyUm/HfGhfwnc142L3ds";
       alakwan = {
         hostNames = ["alakwan.tail9f4b5.ts.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaKbJEmMQmSCYMngka0Z8b+hNw12u1ad7xb4AXBRq0C";
@@ -18,6 +19,9 @@
     # to for my (fmzakari) user. A bit of a hack but....not sure a better alternative.
     extraConfig = ''
       Host build-box.nix-community.org
+        IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host aarch64.nixos.community
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host alakwan.tail9f4b5.ts.net
@@ -71,8 +75,21 @@
       {
         protocol = "ssh-ng";
         hostName = "build-box.nix-community.org";
-        maxJobs = 4;
+        maxJobs = 8;
         systems = ["x86_64-linux"];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+          "nixos-test"
+        ];
+        sshUser = "fmzakari";
+      }
+      {
+        protocol = "ssh-ng";
+        hostName = "aarch64.nixos.community";
+        maxJobs = 64;
+        systems = ["aarch64-linux"];
         supportedFeatures = [
           "benchmark"
           "big-parallel"
