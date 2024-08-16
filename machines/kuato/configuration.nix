@@ -92,19 +92,26 @@
     prometheus = {
       enable = true;
       port = 9001;
+      extraFlags = [
+        "--web.enable-admin-api"
+        # if we want to expand default retention time
+        #  "--storage.tsdb.retention.time=365d"
+      ];
       exporters = {
         node = {
           enable = true;
-          enabledCollectors = ["systemd"];
+          # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/monitoring/prometheus/exporters.nix
+          # https://github.com/prometheus/node_exporter?tab=readme-ov-file#enabled-by-default
+          enabledCollectors = ["systemd" "processes"];
           port = 9002;
         };
       };
       scrapeConfigs = [
         {
-          job_name = config.networking.hostName;
+          job_name = "node";
           static_configs = [
             {
-              targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];
+              targets = ["kuato:${toString config.services.prometheus.exporters.node.port}"];
             }
           ];
         }
