@@ -2,16 +2,18 @@
   config,
   pkgs,
   lib,
+  outputs,
+  inputs,
   ...
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/common.nix
-    ../../modules/platforms/nixos.nix
-    ../../modules/users.nix
     ./acme.nix
-    ./uassel.nix
-    ../../modules/vpn.nix
+    ./quassel.nix
+    ../../modules/nixpkgs.nix
+    ../../modules/nix.nix
+    inputs.agenix.nixosModules.default
+    outputs.nixosModules.vpn
   ];
 
   networking = {
@@ -21,4 +23,7 @@
 
   # testing lametun
   networking.firewall.allowedUDPPorts = [1234];
+
+  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
+  system.stateVersion = "23.11";
 }

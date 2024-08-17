@@ -115,6 +115,7 @@
       # To biuld this remotely as it's aarch64-linux add:
       # --builders "@/etc/nix/machines" --max-jobs 0
       kuato = machine "kuato" [];
+      altaria = machine "altaria" [];
     };
 
     # Uncomment when we want to support individual home-manager

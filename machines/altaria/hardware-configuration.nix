@@ -1,6 +1,13 @@
-{pkgs, ...}: let
-  nixpkgs = (import ../../nix/sources.nix).nixos;
-in {
-  imports = [(nixpkgs + "/nixos/modules/virtualisation/amazon-image.nix")];
+{
+  pkgs,
+  modulesPath,
+  lib,
+  ...
+}: {
+  imports = [
+    "${modulesPath}/virtualisation/amazon-image.nix"
+  ];
   ec2.hvm = true;
+
+  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
