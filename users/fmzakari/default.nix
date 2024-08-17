@@ -114,6 +114,10 @@
     # Language Server for Nix
     # https://github.com/nix-community/nixd
     unstable.nixd
+    # Add JDK
+    openjdk
+    maven
+    gradle
   ];
 
   programs = {

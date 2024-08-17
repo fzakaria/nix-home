@@ -26,6 +26,18 @@
     # Enable the tailscale VPN
     vpn.enable = true;
 
+    prometheus = {
+      exporters = {
+        node = {
+          enable = true;
+          # https://github.com/NixOS/nixpkgs/blob/nixos-24.05/nixos/modules/services/monitoring/prometheus/exporters.nix
+          # https://github.com/prometheus/node_exporter?tab=readme-ov-file#enabled-by-default
+          enabledCollectors = ["systemd" "processes"];
+          port = 9002;
+        };
+      };
+    };
+
     openssh = {
       enable = true;
       startWhenNeeded = true;

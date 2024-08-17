@@ -36,6 +36,14 @@
   go = {
   };
   java = {
+    "java.jdt.ls.java.home" = "${pkgs.openjdk}/lib/openjdk";
+    "java.configuration.runtimes" = [
+      {
+        "default" = true;
+        "name" = "JavaSE-21";
+        "path" = "${pkgs.openjdk}/lib/openjdk";
+      }
+    ];
   };
   telemetry = {
     "redhat.telemetry.enabled" = false;
@@ -79,6 +87,12 @@ in {
         golang.go
         # java
         redhat.java
+        vscjava.vscode-java-debug
+        vscjava.vscode-gradle
+        vscjava.vscode-maven
+        vscjava.vscode-java-dependency
+        vscjava.vscode-java-test
+        vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
