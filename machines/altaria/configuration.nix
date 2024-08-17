@@ -23,6 +23,9 @@
   };
 
   services = {
+    # Enable the tailscale VPN
+    vpn.enable = true;
+
     openssh = {
       enable = true;
       startWhenNeeded = true;

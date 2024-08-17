@@ -33,6 +33,10 @@
       };
     };
   };
+  go = {
+  };
+  java = {
+  };
   telemetry = {
     "redhat.telemetry.enabled" = false;
     "telemetry.telemetryLevel" = "off";
@@ -71,6 +75,10 @@ in {
         ms-python.mypy-type-checker
         ms-python.isort
         ms-python.black-formatter
+        # golang
+        ms-vscode.Go
+        # java
+        redhat.java
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
@@ -87,6 +95,8 @@ in {
       // telemetry
       // window
       // nix
-      // cpp;
+      // cpp
+      // java
+      // go;
   };
 }
