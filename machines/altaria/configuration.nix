@@ -12,6 +12,7 @@
     ./quassel.nix
     ../../modules/nixpkgs.nix
     ../../modules/nix.nix
+    ../../users
     inputs.agenix.nixosModules.default
     outputs.nixosModules.vpn
   ];
@@ -19,6 +20,19 @@
   networking = {
     hostName = "altaria";
     domain = "fzakaria.com";
+  };
+
+  services = {
+    openssh = {
+      enable = true;
+      startWhenNeeded = true;
+      banner = ''
+        Welcome to my EC2 instance. Happy hacking!
+      '';
+      settings = {
+        PasswordAuthentication = false;
+      };
+    };
   };
 
   # testing lametun
