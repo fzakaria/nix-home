@@ -76,7 +76,7 @@ in {
         ms-python.isort
         ms-python.black-formatter
         # golang
-        ms-vscode.Go
+        golang.go
         # java
         redhat.java
       ])
