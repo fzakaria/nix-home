@@ -118,6 +118,8 @@
     openjdk
     maven
     gradle
+    # Golang
+    go
   ];
 
   programs = {

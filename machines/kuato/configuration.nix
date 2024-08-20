@@ -111,7 +111,10 @@
           job_name = "node";
           static_configs = [
             {
-              targets = ["kuato:${toString config.services.prometheus.exporters.node.port}"];
+              targets = [
+                "kuato:${toString config.services.prometheus.exporters.node.port}"
+                "altaria:${toString config.services.prometheus.exporters.node.port}"
+              ];
             }
           ];
         }

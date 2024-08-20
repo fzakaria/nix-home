@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   outputs,
   inputs,
   ...
@@ -22,9 +21,33 @@
     domain = "fzakaria.com";
   };
 
+  age.secrets = {
+    "github-runner.token" = {
+      file = ../../users/fmzakari/secrets/github-runner.token.age;
+    };
+  };
+
+  security = {
+    sudo = {
+      enable = true;
+      wheelNeedsPassword = false;
+    };
+  };
+
   services = {
     # Enable the tailscale VPN
     vpn.enable = true;
+
+    # Register a single GitHub Runner for our CI
+    github-runners.${config.networking.hostName} = {
+      enable = true;
+      ephemeral = true;
+      replace = true;
+      tokenFile = config.age.secrets."github-runner.token".path;
+      url = "https://github.com/fzakaria/nix-home";
+      extraLabels = [pkgs.system];
+      extraPackages = with pkgs; [cachix];
+    };
 
     prometheus = {
       exporters = {
