@@ -12,6 +12,9 @@ on: workflow_dispatch
 jobs:
   build:
     runs-on: [self-hosted, x86_64-linux]
+    strategy:
+      matrix:
+        machine: [nyx, nixie, altaria]
     steps:
     - uses: actions/checkout@v4
     # I don't think we need the cache as we are building on our
@@ -20,10 +23,13 @@ jobs:
     #
     # - name: Run the Magic Nix Cache
     #  uses: DeterminateSystems/magic-nix-cache-action@main
-    - name: Check
+    #
+    # This seems to cause memory exhaustion and causes the EC2 instance
+    # to crash.
+    #
+    # - name: Check
+    #  run: |
+    #    nix flake check
+    - name: Build
       run: |
-        nix flake check
-
-        nix build .#nixosConfigurations.nyx.config.system.build.toplevel
-        nix build .#nixosConfigurations.nixie.config.system.build.toplevel
-        nix build .#nixosConfigurations.altaria.config.system.build.toplevel
+        nix build .#nixosConfigurations.${{ matrix.machine }}.config.system.build.toplevel -L
