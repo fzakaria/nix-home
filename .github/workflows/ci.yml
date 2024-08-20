@@ -11,7 +11,7 @@ on: workflow_dispatch
 
 jobs:
   build:
-    runs-on: [self-hosted, x86_64]
+    runs-on: [self-hosted, x86_64-linux]
     steps:
     - uses: actions/checkout@v4
     # I don't think we need the cache as we are building on our
@@ -23,7 +23,7 @@ jobs:
     - name: Check
       run: |
         nix flake check
-        
+
         nix build .#nixosConfigurations.nyx.config.system.build.toplevel
         nix build .#nixosConfigurations.nixie.config.system.build.toplevel
         nix build .#nixosConfigurations.altaria.config.system.build.toplevel
