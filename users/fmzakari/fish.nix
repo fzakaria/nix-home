@@ -45,20 +45,13 @@
       '';
     };
 
-    shellInit = ''
-      tide configure --auto --style=Lean --prompt_colors='True color' \
-                     --show_time='24-hour format' --lean_prompt_height='Two lines' \
-                     --prompt_connection=Disconnected --prompt_spacing=Sparse \
-                     --icons='Many icons' --transient=Yes
-      fzf_configure_bindings --directory=\cf --processes=\cp --git_log=\cl
-
-      set fzf_diff_highlighter delta --paging=never --width=20
+    interactiveShellInit = ''
+      set -U fish_greeting
+      fish_config theme choose "Dracula"
+      set __fish_git_prompt_showcolorhints 1
     '';
   };
 
   home.packages = with pkgs.fishPlugins; [
-    fzf-fish
-    done
-    tide
   ];
 }
