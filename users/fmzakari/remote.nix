@@ -4,6 +4,7 @@
     knownHosts = {
       "build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIElIQ54qAy7Dh63rBudYKdbzJHrrbrrMXLYl7Pkmk88H";
       "aarch64.nixos.community".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMUTz5i9u5H2FHNAmZJyoJfIGyUm/HfGhfwnc142L3ds";
+      "dennard.soe.ucsc.edu".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPSqcYrwgW6T7XSoC22rfc5tnLmwF2wmsHVJ5vzvsszW";
       alakwan = {
         hostNames = ["alakwan.tail9f4b5.ts.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDaKbJEmMQmSCYMngka0Z8b+hNw12u1ad7xb4AXBRq0C";
@@ -25,6 +26,9 @@
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host alakwan.tail9f4b5.ts.net
+        IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host dennard.soe.ucsc.edu
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host eu.nixbuild.net
@@ -90,6 +94,19 @@
         hostName = "aarch64.nixos.community";
         maxJobs = 64;
         systems = ["aarch64-linux"];
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+          "kvm"
+          "nixos-test"
+        ];
+        sshUser = "fmzakari";
+      }
+      {
+        protocol = "ssh-ng";
+        hostName = "dennard.soe.ucsc.edu";
+        maxJobs = 64;
+        systems = ["x86_64-linux"];
         supportedFeatures = [
           "benchmark"
           "big-parallel"
