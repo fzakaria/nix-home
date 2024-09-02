@@ -16,12 +16,12 @@
 }: let
   cfg = config.services.disable-fingerprint-reader-on-laptop-lid;
   laptop-lid = pkgs.writeShellScript "laptop-lid" ''
-    lock=$HOME/fingerprint-reader-disabled
+    lock=/var/lock/fingerprint-reader-disabled
 
     # match for either display port or hdmi port
     if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
-       (grep -Fxq connected /sys/class/drm/card0-DP-*/status ||
-        grep -Fxq connected /sys/class/drm/card0-HDMI-*/status)
+       (grep -Fxq connected /sys/class/drm/card*-DP-*/status ||
+        grep -Fxq connected /sys/class/drm/card*-HDMI-*/status)
     then
       touch "$lock"
       echo 0 > /sys/bus/usb/devices/1-4/authorized

@@ -21,6 +21,12 @@
       });
     });
 
+    # Let's not get that annoying update message.
+    # Remove when https://github.com/NixOS/nixpkgs/pull/338703 merged.
+    google-chrome = prev.google-chrome.override {
+      commandLineArgs = "--simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'";
+    };
+
     tailscale = prev.tailscale.overrideAttrs (old: {
       subPackages =
         old.subPackages

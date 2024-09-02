@@ -85,6 +85,8 @@ in {
         ms-python.black-formatter
         # golang
         golang.go
+        # bazel
+        bazelbuild.vscode-bazel
         # java
         redhat.java
         vscjava.vscode-java-debug

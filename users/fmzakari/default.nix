@@ -48,6 +48,12 @@
 
   # Place packages here that are
   home.packages = with pkgs; [
+    # unzip
+    unzip
+    # dig
+    dig
+    # tree
+    tree
     # a tool to help review other nixpkgs PR requests
     nixpkgs-review
     # age is a simple, modern and secure file encryption tool, format, and library.

@@ -31,6 +31,7 @@
     delta = {
       enable = true;
       options = {
+        syntax-theme = "Dracula";
       };
     };
 
