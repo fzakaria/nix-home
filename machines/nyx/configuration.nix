@@ -42,6 +42,14 @@
   ];
 
   services = {
+    # Enable printing
+    printing.enable = true;
+    # https://nixos.wiki/wiki/Printing#Enable_autodiscovery_of_network_printers
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     # Enable turning off fingerprint reader when laptop lid is closd
     disable-fingerprint-reader-on-laptop-lid.enable = true;
     # Enable the tailscale VPN
