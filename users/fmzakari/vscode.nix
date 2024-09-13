@@ -59,7 +59,7 @@ in {
     enableUpdateCheck = false;
     mutableExtensionsDir = false;
 
-    package = pkgs.vscode;
+    package = pkgs.unstable.vscode;
 
     extensions =
       (with pkgs.vscode-extensions; [
