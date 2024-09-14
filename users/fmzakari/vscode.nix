@@ -95,6 +95,10 @@ in {
         vscjava.vscode-java-dependency
         vscjava.vscode-java-test
         vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
+        # remote development
+        ms-vscode-remote.remote-ssh
+        ms-vscode-remote.remote-ssh-edit
+        ms-vscode.remote-explorer
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
