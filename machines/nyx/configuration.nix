@@ -41,6 +41,11 @@
     nerdfonts
   ];
 
+  hardware = {
+    # enables support for SANE scanners
+    sane.enable = true;
+  };
+
   services = {
     # Enable printing
     printing.enable = true;
@@ -124,7 +129,15 @@
 
   programs = {
     ssh.startAgent = false;
+
+    # I got tired of facing NixOS issues
+    # Let's be more pragmatic and try to run binaries sometimes
+    # at the cost of sweeping bugs under the rug.
+    nix-ld.enable = true;
   };
+
+  # Disable this because we are using nix-ld instead
+  environment.stub-ld.enable = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -155,9 +168,12 @@
     python3
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default
-    jetbrains.clion
+    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot"])
+    # no license at the moment
+    # jetbrains.clion
     file
     element-desktop
+    bazel_7
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
