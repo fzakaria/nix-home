@@ -126,6 +126,8 @@
     gradle
     # Golang
     go
+    # https://github.com/martinvonz/jj
+    unstable.jj
   ];
 
   programs = {

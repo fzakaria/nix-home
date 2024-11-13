@@ -133,7 +133,13 @@
     # I got tired of facing NixOS issues
     # Let's be more pragmatic and try to run binaries sometimes
     # at the cost of sweeping bugs under the rug.
-    nix-ld.enable = true;
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc.lib
+        zlib # numpy
+      ];
+    };
   };
 
   # Disable this because we are using nix-ld instead
