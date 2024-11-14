@@ -127,7 +127,7 @@
     # Golang
     go
     # https://github.com/martinvonz/jj
-    unstable.jj
+    unstable.jujutsu
   ];
 
   programs = {
