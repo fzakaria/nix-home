@@ -99,6 +99,9 @@ in {
         ms-vscode-remote.remote-ssh
         ms-vscode-remote.remote-ssh-edit
         ms-vscode.remote-explorer
+        # haskell
+        haskell.haskell
+        justusadam.language-haskell
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot

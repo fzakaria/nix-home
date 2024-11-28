@@ -180,6 +180,7 @@
     file
     element-desktop
     bazel_7
+    unstable.ghostty
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

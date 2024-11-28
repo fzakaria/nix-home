@@ -128,6 +128,8 @@
     go
     # https://github.com/martinvonz/jj
     unstable.jujutsu
+    unstable.zed-editor
+    nixfmt-rfc-style
   ];
 
   programs = {
