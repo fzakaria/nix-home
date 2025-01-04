@@ -175,7 +175,7 @@
     # https://github.com/eza-community/eza
     eza = {
       enable = true;
-      icons = false;
+      icons = "never";
       git = true;
       enableFishIntegration = true;
     };

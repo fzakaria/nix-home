@@ -8,17 +8,15 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     # We want to use the yubikey-agent so disable gnome's ssh-agent
-    gnome = prev.gnome.overrideScope (gfinal: gprev: {
-      gnome-keyring = gprev.gnome-keyring.overrideAttrs (oldAttrs: {
-        enableParallelBuilding = true;
+    gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
+      enableParallelBuilding = true;
 
-        configureFlags =
-          oldAttrs.configureFlags
-          or []
-          ++ [
-            "--disable-ssh-agent"
-          ];
-      });
+      configureFlags =
+        oldAttrs.configureFlags
+        or []
+        ++ [
+          "--disable-ssh-agent"
+        ];
     });
 
     # Let's not get that annoying update message.

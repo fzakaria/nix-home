@@ -31,14 +31,13 @@
   hardware = {
     # Plenty of the opengl settings are set in nixos-hardware
     # for common/amd/gpu
-    opengl.enable = true;
+    graphics.enable = true;
     enableRedistributableFirmware = true;
     cpu.amd.updateMicrocode = true;
     bluetooth = {
       enable = true;
       powerOnBoot = true;
     };
-    pulseaudio.enable = true;
   };
 
   fileSystems = {
