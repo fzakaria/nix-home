@@ -44,7 +44,7 @@
     # point with fish incompatibilities since many things default to SHELL
     # Let's have our login shell be bash and just manually enter fish :(
     shell = pkgs.bash;
-    extraGroups = ["wheel" "networkmanager" "scanner" "lp"];
+    extraGroups = ["wheel" "networkmanager" "scanner" "lp" "docker"];
     description = "Farid Zakaria";
     openssh.authorizedKeys.keyFiles = [
       ./fmzakari/keys

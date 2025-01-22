@@ -102,6 +102,8 @@ in {
         # haskell
         haskell.haskell
         justusadam.language-haskell
+        # frontend
+        svelte.svelte-vscode
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot

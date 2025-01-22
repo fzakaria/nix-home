@@ -237,12 +237,26 @@
           email = "farid.m.zakaria@gmail.com";
         };
 
+        revset-aliases = {
+          # see jj bump & jj tug aliases
+          bumpable = "all:mutable() & mine()";
+          tuggable = "heads(::@- & bookmarks())";
+        };
+
         aliases = {
+          all = ["log" "-r" "all()"];
+          bump = [
+            "rebase"
+            "-b"
+            "bumpable()"
+            "-d"
+            "trunk()"
+          ];
           tug = [
             "bookmark"
             "move"
             "--from"
-            "heads(::@- & bookmarks())"
+            "tuggable()"
             "--to"
             "@-"
           ];
