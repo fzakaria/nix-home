@@ -204,6 +204,13 @@
       };
     };
 
+    ghostty = {
+      package = pkgs.unstable.ghostty;
+      settings = {
+        theme = "Dracula";
+      };
+    };
+
     # nix-index provides it's own command-not-found functionality
     nix-index.enable = true;
     nix-index-database.comma.enable = true;
@@ -219,6 +226,28 @@
       fileWidgetOptions = [
         "--ansi --preview-window=right:60% --preview 'bat --style=plain --color=always --line-range :500 {}'"
       ];
+    };
+
+    jujutsu = {
+      enable = true;
+      package = pkgs.unstable.jujutsu;
+      settings = {
+        user = {
+          name = "Farid Zakaria";
+          email = "farid.m.zakaria@gmail.com";
+        };
+
+        aliases = {
+          tug = [
+            "bookmark"
+            "move"
+            "--from"
+            "heads(::@- & bookmarks())"
+            "--to"
+            "@-"
+          ];
+        };
+      };
     };
 
     bash = {
