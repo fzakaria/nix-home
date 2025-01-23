@@ -49,6 +49,9 @@
     "redhat.telemetry.enabled" = false;
     "telemetry.telemetryLevel" = "off";
   };
+  frontend = {
+    "svelte.enable-ts-plugin" = true;
+  };
 in {
   xdg.mimeApps.defaultApplications."text/plain" = "code.desktop";
 
@@ -104,6 +107,7 @@ in {
         justusadam.language-haskell
         # frontend
         svelte.svelte-vscode
+        bradlc.vscode-tailwindcss
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
@@ -122,6 +126,7 @@ in {
       // nix
       // cpp
       // java
-      // go;
+      // go
+      // frontend;
   };
 }

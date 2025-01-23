@@ -239,8 +239,8 @@
 
         revset-aliases = {
           # see jj bump & jj tug aliases
-          bumpable = "all:mutable() & mine()";
-          tuggable = "heads(::@- & bookmarks())";
+          "bumpable()" = "all:mutable() & mine()";
+          "tuggable()" = "heads(::@- & bookmarks())";
         };
 
         aliases = {
