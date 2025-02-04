@@ -109,7 +109,7 @@ in {
         svelte.svelte-vscode
         bradlc.vscode-tailwindcss
         # ruby
-        Shopify.ruby-lsp
+        shopify.ruby-lsp
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
