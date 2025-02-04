@@ -108,6 +108,8 @@ in {
         # frontend
         svelte.svelte-vscode
         bradlc.vscode-tailwindcss
+        # ruby
+        Shopify.ruby-lsp
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
