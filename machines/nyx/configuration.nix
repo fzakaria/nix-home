@@ -103,6 +103,13 @@
     };
   };
 
+  age.secrets = {
+    "atuin.key" = {
+      file = ../../users/fmzakari/secrets/atuin.key.age;
+      owner = "fmzakari";
+    };
+  };
+
   # security = {
   #   # This is to fix GDM prompting for fingerprint right away.
   #   # TODO(fzakaria): understand it.

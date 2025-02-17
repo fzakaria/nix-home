@@ -3,6 +3,8 @@
   inputs,
   pkgs,
   lib,
+  config,
+  osConfig,
   ...
 }: {
   imports = [
@@ -219,7 +221,6 @@
     # https://github.com/junegunn/fzf
     fzf = {
       enable = true;
-      enableFishIntegration = true;
       changeDirWidgetCommand = "fd --color always --hidden --follow --exclude .git --type d";
       changeDirWidgetOptions = ["--ansi --preview 'exa --color always --tree {} | head -500'"];
       fileWidgetCommand = "fd --color always --type f --hidden --follow --exclude .git";
@@ -261,6 +262,22 @@
             "@-"
           ];
         };
+      };
+    };
+
+    atuin = {
+      enable = true;
+      package = pkgs.unstable.atuin;
+      enableFishIntegration = true;
+      settings = {
+        update_check = false;
+        key_path = osConfig.age.secrets."atuin.key".path;
+        enter_accept = false;
+        filter_mode_shell_up_key_binding = "host";
+        style = "compact";
+        # Has some UI issues
+        # https://github.com/atuinsh/atuin/issues/1289
+        inline_height = 20;
       };
     };
 

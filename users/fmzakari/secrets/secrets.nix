@@ -15,4 +15,5 @@ in {
   "tailscale-tclip.key.age".publicKeys = allUsers ++ [systems.kuato];
   "tailscale-grafana.key.age".publicKeys = allUsers ++ [systems.kuato];
   "github-runner.token.age".publicKeys = allUsers ++ [systems.altaria];
+  "atuin.key.age".publicKeys = allUsers ++ allSystems;
 }
