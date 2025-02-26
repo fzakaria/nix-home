@@ -51,6 +51,10 @@
   };
 
   services = {
+    # A fuse filesystem that dynamically populates contents of /bin
+    # and /usr/bin/ so that it contains all executables from the PATH
+    # of the requesting process. 
+    envfs.enable = true;
     # Enable printing
     printing.enable = true;
     # https://nixos.wiki/wiki/Printing#Enable_autodiscovery_of_network_printers
@@ -192,6 +196,7 @@
     element-desktop
     bazel_7
     unstable.ghostty
+    unstable.code-cursor
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

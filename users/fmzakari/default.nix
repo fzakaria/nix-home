@@ -273,7 +273,8 @@
         update_check = false;
         key_path = osConfig.age.secrets."atuin.key".path;
         enter_accept = false;
-        filter_mode_shell_up_key_binding = "host";
+        filter_mode = "session";
+        filter_mode_shell_up_key_binding = "directory";
         style = "compact";
         # Has some UI issues
         # https://github.com/atuinsh/atuin/issues/1289
