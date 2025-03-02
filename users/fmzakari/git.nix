@@ -62,12 +62,16 @@
         tool = "bc";
       };
       difftool = {
-        bc.trustExitCode = true;
+        prompt = false;
+        bc = {
+          trustExitCode = true;
+        };
       };
       merge = {
         tool = "bc";
       };
       mergetool = {
+        prompt = false;
         bc = {
           keepBackup = false;
           trustExitCode = true;
