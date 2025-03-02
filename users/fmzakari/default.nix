@@ -266,7 +266,8 @@
     };
 
     atuin = {
-      enable = true;
+      # for now let's prefer fzf
+      enable = false;
       package = pkgs.unstable.atuin;
       enableFishIntegration = true;
       settings = {
