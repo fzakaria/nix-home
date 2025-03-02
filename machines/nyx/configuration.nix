@@ -185,7 +185,7 @@
     linuxPackages_latest.perf
     bc
     gdb
-    sublime-merge
+    bcompare
     python3
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default

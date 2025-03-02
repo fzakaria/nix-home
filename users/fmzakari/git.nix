@@ -58,13 +58,20 @@
         # this is the safest option. if you want to merge do so explicitly.
         ff = "only";
       };
+      diff = {
+        tool = "bc";
+      };
+      difftool = {
+        bc.trustExitCode = true;
+      };
       merge = {
-        tool = "smerge";
+        tool = "bc";
       };
       mergetool = {
-        smerge.cmd = "smerge mergetool \"$BASE\" \"$LOCAL\" \"$REMOTE\" -o \"$MERGED\"";
-        keepBackup = false;
-        trustExitCode = true;
+        bc = {
+          keepBackup = false;
+          trustExitCode = true;
+        };
       };
     };
   };
