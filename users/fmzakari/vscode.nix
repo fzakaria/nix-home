@@ -65,9 +65,12 @@ in {
     package = pkgs.unstable.vscode;
 
     extensions =
-      (with pkgs.vscode-extensions; [
+      # use the nixpkgs version but at least unstable
+      (with pkgs.unstable.vscode-extensions; [
         # nixpkgs has special handling to create this extension
         ms-vscode.cpptools
+        # remote development
+        ms-vscode-remote.remote-ssh    
       ])
       ++ (with pkgs.vscode-marketplace; [
         # nix extensions
@@ -98,10 +101,6 @@ in {
         vscjava.vscode-java-dependency
         vscjava.vscode-java-test
         vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
-        # remote development
-        ms-vscode-remote.remote-ssh
-        ms-vscode-remote.remote-ssh-edit
-        ms-vscode.remote-explorer
         # haskell
         haskell.haskell
         justusadam.language-haskell
@@ -110,6 +109,9 @@ in {
         bradlc.vscode-tailwindcss
         # ruby
         shopify.ruby-lsp
+        # remote development
+        ms-vscode-remote.remote-ssh-edit
+        ms-vscode.remote-explorer
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
