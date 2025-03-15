@@ -42,7 +42,6 @@
     # tailscale golink
     tailscale-golink.url = "github:tailscale/golink";
     tailscale-golink.inputs.nixpkgs.follows = "nixpkgs";
-    tailscale-golink.inputs.flake-utils.follows = "flake-utils";
 
     # tailscale tclip
     tailscale-tclip.url = "github:tailscale-dev/tclip";

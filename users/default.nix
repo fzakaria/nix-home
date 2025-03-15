@@ -72,7 +72,7 @@
       discord
       dmenu
       docker
-      emacs29
+      emacs
       firefox
       flameshot
       (haskellPackages.ghcWithPackages (hpkgs: [
