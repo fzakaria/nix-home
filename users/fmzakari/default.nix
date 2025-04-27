@@ -11,6 +11,7 @@
     ./git.nix
     ./fish.nix
     ./vscode.nix
+    ./helix.nix
     inputs.h.homeModules.default
     inputs.nix-index-database.hmModules.nix-index
   ];
