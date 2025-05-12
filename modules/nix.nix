@@ -23,7 +23,7 @@
     };
 
     settings = {
-      experimental-features = ["nix-command" "flakes" "dynamic-derivations" "ca-derivations" "recursive-nix"];
+      experimental-features = ["cgroups" "nix-command" "flakes" "dynamic-derivations" "ca-derivations" "recursive-nix"];
       trusted-users = [
         "fmzakari"
         "mrw"
