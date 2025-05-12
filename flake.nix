@@ -47,15 +47,16 @@
     tailscale-tclip.url = "github:tailscale-dev/tclip";
     # Could not follow as nixpkgs; had to use nixpkgs-unstable
     tailscale-tclip.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
     home-manager,
-    nixos-hardware,
-    agenix,
-    nix-vscode-extensions,
     ...
   } @ inputs: let
     inherit (self) outputs;

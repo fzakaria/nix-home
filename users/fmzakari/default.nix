@@ -12,6 +12,7 @@
     ./fish.nix
     ./vscode.nix
     ./helix.nix
+    ./vim
     inputs.h.homeModules.default
     inputs.nix-index-database.hmModules.nix-index
   ];
@@ -43,7 +44,8 @@
 
   home.sessionVariables = {
     LESS = "--quit-if-one-screen --RAW-CONTROL-CHARS";
-    EDITOR = "vim";
+    # this is now set by nixvim
+    # EDITOR = "vim";
     # TODO(fmzakari): I might want this if I use home-manager on Linux non-NixOS
     # https://nixos.org/manual/nixpkgs/stable/#locales
     # LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";

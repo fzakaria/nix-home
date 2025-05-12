@@ -70,7 +70,7 @@ in {
         # nixpkgs has special handling to create this extension
         ms-vscode.cpptools
         # remote development
-        ms-vscode-remote.remote-ssh    
+        ms-vscode-remote.remote-ssh
       ])
       ++ (with pkgs.vscode-marketplace; [
         # nix extensions
