@@ -1,0 +1,12 @@
+[scroll]>[shutdn]
+[kp=]>[kp=mac]
+[lctrl]>[lwin]
+[kp-lctrl]>[kp-lwin]
+[rctrl]>[rwin]
+[kp-rctrl]>[kp-rwin]
+[rwin]>[rctrl]
+[kp-rwin]>[kp-rctrl]
+# password macro: not the real password
+{lshift}{f1}>{-lshift}{P}{+lshift}{a}{s}{s}{w}{o}{r}{d}{-lshift}{3}{+lshift}{enter}
+[caps]>[lctrl]
+

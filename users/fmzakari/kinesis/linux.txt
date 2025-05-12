@@ -1,0 +1,5 @@
+[rwin]>[lwin]
+# password macro: not the real password
+{lshift}{f1}>{-lshift}{P}{+lshift}{a}{s}{s}{w}{o}{r}{d}{-lshift}{3}{+lshift}{enter}
+[caps]>[lctrl]
+[rctrl]>[caps]
