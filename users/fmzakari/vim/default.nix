@@ -61,6 +61,17 @@
       };
     };
 
+    keymaps = [
+      {
+        mode = ["n"];
+        key = "<leader>e";
+        action = "<cmd>Neotree reveal toggle<cr>";
+        options = {
+          desc = "Toggle Neotree";
+        };
+      }
+    ];
+
     plugins = {
       # https://github.com/nvim-telescope/telescope.nvim
       telescope = {
@@ -112,6 +123,17 @@
         };
       };
 
+      mini = {
+        enable = true;
+        modules = {
+          completion = {
+            lsp_completion = {
+              source_func = "omnifunc";
+            };
+          };
+        };
+      };
+
       web-devicons = {
         enable = true;
       };
@@ -119,6 +141,11 @@
       # show available keybindings in a popup as you type
       # https://github.com/folke/which-key.nvim
       which-key = {
+        enable = true;
+      };
+
+      # https://github.com/windwp/nvim-autopairs
+      nvim-autopairs = {
         enable = true;
       };
 
@@ -140,12 +167,6 @@
             enable = true;
           };
         };
-      };
-
-      # https://github.com/neovim/nvim-lspconfig/
-      # provides default configs for many language servers
-      lspconfig = {
-        enable = true;
       };
 
       # Indent guides for Neovim
@@ -183,7 +204,11 @@
             inherit highlight;
             include.node_type = {
               # show scopes for attrsets
-              nix = ["attrset_expression"];
+              nix = [
+                "list_expression"
+                "attrset_expression"
+                "rec_attrset_expression"
+              ];
             };
           };
           indent = {
