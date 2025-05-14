@@ -70,6 +70,13 @@
           desc = "Toggle Neotree";
         };
       }
+      {
+        key = "<leader>bd";
+        action = "<cmd>lua MiniBufremove.delete()<cr>";
+        options = {
+          desc = "Close Buffer";
+        };
+      }
     ];
 
     plugins = {
@@ -152,6 +159,12 @@
       mini = {
         enable = true;
         modules = {
+          basics = {
+            mappings = {
+              windows = true;
+            };
+          };
+          bufremove = { };
           completion = {
             lsp_completion = {
               source_func = "omnifunc";
