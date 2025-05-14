@@ -76,6 +76,14 @@
       # https://github.com/nvim-telescope/telescope.nvim
       telescope = {
         enable = true;
+        extensions = {
+          file-browser = {
+            enable = true;
+          };
+          fzf-native = {
+            enable = true;
+          };
+        };
         keymaps = {
           "<leader><space>" = {
             action = "find_files";
@@ -89,16 +97,34 @@
               desc = "Live grep";
             };
           };
-          "<leader>b" = {
+          "<leader>ff" = {
+            action = "find_files";
+            options = {
+              desc = "Find project files";
+            };
+          };
+          "<leader>fr" = {
+            action = "oldfiles";
+            options = {
+              desc = "Recent";
+            };
+          };
+          "<leader>fb" = {
             action = "buffers";
             options = {
               desc = "+buffer";
             };
           };
-          "<leader>h" = {
-            action = "help_tags";
+          "<leader>sb" = {
+            action = "current_buffer_fuzzy_find";
             options = {
-              desc = "Help pages";
+              desc = "Buffer";
+            };
+          };
+          "<leader>sk" = {
+            action = "keymaps";
+            options = {
+              desc = "Keymaps";
             };
           };
         };
@@ -149,11 +175,33 @@
         enable = true;
       };
 
+      bufferline = {
+        enable = true;
+        settings = {
+          options = {
+            mode = "buffers";
+            diagnostics = "nvim_lsp";
+            offsets = [
+              {
+                filetype = "neo-tree";
+                text = "Neo-tree";
+                highlight = "Directory";
+                text_align = "left";
+              }
+            ];
+          };
+        };
+      };
+
       lualine = {
         enable = true;
         settings = {
           options = {
-            globalStatus = true;
+            extensions = [
+              "fzf"
+              "neo-tree"
+            ];
+            globalstatus = true;
             theme = "dracula";
           };
         };
