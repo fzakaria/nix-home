@@ -135,6 +135,7 @@
     unstable.jujutsu
     unstable.zed-editor
     nixfmt-rfc-style
+    zip
   ];
 
   programs = {

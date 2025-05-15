@@ -7,6 +7,11 @@
   # Many thanks to https://github.com/dc-tec/nixvim
   programs.nixvim = {
     enable = true;
+    nixpkgs = {
+      config = {
+        allowUnfree = true;
+      };
+    };
 
     defaultEditor = true;
     viAlias = true;
@@ -75,6 +80,26 @@
         action = "<cmd>lua MiniBufremove.delete()<cr>";
         options = {
           desc = "Close Buffer";
+        };
+      }
+      # Quickly save the current buffer
+      {
+        mode = ["n" "i" "v"];
+        key = "<C-s>";
+        action = "<cmd>w<CR>";
+        options = {
+          noremap = true;
+          silent = true;
+        };
+      }
+      # Trigger auto completion box
+      {
+        mode = "i";
+        key = "<C-Space>";
+        action = "<C-x><C-o>";
+        options = {
+          noremap = true;
+          silent = true;
         };
       }
     ];
@@ -164,13 +189,12 @@
               windows = true;
             };
           };
-          bufremove = { };
-          completion = {
-            lsp_completion = {
-              source_func = "omnifunc";
-            };
-          };
+          bufremove = {};
         };
+      };
+
+      copilot-vim = {
+        enable = true;
       };
 
       web-devicons = {
@@ -217,6 +241,17 @@
             globalstatus = true;
             theme = "dracula";
           };
+          sections = {
+            lualine_x = [
+              # let's hide copilot as it's always active
+              {
+                __unkeyed = "lsp_status";
+                ignore_lsp = ["GitHub Copilot"];
+              }
+              "filetype"
+              "hostname"
+            ];
+          };
         };
       };
 
@@ -225,6 +260,18 @@
         inlayHints = true;
         servers = {
           nixd = {
+            enable = true;
+          };
+          clangd = {
+            enable = true;
+          };
+          pyright = {
+            enable = true;
+          };
+          ts-ls = {
+            enable = true;
+          };
+          gopls = {
             enable = true;
           };
         };
