@@ -112,6 +112,9 @@ in {
         # remote development
         ms-vscode-remote.remote-ssh-edit
         ms-vscode.remote-explorer
+        # meson
+        mesonbuild.mesonbuild
+
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
