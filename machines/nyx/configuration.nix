@@ -181,7 +181,8 @@
     htop
     btop
     amdgpu_top
-    signal-desktop
+    # the 24.11 expired
+    unstable.signal-desktop
     linuxPackages_latest.perf
     bc
     gdb
@@ -190,13 +191,13 @@
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default
     (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot"])
-    # no license at the moment
-    # jetbrains.clion
+    unstable.jetbrains.clion
     file
     element-desktop
     bazel_7
     unstable.ghostty
     unstable.code-cursor
+    meson
   ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,

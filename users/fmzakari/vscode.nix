@@ -52,6 +52,14 @@
   frontend = {
     "svelte.enable-ts-plugin" = true;
   };
+  meson = {
+    "mesonbuild.downloadLanguageServer" = false;
+    "mesonbuild.languageServer" = "mesonlsp";
+    "mesonbuild.languageServerPath" = pkgs.lib.getExe pkgs.unstable.mesonlsp;
+    "mesonbuild.modifySettings" = false;
+    # default for Nix project
+    "mesonbuild.buildFolder" = "build";
+  };
 in {
   xdg.mimeApps.defaultApplications."text/plain" = "code.desktop";
 
@@ -114,7 +122,8 @@ in {
         ms-vscode.remote-explorer
         # meson
         mesonbuild.mesonbuild
-
+        # malloy
+        malloydata.malloy-vscode
       ])
       ++ (with pkgs.vscode-marketplace-release; [
         github.copilot
@@ -126,6 +135,8 @@ in {
       {
         # You can put one-off settings here, otherwise try to put them
         # in a more specific attrset above.
+        "malloy.nodePath" = pkgs.lib.getExe pkgs.nodejs;
+        "malloy.useNewExplorer" = true;
       }
       // editor
       // telemetry
@@ -134,6 +145,7 @@ in {
       // cpp
       // java
       // go
-      // frontend;
+      // frontend
+      // meson;
   };
 }

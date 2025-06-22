@@ -136,6 +136,7 @@
     unstable.zed-editor
     nixfmt-rfc-style
     zip
+    ccache
   ];
 
   programs = {

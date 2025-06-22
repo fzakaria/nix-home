@@ -268,7 +268,7 @@
           pyright = {
             enable = true;
           };
-          ts-ls = {
+          ts_ls = {
             enable = true;
           };
           gopls = {
