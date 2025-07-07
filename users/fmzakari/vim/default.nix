@@ -3,10 +3,24 @@
     inputs.nixvim.homeManagerModules.nixvim
   ];
 
+ programs.vim = {
+    enable = true;
+    extraConfig = ''
+      set background=dark
+      colorscheme evening
+
+      " Override with a green background
+      highlight Normal ctermbg=green guibg=green
+
+      syntax on
+      set number
+    '';
+  };
+  
   # Enable the NixOS module for NixVim
   # Many thanks to https://github.com/dc-tec/nixvim
   programs.nixvim = {
-    enable = true;
+    enable = false;
     nixpkgs = {
       config = {
         allowUnfree = true;
