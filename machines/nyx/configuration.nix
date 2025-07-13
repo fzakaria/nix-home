@@ -29,6 +29,13 @@
     binfmt.emulatedSystems = ["aarch64-linux"];
   };
 
+  # High-DPI console
+  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+  console.keyMap = "us";
+  # prevents `systemd-vconsole-setup` failing during systemd initrd
+  console.earlySetup = true;
+  systemd.services.systemd-vconsole-setup.unitConfig.After = "local-fs.target";
+
   networking = {
     hostName = "nyx";
     networkmanager.enable = true;
