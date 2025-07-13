@@ -30,10 +30,12 @@
   };
 
   # High-DPI console
-  console.font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
-  console.keyMap = "us";
-  # prevents `systemd-vconsole-setup` failing during systemd initrd
-  console.earlySetup = true;
+  console = {
+    font = lib.mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-u28n.psf.gz";
+    keyMap = "us";
+    # prevents `systemd-vconsole-setup` failing during systemd initrd
+    earlySetup = true;
+  };
   systemd.services.systemd-vconsole-setup.unitConfig.After = "local-fs.target";
 
   networking = {
@@ -150,6 +152,21 @@
   # };
 
   programs = {
+    noisetorch = {
+      enable = true;
+    };
+    
+    obs-studio = {
+      package = pkgs.unstable.obs-studio;
+      enable = true;
+      enableVirtualCamera = true;
+      plugins = with pkgs.unstable.obs-studio-plugins; [
+        obs-pipewire-audio-capture
+        obs-backgroundremoval
+        wlrobs
+      ];
+    };
+
     ssh.startAgent = false;
 
     # I got tired of facing NixOS issues
