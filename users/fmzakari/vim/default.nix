@@ -1,6 +1,6 @@
 {inputs, ...}: {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
   ];
 
   # Enable the NixOS module for NixVim

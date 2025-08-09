@@ -8,14 +8,12 @@
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
     # We want to use the yubikey-agent so disable gnome's ssh-agent
+    # https://discourse.nixos.org/t/disable-ssh-agent-from-gnome-keyring-on-gnome/28176/7?u=fzakaria
     gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
-      enableParallelBuilding = true;
-
-      configureFlags =
-        oldAttrs.configureFlags
-        or []
+      mesonFlags =
+        (builtins.filter (flag: flag != "-Dssh-agent=true") oldAttrs.mesonFlags)
         ++ [
-          "--disable-ssh-agent"
+          "-Dssh-agent=false"
         ];
     });
 

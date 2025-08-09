@@ -46,9 +46,23 @@
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  fonts.packages = with pkgs; [
-    nerdfonts
-  ];
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs.nerd-fonts; [
+      fira-code
+      fira-mono
+      caskaydia-cove
+      caskaydia-mono
+    ];
+    fontconfig = {
+      defaultFonts = {
+        serif = ["CaskaydiaCove Nerd Font"];
+        sansSerif = ["CaskaydiaCove Nerd Font"];
+        monospace = ["CaskaydiaCove Nerd Font Mono"];
+        emoji = ["CaskaydiaCove Nerd Font"];
+      };
+    };
+  };
 
   hardware = {
     # enables support for SANE scanners
@@ -155,7 +169,7 @@
     noisetorch = {
       enable = true;
     };
-    
+
     obs-studio = {
       package = pkgs.unstable.obs-studio;
       enable = true;
@@ -193,7 +207,6 @@
     google-chrome
     firefox
     yubikey-personalization
-    yubikey-manager-qt
     yubikey-manager
     pstree
     niv
@@ -214,7 +227,8 @@
     python3
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default
-    (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot"])
+    # (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot"])
+    unstable.jetbrains.idea-ultimate
     unstable.jetbrains.clion
     file
     element-desktop
