@@ -208,6 +208,10 @@
           hostname = "alakwan.tail9f4b5.ts.net";
           user = "fzakaria";
         };
+        "leviathan" = {
+          hostname = "leviathan.cymric-daggertooth.ts.net";
+          user = "fmzakari";
+        };
       };
     };
 

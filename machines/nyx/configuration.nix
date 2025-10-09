@@ -231,7 +231,8 @@
     unstable.jetbrains.idea-ultimate
     unstable.jetbrains.clion
     file
-    element-desktop
+    # web app better
+    # element-desktop
     bazel_7
     unstable.ghostty
     unstable.code-cursor

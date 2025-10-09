@@ -12,6 +12,10 @@
         hostNames = ["eu.nixbuild.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
       };
+      leviathan = {
+        hostNames = ["leviathan.cymric-daggertooth.ts.net"];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEtV2xoOv+N4c5sg5oBqM/Xy+aZHf+5GHOhzXKYduXG";
+      };
     };
 
     # nix remote builders don't work with Yubikey and on NixOS the builder runs as root
@@ -22,6 +26,9 @@
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host alakwan.tail9f4b5.ts.net
+        IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host leviathan.cymric-daggertooth.ts.net
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host dennard.soe.ucsc.edu
@@ -65,6 +72,14 @@
         maxJobs = 192;
         supportedFeatures = ["benchmark" "big-parallel"];
         sshUser = "fzakaria";
+      }
+      {
+        protocol = "ssh-ng";
+        hostName = "leviathan.cymric-daggertooth.ts.net";
+        systems = ["x86_64-linux"];
+        maxJobs = 256;
+        supportedFeatures = ["benchmark" "big-parallel"];
+        sshUser = "fmzakari";
       }
       {
         hostName = "eu.nixbuild.net";

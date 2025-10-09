@@ -19,7 +19,7 @@
       kernelModules = [];
     };
     kernelModules = ["kvm-amd"];
-    kernelPackages = pkgs.unstable.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_latest;
     extraModulePackages = [];
     kernelParams = [
       # Turn on adaptive brightness management
