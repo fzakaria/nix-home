@@ -156,6 +156,23 @@
           )
         ];
       };
+      "fmzakari@leviathan" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [
+          ./users/fmzakari
+          # > Our main home-manager configuration file <
+          ./modules/nixpkgs.nix
+          (
+            {lib, ...}: {
+              home = {
+                username = lib.mkForce "fmzakari";
+                homeDirectory = lib.mkForce "/home/fmzakari";
+              };
+            }
+          )
+        ];
+      };
       "fzakaria@confluent.io" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."aarch64-darwin";
         extraSpecialArgs = {inherit inputs outputs;};
