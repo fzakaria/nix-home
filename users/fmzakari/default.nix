@@ -137,6 +137,8 @@
     nixfmt-rfc-style
     zip
     ccache
+    # Should we use the -bin variant?
+    unstable.gemini-cli-bin
   ];
 
   programs = {
