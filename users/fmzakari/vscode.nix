@@ -35,6 +35,9 @@
   };
   go = {
   };
+  rust = {
+
+  };
   java = {
     "java.jdt.ls.java.home" = "${pkgs.openjdk}/lib/openjdk";
     "java.configuration.runtimes" = [
@@ -81,6 +84,9 @@ in {
         ms-vscode-remote.remote-ssh
       ])
       ++ (with pkgs.vscode-marketplace; [
+        # rust extensions
+        rust-lang.rust-analyzer
+        
         # nix extensions
         jnoortheen.nix-ide
         # general extensions
@@ -146,6 +152,7 @@ in {
       // java
       // go
       // frontend
+      // rust
       // meson;
   };
 }
