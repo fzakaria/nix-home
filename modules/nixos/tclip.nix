@@ -61,7 +61,7 @@ in {
   };
   config = mkIf cfg.enable {
     environment.systemPackages = [
-      pkgs.tclip
+      cfg.package
     ];
 
     users.users."${cfg.user}" = {
