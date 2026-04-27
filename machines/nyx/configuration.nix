@@ -227,8 +227,8 @@
     python3
     sqlite-interactive
     inputs.agenix.packages.x86_64-linux.default
-    # (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ["github-copilot"])
-    unstable.jetbrains.idea-ultimate
+    # (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea ["github-copilot"])
+    unstable.jetbrains.idea
     unstable.jetbrains.clion
     file
     # web app better
