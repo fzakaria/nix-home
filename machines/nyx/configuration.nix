@@ -74,6 +74,9 @@
   };
 
   services = {
+    guix = {
+      enable = true;
+    };
     # A fuse filesystem that dynamically populates contents of /bin
     # and /usr/bin/ so that it contains all executables from the PATH
     # of the requesting process.
