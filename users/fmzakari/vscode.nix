@@ -69,90 +69,93 @@ in {
   programs.vscode = {
     enable = true;
 
-    enableExtensionUpdateCheck = false;
-    enableUpdateCheck = false;
+    profiles.default = {
+      enableExtensionUpdateCheck = false;
+      enableUpdateCheck = false;
+
+      extensions =
+        # use the nixpkgs version but at least unstable
+        (with pkgs.unstable.vscode-extensions; [
+          # nixpkgs has special handling to create this extension
+          ms-vscode.cpptools
+          # remote development
+          ms-vscode-remote.remote-ssh
+        ])
+        ++ (with pkgs.vscode-marketplace; [
+          # rust extensions
+          rust-lang.rust-analyzer
+          
+          # nix extensions
+          jnoortheen.nix-ide
+          # general extensions
+          christian-kohler.path-intellisense
+          # c++ extensions
+          twxs.cmake
+          ms-vscode.cpptools-themes
+          ms-vscode.cmake-tools
+          llvm-vs-code-extensions.vscode-clangd
+          # python
+          ms-python.python
+          ms-python.vscode-pylance
+          ms-python.debugpy
+          ms-python.mypy-type-checker
+          ms-python.isort
+          ms-python.black-formatter
+          # golang
+          golang.go
+          # bazel
+          bazelbuild.vscode-bazel
+          # java
+          redhat.java
+          vscjava.vscode-java-debug
+          vscjava.vscode-gradle
+          vscjava.vscode-maven
+          vscjava.vscode-java-dependency
+          vscjava.vscode-java-test
+          vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
+          # haskell
+          haskell.haskell
+          justusadam.language-haskell
+          # frontend
+          svelte.svelte-vscode
+          bradlc.vscode-tailwindcss
+          # ruby
+          shopify.ruby-lsp
+          # remote development
+          ms-vscode-remote.remote-ssh-edit
+          ms-vscode.remote-explorer
+          # meson
+          mesonbuild.mesonbuild
+          # malloy
+          malloydata.malloy-vscode
+        ])
+        ++ (with pkgs.vscode-marketplace-release; [
+          github.copilot
+          github.copilot-chat
+          eamodio.gitlens
+        ]);
+
+      userSettings =
+        {
+          # You can put one-off settings here, otherwise try to put them
+          # in a more specific attrset above.
+          "malloy.nodePath" = pkgs.lib.getExe pkgs.nodejs;
+          "malloy.useNewExplorer" = true;
+        }
+        // editor
+        // telemetry
+        // window
+        // nix
+        // cpp
+        // java
+        // go
+        // frontend
+        // rust
+        // meson;
+    };
+
     mutableExtensionsDir = false;
 
     package = pkgs.unstable.vscode;
-
-    extensions =
-      # use the nixpkgs version but at least unstable
-      (with pkgs.unstable.vscode-extensions; [
-        # nixpkgs has special handling to create this extension
-        ms-vscode.cpptools
-        # remote development
-        ms-vscode-remote.remote-ssh
-      ])
-      ++ (with pkgs.vscode-marketplace; [
-        # rust extensions
-        rust-lang.rust-analyzer
-        
-        # nix extensions
-        jnoortheen.nix-ide
-        # general extensions
-        christian-kohler.path-intellisense
-        # c++ extensions
-        twxs.cmake
-        ms-vscode.cpptools-themes
-        ms-vscode.cmake-tools
-        llvm-vs-code-extensions.vscode-clangd
-        # python
-        ms-python.python
-        ms-python.vscode-pylance
-        ms-python.debugpy
-        ms-python.mypy-type-checker
-        ms-python.isort
-        ms-python.black-formatter
-        # golang
-        golang.go
-        # bazel
-        bazelbuild.vscode-bazel
-        # java
-        redhat.java
-        vscjava.vscode-java-debug
-        vscjava.vscode-gradle
-        vscjava.vscode-maven
-        vscjava.vscode-java-dependency
-        vscjava.vscode-java-test
-        vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
-        # haskell
-        haskell.haskell
-        justusadam.language-haskell
-        # frontend
-        svelte.svelte-vscode
-        bradlc.vscode-tailwindcss
-        # ruby
-        shopify.ruby-lsp
-        # remote development
-        ms-vscode-remote.remote-ssh-edit
-        ms-vscode.remote-explorer
-        # meson
-        mesonbuild.mesonbuild
-        # malloy
-        malloydata.malloy-vscode
-      ])
-      ++ (with pkgs.vscode-marketplace-release; [
-        github.copilot
-        github.copilot-chat
-        eamodio.gitlens
-      ]);
-
-    userSettings =
-      {
-        # You can put one-off settings here, otherwise try to put them
-        # in a more specific attrset above.
-        "malloy.nodePath" = pkgs.lib.getExe pkgs.nodejs;
-        "malloy.useNewExplorer" = true;
-      }
-      // editor
-      // telemetry
-      // window
-      // nix
-      // cpp
-      // java
-      // go
-      // frontend
-      // rust
-      // meson;
   };
 }

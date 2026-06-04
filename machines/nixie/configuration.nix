@@ -103,11 +103,11 @@
     };
   };
 
-  services.xserver.displayManager.lightdm.enable = true;
+  services.displayManager.lightdm.enable = true;
   # Emulate an old-fashioned session
   # https://github.com/NixOS/nixpkgs/issues/177555#issuecomment-1263498702
   # https://github.com/dwf/dotfiles/blob/eb783902a03a5c0259bb28843101746db31c5623/nixos/modules/user-xsession.nix
-  services.xserver.displayManager.session = [
+  services.displayManager.session = [
     {
       manage = "desktop";
       name = "normal-user-session";

@@ -199,14 +199,15 @@
 
     ssh = {
       enable = true;
-      forwardAgent = true;
-      # TODO(fzakaria): Doesn't exist in 23.05 nixos release
-      # addKeysToAgent = "confirm";
-      serverAliveInterval = 0;
-      controlMaster = "auto";
-      controlPersist = "60m";
+      enableDefaultConfig = false;
 
       matchBlocks = {
+        "*" = {
+          forwardAgent = true;
+          serverAliveInterval = 0;
+          controlMaster = "auto";
+          controlPersist = "60m";
+        };
         "alakwan" = {
           hostname = "alakwan.tail9f4b5.ts.net";
           user = "fzakaria";

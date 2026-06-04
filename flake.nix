@@ -5,7 +5,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     # You can access packages and modules from different nixpkgs revs
     # at the same time. Here's an working example:
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -15,7 +15,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Nix-index-database
@@ -37,7 +37,6 @@
     # vscode-extensions
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
-    nix-vscode-extensions.inputs.flake-utils.follows = "flake-utils";
 
     # tailscale golink
     tailscale-golink.url = "github:tailscale/golink";
@@ -187,7 +186,7 @@
     nixosMachines = forAllSystems (
       system: let
         # Filter the configurations to those that match the current system
-        matchingSystemConfigurations = nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.nixosConfigurations;
+        matchingSystemConfigurations = nixpkgs.lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system) self.nixosConfigurations;
 
         # Map each matching configuration to its top-level system derivation
         toplevelDerivations = nixpkgs.lib.mapAttrs (_: c: c.config.system.build.toplevel) matchingSystemConfigurations;
@@ -201,7 +200,7 @@
           {
           }
           # Add all our homemanager configurations
-          // (nixpkgs.lib.mapAttrs (_: c: c.activationPackage) (nixpkgs.lib.filterAttrs (_: c: c.pkgs.system == system) self.homeConfigurations))
+          // (nixpkgs.lib.mapAttrs (_: c: c.activationPackage) (nixpkgs.lib.filterAttrs (_: c: c.pkgs.stdenv.hostPlatform.system == system) self.homeConfigurations))
       )
       // self.nixosMachines;
   };

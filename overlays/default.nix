@@ -33,10 +33,10 @@
 
     # TODO(fzakaria): These should from an overlay from the flake.
     # Checkphase with emulation takes a very long time. For now disable it.
-    tclip = inputs.tailscale-tclip.packages."${prev.system}".tclip.overrideAttrs (oldAttrs: {
+    tclip = inputs.tailscale-tclip.packages."${prev.stdenv.hostPlatform.system}".tclip.overrideAttrs (oldAttrs: {
       doCheck = false;
     });
-    tclipd = inputs.tailscale-tclip.packages."${prev.system}".tclipd.overrideAttrs (oldAttrs: {
+    tclipd = inputs.tailscale-tclip.packages."${prev.stdenv.hostPlatform.system}".tclipd.overrideAttrs (oldAttrs: {
       doCheck = false;
     });
   };
@@ -45,7 +45,7 @@
   # be accessible through 'pkgs.unstable'
   unstable-packages = final: _prev: {
     unstable = import inputs.nixpkgs-unstable {
-      system = final.system;
+      system = final.stdenv.hostPlatform.system;
       config.allowUnfree = true;
     };
   };

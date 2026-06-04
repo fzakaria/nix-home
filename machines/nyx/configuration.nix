@@ -93,22 +93,18 @@
     disable-fingerprint-reader-on-laptop-lid.enable = true;
     # Enable the tailscale VPN
     vpn.enable = true;
+    # Enable the GNOME Desktop Environment
+    desktopManager.gnome.enable = true;
+    displayManager.gdm = {
+      enable = true;
+
+      # TODO(fzakaria): google-chrome doesn't respect fractional scaling
+      # when wayland is toggled. Disable for now.
+      wayland = false;
+    };
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
-      desktopManager = {
-        gnome.enable = true;
-      };
-      displayManager = {
-        # Enable the GNOME Desktop Environment
-        gdm = {
-          enable = true;
-
-          # TODO(fzakaria): google-chrome doesn't respect fractional scaling
-          # when wayland is toggled. Disable for now.
-          wayland = false;
-        };
-      };
     };
     fwupd.enable = true;
     hardware = {
@@ -223,7 +219,7 @@
     amdgpu_top
     # the 24.11 expired
     unstable.signal-desktop
-    linuxPackages_latest.perf
+    perf
     bc
     gdb
     bcompare

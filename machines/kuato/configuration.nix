@@ -140,22 +140,18 @@
       tailscaleAuthKeyFile = config.age.secrets."tailscale-tclip.key".path;
       funnel = true;
     };
+    # Enable the GNOME Desktop Environment
+    desktopManager.gnome.enable = true;
+    displayManager.gdm = {
+      enable = true;
+
+      # FIXME: I want to disable wayland but the touch screen seems
+      # to not work otherwise.
+      # wayland = false;
+    };
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
-      desktopManager = {
-        gnome.enable = true;
-      };
-      displayManager = {
-        # Enable the GNOME Desktop Environment
-        gdm = {
-          enable = true;
-
-          # FIXME: I want to disable wayland but the touch screen seems
-          # to not work otherwise.
-          # wayland = false;
-        };
-      };
     };
   };
 

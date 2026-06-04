@@ -225,9 +225,11 @@
       # https://github.com/nvim-neo-tree/neo-tree.nvim
       neo-tree = {
         enable = true;
-        filesystem = {
-          followCurrentFile = {
-            enabled = true;
+        settings = {
+          filesystem = {
+            follow_current_file = {
+              enabled = true;
+            };
           };
         };
       };
