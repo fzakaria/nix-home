@@ -97,10 +97,7 @@
     desktopManager.gnome.enable = true;
     displayManager.gdm = {
       enable = true;
-
-      # TODO(fzakaria): google-chrome doesn't respect fractional scaling
-      # when wayland is toggled. Disable for now.
-      wayland = false;
+      wayland = true;
     };
     # Enable the X11 windowing system.
     xserver = {

@@ -1,4 +1,8 @@
-{inputs, config, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   imports = [
     inputs.nixvim.homeModules.nixvim
   ];
@@ -311,7 +315,7 @@
       lspsaga = {
         enable = true;
       };
-      
+
       lsp = {
         enable = true;
         inlayHints = true;
