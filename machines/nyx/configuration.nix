@@ -120,6 +120,11 @@
     };
   };
 
+  # Disable gcr-ssh-agent as it hijacks SSH_AUTH_SOCK and prevents
+  # yubikey-agent from setting it correctly.
+  systemd.user.services.gcr-ssh-agent.enable = false;
+  systemd.user.sockets.gcr-ssh-agent.enable = false;
+
   virtualisation = {
     docker = {
       enable = true;

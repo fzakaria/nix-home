@@ -138,7 +138,7 @@
     zip
     ccache
     # Should we use the -bin variant?
-    unstable.gemini-cli-bin
+    unstable.antigravity-cli
     unstable.devenv
   ];
 
