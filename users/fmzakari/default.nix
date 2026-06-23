@@ -52,95 +52,100 @@
   };
 
   # Place packages here that are
-  home.packages = with pkgs; [
-    # unzip
-    unzip
-    # dig
-    dig
-    # tree
-    tree
-    # a tool to help review other nixpkgs PR requests
-    nixpkgs-review
-    # age is a simple, modern and secure file encryption tool, format, and library.
-    # https://github.com/FiloSottile/age
-    age
-    # A simple, fast and user-friendly alternative to 'find'
-    # https://github.com/sharkdp/fd
-    fd
-    # ripgrep recursively searches directories for a regex pattern
-    # https://github.com/BurntSushi/ripgrep
-    ripgrep
-    # Quickly locate nix packages with specific files
-    # https://github.com/bennofs/nix-index
-    # TODO(fzakaria): We bring it in with nix-index-database as a NixOS module
-    # nix-index
-    # Command line tool to share your UNIX terminal and forward local TCP ports to people you trust.
-    # https://github.com/gravitational/teleconsole
-    # archived by upstream
-    #teleconsole
-    cachix
-    # Terminal session recorder
-    # https://github.com/asciinema/asciinema
-    asciinema
-    # Command-line JSON processor
-    # https://github.com/stedolan/jq
-    jq
-    # htop is an interactive text-mode process viewe
-    # https://github.com/hishamhm/htop
-    htop
-    # A formatter for Nix code
-    # https://github.com/kamadorueda/alejandra
-    alejandra
-    # A command-line fuzzy finder
-    # https://github.com/junegunn/fzf
-    fzf
-    # TUI: Interactively browse dependency graphs of Nix derivations
-    # https://github.com/utdemir/nix-tree
-    nix-tree
-    # Get additional information while building.
-    # https://github.com/maralorn/nix-output-monitor
-    nix-output-monitor
-    # Add readelf and other common utilities
-    # Add higher priority because it has some collisions with GCC on Darwin
-    (lib.hiPrio binutils)
-    # Add patchelf
-    patchelf
-    # Add gnumake
-    gnumake
-    # https://github.com/sharkdp/hyperfine
-    # CLI benchmarking tool
-    hyperfine
-    # get copy and paste working for X11
-    xclip
-    niv
-    buildifier
-    just
-    # Add compiler tools
-    gcc
-    # Use age with yubikey
-    # https://github.com/str4d/age-plugin-yubikey
-    age-plugin-yubikey
-    # clangd and other tools
-    clang-tools
-    # Language Server for Nix
-    # https://github.com/nix-community/nixd
-    unstable.nixd
-    # Add JDK
-    openjdk
-    maven
-    gradle
-    # Golang
-    go
-    # https://github.com/martinvonz/jj
-    unstable.jujutsu
-    unstable.zed-editor
-    nixfmt-rfc-style
-    zip
-    ccache
-    # Should we use the -bin variant?
-    unstable.antigravity-cli
-    unstable.devenv
-  ];
+  home.packages = with pkgs;
+    [
+      # unzip
+      unzip
+      # dig
+      dig
+      # tree
+      tree
+      # a tool to help review other nixpkgs PR requests
+      nixpkgs-review
+      # age is a simple, modern and secure file encryption tool, format, and library.
+      # https://github.com/FiloSottile/age
+      age
+      # A simple, fast and user-friendly alternative to 'find'
+      # https://github.com/sharkdp/fd
+      fd
+      # ripgrep recursively searches directories for a regex pattern
+      # https://github.com/BurntSushi/ripgrep
+      ripgrep
+      # Quickly locate nix packages with specific files
+      # https://github.com/bennofs/nix-index
+      # TODO(fzakaria): We bring it in with nix-index-database as a NixOS module
+      # nix-index
+      # Command line tool to share your UNIX terminal and forward local TCP ports to people you trust.
+      # https://github.com/gravitational/teleconsole
+      # archived by upstream
+      #teleconsole
+      cachix
+      # Terminal session recorder
+      # https://github.com/asciinema/asciinema
+      asciinema
+      # Command-line JSON processor
+      # https://github.com/stedolan/jq
+      jq
+      # htop is an interactive text-mode process viewe
+      # https://github.com/hishamhm/htop
+      htop
+      # A formatter for Nix code
+      # https://github.com/kamadorueda/alejandra
+      alejandra
+      # A command-line fuzzy finder
+      # https://github.com/junegunn/fzf
+      fzf
+      # TUI: Interactively browse dependency graphs of Nix derivations
+      # https://github.com/utdemir/nix-tree
+      nix-tree
+      # Get additional information while building.
+      # https://github.com/maralorn/nix-output-monitor
+      nix-output-monitor
+      # Add readelf and other common utilities
+      # Add higher priority because it has some collisions with GCC on Darwin
+      (lib.hiPrio binutils)
+      # Add patchelf
+      patchelf
+      # Add gnumake
+      gnumake
+      # https://github.com/sharkdp/hyperfine
+      # CLI benchmarking tool
+      hyperfine
+      # get copy and paste working for X11
+      xclip
+      niv
+      buildifier
+      just
+      # Add compiler tools
+      gcc
+      # Use age with yubikey
+      # https://github.com/str4d/age-plugin-yubikey
+      age-plugin-yubikey
+      # clangd and other tools
+      clang-tools
+      # Language Server for Nix
+      # https://github.com/nix-community/nixd
+      unstable.nixd
+      # Add JDK
+      openjdk
+      maven
+      gradle
+      # Golang
+      go
+      # https://github.com/martinvonz/jj
+      unstable.jujutsu
+      unstable.zed-editor
+      nixfmt-rfc-style
+      zip
+      ccache
+      unstable.devenv
+      unstable.radare2
+    ]
+    ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+      pi
+      antigravity-cli
+      opencode
+    ]);
 
   programs = {
     # Let Home Manager install and manage itself.
