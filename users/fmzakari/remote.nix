@@ -14,7 +14,7 @@
       };
       leviathan = {
         hostNames = ["leviathan.cymric-daggertooth.ts.net"];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOEtV2xoOv+N4c5sg5oBqM/Xy+aZHf+5GHOhzXKYduXG";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMeSXZNbJuMapeK3JL7B/NfIo1ER8omtbPqTGMK1KNIj";
       };
     };
 
