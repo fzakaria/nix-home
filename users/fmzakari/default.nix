@@ -140,6 +140,7 @@
       ccache
       unstable.devenv
       unstable.radare2
+      unstable.eternal-terminal
     ]
     ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       pi
