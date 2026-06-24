@@ -32,11 +32,13 @@
         "http://fzakaria.cachix.org"
         "https://nix-community.cachix.org"
         "https://cache.numtide.com"
+        "http://leviathan.cymric-daggertooth.ts.net:5000?priority=100"
       ];
       trusted-public-keys = [
         "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
+        "harmonia-leviathan:iCmntZCA/nIZZ6rqdkJwUCpPv1G+259hZ8JTLrlfRz8="
       ];
     };
   };
