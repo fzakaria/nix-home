@@ -144,6 +144,16 @@
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-selection-and-cancel
 
+      # === Zoom indicator ==================================================
+      # When you zoom a pane to fullscreen (prefix + z), it's easy to forget
+      # the window is holding other hidden panes. Append a magnifying glass to
+      # the active window's status entry while it's zoomed. `set -ga` *appends*
+      # to whatever Dracula already set window-status-current-format to, so we
+      # keep Dracula's styling and just tack the glass on the end. This runs
+      # after Dracula's run-shell (global extraConfig comes last), so the
+      # append lands on top of Dracula's value.
+      set -ga window-status-current-format "#{?window_zoomed_flag, 🔍,}"
+
       # NOTE: Dracula theme widgets (@dracula-plugins etc.) are configured up
       # in the plugins list, not here — they must be set *before* the plugin's
       # run-shell runs. See the comment there for why.
