@@ -120,6 +120,59 @@ in {
     enable = true;
     package = claudeWithLsp;
 
+    # Host-level memory — written to ~/.claude/CLAUDE.md and loaded for *every*
+    # project on this machine (a per-repo ./CLAUDE.md is layered on top). Keep
+    # this to durable, machine-wide guidance; project specifics belong in the
+    # repo's own CLAUDE.md.
+    memory.text = ''
+      # Host: nyx (NixOS)
+
+      This machine runs **NixOS** with a flake-based configuration. Adjust your
+      defaults accordingly — it is not a typical FHS Linux box.
+
+      ## NixOS specifics
+      - **Do not install tools imperatively.** `pip install`, `npm -g`,
+        `cargo install`, `apt`, etc. do not belong here and often won't work.
+        For a one-off tool, run it ephemerally: `nix run nixpkgs#<pkg> -- ...`
+        or `nix shell nixpkgs#<pkg> -c <cmd>`. For something permanent, tell me
+        to add it to the Nix config rather than installing it yourself.
+        If working on a project, you likely want a `shell.nix` or `flake.nix`
+        for that repo, not a global install.
+      - **Pre-built/downloaded binaries won't likely run out of the box.** NixOS
+        is not FHS: there is no `/lib/ld-linux…` and libraries aren't in standard paths,
+        so foreign ELF binaries fail on the dynamic linker. Prefer a nixpkgs
+        build; if a foreign binary is unavoidable, use `nix run nixpkgs#steam-run
+        -- ./binary` or patch it with `patchelf`.
+        We leverage nix-ld so some downloaded binaries may work but it's not ideal.
+      - `/usr/bin/env` exists, but almost nothing else lives in `/usr/bin` or
+        `/bin` (except `/bin/sh`). Tools live in the Nix store (/nix/store) and on PATH.
+
+      ## This machine's configuration
+      - The NixOS + home-manager config lives at
+        **`/home/fmzakari/code/github.com/fzakaria/nix-home`** (a flake).
+      - Apply changes:
+        `sudo nixos-rebuild switch --flake ~/code/github.com/fzakaria/nix-home#nyx`
+      - Validate *without* switching (prefer this while iterating):
+        - `nix flake check`
+        - `nix build .#nixosConfigurations.nyx.config.system.build.toplevel`
+        - home-manager pieces: `nix build .#homeConfigurations.fmzakari.activationPackage`
+      - Run `nix fmt` on `.nix` files you touch, and keep the existing formatting/comment style.
+
+      ## Version control: prefer jujutsu (jj)
+      - My repos are typically **jj-colocated** (a `.jj/` dir alongside `.git/`).
+        When `.jj/` is present, use **jujutsu**, not raw git.
+      - There is no staging area and no manual snapshot step: jj auto-snapshots
+        the working copy. Do **not** run `git add` / `git commit` in a jj repo.
+      - Common commands: `jj st`, `jj diff`, `jj log`, `jj describe -m "..."`
+        (set the current change's message), `jj new` (start the next change),
+        `jj bookmark`/`jj git push` for pushing.
+      - `git` CLI still works for read-only inspection, but make commits through
+        `jj`. If a repo has no `.jj/`, fall back to normal git.
+
+      ## General preferences
+      - Match the surrounding code's style; don't reformat unrelated lines.
+    '';
+
     settings = {
       theme = "auto";
       # Claude's own internal status line — rendered at the bottom of the
