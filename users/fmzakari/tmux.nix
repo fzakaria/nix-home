@@ -25,7 +25,7 @@
     baseIndex = 1;
 
     # Changes prefix to Ctrl-a
-    shortcut = "a";
+    # shortcut = "a";
 
     # Use vi-style keybindings in copy mode (the mode you enter to scroll back
     # and select text). If you prefer emacs bindings, set this to "emacs".
