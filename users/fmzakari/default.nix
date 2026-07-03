@@ -12,6 +12,7 @@
     ./fish.nix
     ./vscode.nix
     ./helix.nix
+    ./tmux.nix
     ./vim
     inputs.h.homeModules.default
     inputs.nix-index-database.homeModules.nix-index
@@ -141,7 +142,7 @@
       unstable.devenv
       unstable.radare2
       unstable.eternal-terminal
-      unstable.tmux
+      unstable.gh
     ]
     ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       pi

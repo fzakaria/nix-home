@@ -59,7 +59,7 @@
       '';
 
       # disable welcome message
-      fish_greeting = "fish_prompt";
+      fish_greeting = "";
       nix-closure-size = {
         body = ''
           nix path-info --recursive --size --closure-size \
