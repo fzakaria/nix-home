@@ -70,6 +70,24 @@
       };
     };
 
+    # Composing an aerc reply opens this editor on a `mail` filetype buffer.
+    # Vim's mail syntax buckets each quote depth into mailQuoted1..6, but stock
+    # dracula-nvim only renders a couple of them distinctly, so deeply
+    # interleaved kernel-thread replies collapse to ~2 near-identical colors.
+    # Give each depth an explicit, distinct dracula hue -- and deliberately
+    # reuse the same palette as our aerc `colorize` styleset (see aerc.nix) so
+    # depths 1-4 look identical whether reading or replying. Set as concrete
+    # colors (not `link`s) so mail.vim's `hi def link` defaults don't clobber
+    # them. The 7th+ level wraps back to mailQuoted1.
+    highlight = {
+      mailQuoted1.fg = "#8be9fd"; # cyan
+      mailQuoted2.fg = "#50fa7b"; # green
+      mailQuoted3.fg = "#ffb86c"; # orange
+      mailQuoted4.fg = "#ff79c6"; # pink
+      mailQuoted5.fg = "#bd93f9"; # purple
+      mailQuoted6.fg = "#f1fa8c"; # yellow
+    };
+
     keymaps = [
       {
         mode = ["n"];

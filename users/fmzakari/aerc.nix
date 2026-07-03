@@ -39,6 +39,40 @@ in {
     enable = true;
     package = aerc;
 
+    # Reading long kernel threads means wading through deeply interleaved
+    # quotes (`>`, `>>`, `>> >`, ...). aerc's `colorize` filter styles quoted
+    # text by depth via the `quote_1`..`quote_4`/`quote_x` styleset objects,
+    # but stock dracula paints *every* level the same dim cyan
+    # (`quote_*.fg=6; quote_*.dim=true`), so the nesting is invisible.
+    #
+    # Rather than fork the whole styleset, we reuse upstream dracula verbatim
+    # via readFile and append per-depth *color* overrides giving each quote
+    # level a distinct dracula hue. quote_x covers anything deeper than four.
+    #
+    # We deliberately override only `fg`, not `dim`: stock dracula already sets
+    # `quote_*.dim=true` with `quote_1.dim=false`, i.e. the top quote level is
+    # bright and every deeper level is dimmed. Keeping that means depth is cued
+    # twice over -- by hue *and* by brightness (level 1 vivid, replies faded) --
+    # which reads nicely on long interleaved threads. `fg` and `dim` are
+    # independent attributes, so setting only `fg` leaves that dim pattern intact.
+    #
+    # IMPORTANT: do NOT wrap these in their own `[viewer]` header. The colorize
+    # filter is a small C program (not go-ini) that reads only the *first*
+    # `[viewer]` section and silently ignores any later duplicate section -- so
+    # a second `[viewer]` block has no effect (verified empirically). Within a
+    # single section it is last-key-wins, and stock dracula's `[viewer]` is the
+    # file's final section, so appending bare `quote_*` lines extends it and
+    # our values override the earlier `quote_*` wildcard.
+    stylesets.dracula-interleaved = ''
+      ${builtins.readFile "${aerc}/share/aerc/stylesets/dracula"}
+
+      quote_1.fg=#8be9fd
+      quote_2.fg=#50fa7b
+      quote_3.fg=#ffb86c
+      quote_4.fg=#ff79c6
+      quote_x.fg=#bd93f9
+    '';
+
     extraConfig = {
       general = {
         # Required: home-manager writes accounts.conf into the (world-readable)
@@ -49,7 +83,9 @@ in {
       };
 
       ui = {
-        styleset-name = "dracula";
+        # Our own styleset (see programs.aerc.stylesets below): stock dracula
+        # plus distinct per-quote-depth colors for readable interleaved replies.
+        styleset-name = "dracula-interleaved";
 
         # Gmail's IMAP does not implement server-side THREAD well, so build
         # the thread tree on the client instead.
