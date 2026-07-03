@@ -173,6 +173,7 @@ in {
       package = llmAgents.claude-code;
 
       settings = {
+        theme = "auto";
         # Claude's own internal status line — rendered at the bottom of the
         # Claude pane. This is the only place session usage/tokens/cost show up
         # (tmux's status bar can't see inside the Claude session). We feed it
