@@ -74,6 +74,9 @@ in {
       # A simple, fast and user-friendly alternative to 'find'
       # https://github.com/sharkdp/fd
       fd
+      # Automatically absorb staged changes into your existing commits
+      # https://github.com/tummychow/git-absorb
+      git-absorb
       # ripgrep recursively searches directories for a regex pattern
       # https://github.com/BurntSushi/ripgrep
       ripgrep
