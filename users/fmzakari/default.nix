@@ -141,9 +141,11 @@
       unstable.devenv
       unstable.radare2
       unstable.eternal-terminal
+      unstable.tmux
     ]
     ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
       pi
+      claude-code
       antigravity-cli
       opencode
     ]);
