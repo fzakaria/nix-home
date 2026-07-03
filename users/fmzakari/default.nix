@@ -17,6 +17,7 @@ in {
     ./vscode.nix
     ./helix.nix
     ./claude.nix
+    ./aerc.nix
     ./tmux.nix
     ./vim
     inputs.h.homeModules.default
@@ -151,6 +152,9 @@ in {
       unstable.radare2
       unstable.eternal-terminal
       unstable.gh
+      # A tool to help with kernel-style patch/email workflows (lore.kernel.org)
+      # https://b4.docs.kernel.org/
+      b4
     ]
     ++ (with llmAgents; [
       pi

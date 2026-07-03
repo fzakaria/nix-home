@@ -16,4 +16,6 @@ in {
   "tailscale-grafana.key.age".publicKeys = allUsers ++ [systems.kuato];
   "github-runner.token.age".publicKeys = allUsers ++ [systems.altaria];
   "atuin.key.age".publicKeys = allUsers ++ allSystems;
+  # Gmail app-specific password used by aerc (see users/fmzakari/aerc.nix).
+  "gmail-app-password.age".publicKeys = allUsers ++ [systems.nyx];
 }

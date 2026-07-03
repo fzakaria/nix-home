@@ -136,6 +136,11 @@
       file = ../../users/fmzakari/secrets/atuin.key.age;
       owner = "fmzakari";
     };
+    # Gmail app-specific password consumed by aerc (users/fmzakari/aerc.nix).
+    "gmail-app-password" = {
+      file = ../../users/fmzakari/secrets/gmail-app-password.age;
+      owner = "fmzakari";
+    };
   };
 
   # security = {
