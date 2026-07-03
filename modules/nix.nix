@@ -4,6 +4,16 @@
   pkgs,
   ...
 }: {
+  # nh (https://github.com/nix-community/nh) is a nicer frontend for
+  # nixos-rebuild / home-manager that gives pretty diffs and a unified CLI.
+  programs.nh = {
+    enable = true;
+    # Point nh at our flake so `nh os switch` (etc.) work without arguments.
+    flake = "/home/fmzakari/code/github.com/fzakaria/nix-home";
+    # NOTE: nh.clean is intentionally left disabled; it is mutually exclusive
+    # with the nix.gc.automatic below (the module asserts on both being set).
+  };
+
   # Put nixpkgs into /etc/nixpkgs for convenience
   environment.etc.nixpkgs.source = inputs.nixpkgs;
   # Point nixpath to that nixpkgs so that the system uses the same nix
