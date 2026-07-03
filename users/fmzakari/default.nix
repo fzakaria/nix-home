@@ -8,8 +8,7 @@
   ...
 }: let
   # Binaries from numtide's llm-agents.nix (tracks upstream more aggressively
-  # than nixpkgs). The home-manager `programs.claude-code` module below manages
-  # the *config* around whichever binary we point its `package` at.
+  # than nixpkgs). Claude Code itself lives in ./claude.nix.
   llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in {
   imports = [
@@ -17,6 +16,7 @@ in {
     ./fish.nix
     ./vscode.nix
     ./helix.nix
+    ./claude.nix
     ./tmux.nix
     ./vim
     inputs.h.homeModules.default
@@ -151,8 +151,8 @@ in {
     ]
     ++ (with llmAgents; [
       pi
-      # claude-code is installed via programs.claude-code below (which also
-      # manages ~/.claude/settings.json), so it is intentionally not listed here.
+      # claude-code is installed via programs.claude-code in ./claude.nix (which
+      # also manages ~/.claude/settings.json), so it is intentionally not here.
       antigravity-cli
       opencode
     ]);
@@ -161,30 +161,6 @@ in {
     # Let Home Manager install and manage itself.
     home-manager = {
       enable = true;
-    };
-
-    # Claude Code — Anthropic's CLI.
-    #
-    # The binary comes from llm-agents.nix (via `package`); this module owns the
-    # *config* it writes to ~/.claude/settings.json. Keeping the binary here (not
-    # in home.packages) avoids installing claude-code twice into the profile.
-    claude-code = {
-      enable = true;
-      package = llmAgents.claude-code;
-
-      settings = {
-        theme = "auto";
-        # Claude's own internal status line — rendered at the bottom of the
-        # Claude pane. This is the only place session usage/tokens/cost show up
-        # (tmux's status bar can't see inside the Claude session). We feed it
-        # ccusage's `statusline` renderer, referenced by store path so it works
-        # regardless of PATH and is pulled into the closure without also being
-        # installed onto PATH.
-        statusLine = {
-          type = "command";
-          command = "${llmAgents.ccusage}/bin/ccusage statusline";
-        };
-      };
     };
 
     zellij = {
