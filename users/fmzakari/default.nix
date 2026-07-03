@@ -155,6 +155,10 @@ in {
       # A tool to help with kernel-style patch/email workflows (lore.kernel.org)
       # https://b4.docs.kernel.org/
       b4
+      # Fetch URLs behind Anubis' JS proof-of-work wall (lore.kernel.org, GNOME,
+      # kernel.org, ...) by driving a real headless Chromium. See ./claude.nix.
+      # Custom package from ../../pkgs, exposed via the `additions` overlay.
+      anubis-fetch
     ]
     ++ (with llmAgents; [
       pi

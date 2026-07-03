@@ -147,6 +147,21 @@ in {
       - `/usr/bin/env` exists, but almost nothing else lives in `/usr/bin` or
         `/bin` (except `/bin/sh`). Tools live in the Nix store (/nix/store) and on PATH.
 
+      ## Fetching pages behind Anubis (lore.kernel.org, GNOME, kernel.org, ...)
+      Many sites sit behind **Anubis**, a JS proof-of-work bot-wall. Plain
+      `curl`/WebFetch just get a 403 "Access Denied" page and see no content.
+      - Use **`anubis-fetch <url>`** (on PATH; custom pkg in nix-home). It drives
+        a real headless Chromium that solves the PoW and prints the settled page.
+        - `anubis-fetch <url>` → page HTML on stdout.
+        - `anubis-fetch --text <url>` → readable plain text (rendered via w3m).
+        - `--timeout <ms>` (default 30000) for stubborn challenges; `--ua <str>`
+          to override the User-Agent.
+      - For **lore.kernel.org specifically** there's a lighter path that needs no
+        browser: public-inbox exposes machine-readable endpoints a plain UA can
+        hit, e.g. append `/t.mbox.gz` to a thread URL (`curl -A curl ... | gunzip`)
+        or `/raw` to a message URL. Prefer this for bulk/patch work; reach for
+        `anubis-fetch` when you need the rendered HTML page.
+
       ## This machine's configuration
       - The NixOS + home-manager config lives at
         **`/home/fmzakari/code/github.com/fzakaria/nix-home`** (a flake).
