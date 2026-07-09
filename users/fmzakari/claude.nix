@@ -147,23 +147,22 @@ in {
       - `/usr/bin/env` exists, but almost nothing else lives in `/usr/bin` or
         `/bin` (except `/bin/sh`). Tools live in the Nix store (/nix/store) and on PATH.
 
-      ## Fetching pages behind Anubis (lore.kernel.org, GNOME, kernel.org, ...)
-      Many sites sit behind **Anubis**, a JS proof-of-work bot-wall. Plain
-      `curl`/WebFetch just get a 403 "Access Denied" page and see no content.
-      Two custom tools on PATH (nix-home `pkgs/`) handle it:
-      - **`anubis-fetch <url>`** — the main command; use this by default. It runs
-        the browserless solver first and only drives headless Chromium
-        (Playwright) when the solver can't cope: preact/metarefresh challenge
-        methods, very high difficulty, or a Cloudflare *active* JS challenge. So
-        it's fast on the common case and general on the tail. `--browser` skips
-        straight to the browser.
-      - **`anubis-solve <url>`** — the standalone fast path `anubis-fetch` calls.
-        Solves Anubis' SHA-256 PoW in-process over an impersonating HTTP client
-        (curl_cffi, which also clears Cloudflare passive/JA3 fingerprinting).
-        ~4x faster than a browser, no Chromium closure. Exits 3 (no browser) when
-        it can't solve. Reach for it directly when you want the lean/fast tool.
-      - Both take `--text` (readable plain text via w3m), `--timeout <ms>`
-        (default 30000), and `--ua <str>`.
+      ## Fetching pages behind Anubis / Cloudflare (lore.kernel.org, GNOME, ...)
+      Many sites sit behind **Anubis**, a JS proof-of-work bot-wall (some behind
+      Cloudflare). Plain `curl`/WebFetch just get a 403 "Access Denied" page.
+      Use **`anubis-fetch <url>`** (on PATH; my own tool at
+      github.com/fzakaria/anubis-fetch, wired in as a flake input):
+      - Cheapest step first: a saved auth cookie → solving Anubis' SHA-256 PoW
+        in-process over a Chrome-impersonating HTTP client (which also clears
+        Cloudflare *passive* TLS/JA3 fingerprinting) → a headless-Chromium
+        fallback for the preact/metarefresh methods, too-high difficulty, or a
+        Cloudflare *active* JS challenge. Fast on the common case, general on the
+        tail.
+      - Cookies persist per host under `$XDG_CACHE_HOME/anubis-fetch/`, so a
+        revisit skips the challenge entirely (like a browser).
+      - Flags: `--text` (readable plain text), `--timeout <ms>` (default 30000),
+        `--ua <str>`, `--browser` (force browser), `--no-browser` (never browser;
+        exit 3 if it can't solve), `--no-cache`.
       - For **lore.kernel.org specifically** there's an even lighter path needing
         no PoW at all: public-inbox exposes machine-readable endpoints a plain
         (non-browser) UA passes straight through — append `/t.mbox.gz` to a

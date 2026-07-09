@@ -52,6 +52,11 @@
     };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    # Fetch pages from behind Anubis proof-of-work / Cloudflare bot-walls.
+    anubis-fetch.url = "github:fzakaria/anubis-fetch";
+    anubis-fetch.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    anubis-fetch.inputs.flake-utils.follows = "flake-utils";
   };
 
   outputs = {

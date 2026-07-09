@@ -25,6 +25,30 @@
         "type": "github"
       }
     },
+    "anubis-fetch": {
+      "inputs": {
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1783624039,
+        "narHash": "sha256-NJWG+8t7DIOV+Hfl0lIb4YeSXutc5JH74X07OsjaN4Q=",
+        "owner": "fzakaria",
+        "repo": "anubis-fetch",
+        "rev": "694269205fdd7a7fcb9b91a2cb872d514d12bf33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fzakaria",
+        "repo": "anubis-fetch",
+        "type": "github"
+      }
+    },
     "blueprint": {
       "inputs": {
         "nixpkgs": [
@@ -214,7 +238,7 @@
         "flake-parts": "flake-parts",
         "nixpkgs": "nixpkgs",
         "systems": "systems_3",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1782198869,
@@ -389,6 +413,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "anubis-fetch": "anubis-fetch",
         "flake-utils": "flake-utils",
         "h": "h",
         "home-manager": "home-manager",
@@ -537,6 +562,27 @@
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "anubis-fetch",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1780220602,
+        "narHash": "sha256-eynAfOmbmxJnkp7YewvCEbShNnnYJ9gLLqkzsYtBPeM=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "db947814a175b7ca6ded66e21383d938df01c227",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "llm-agents",
