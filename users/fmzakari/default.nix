@@ -156,9 +156,12 @@ in {
       # https://b4.docs.kernel.org/
       b4
       # Fetch URLs behind Anubis' JS proof-of-work wall (lore.kernel.org, GNOME,
-      # kernel.org, ...) by driving a real headless Chromium. See ./claude.nix.
-      # Custom package from ../../pkgs, exposed via the `additions` overlay.
+      # kernel.org, ...). See ./claude.nix. Custom packages from ../../pkgs,
+      # exposed via the `additions` overlay.
+      #  - anubis-fetch: main CLI; solver first, headless-Chromium fallback.
+      #  - anubis-solve: standalone browserless fast path (also usable directly).
       anubis-fetch
+      anubis-solve
     ]
     ++ (with llmAgents; [
       pi

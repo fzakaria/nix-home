@@ -150,17 +150,25 @@ in {
       ## Fetching pages behind Anubis (lore.kernel.org, GNOME, kernel.org, ...)
       Many sites sit behind **Anubis**, a JS proof-of-work bot-wall. Plain
       `curl`/WebFetch just get a 403 "Access Denied" page and see no content.
-      - Use **`anubis-fetch <url>`** (on PATH; custom pkg in nix-home). It drives
-        a real headless Chromium that solves the PoW and prints the settled page.
-        - `anubis-fetch <url>` → page HTML on stdout.
-        - `anubis-fetch --text <url>` → readable plain text (rendered via w3m).
-        - `--timeout <ms>` (default 30000) for stubborn challenges; `--ua <str>`
-          to override the User-Agent.
-      - For **lore.kernel.org specifically** there's a lighter path that needs no
-        browser: public-inbox exposes machine-readable endpoints a plain UA can
-        hit, e.g. append `/t.mbox.gz` to a thread URL (`curl -A curl ... | gunzip`)
-        or `/raw` to a message URL. Prefer this for bulk/patch work; reach for
-        `anubis-fetch` when you need the rendered HTML page.
+      Two custom tools on PATH (nix-home `pkgs/`) handle it:
+      - **`anubis-fetch <url>`** — the main command; use this by default. It runs
+        the browserless solver first and only drives headless Chromium
+        (Playwright) when the solver can't cope: preact/metarefresh challenge
+        methods, very high difficulty, or a Cloudflare *active* JS challenge. So
+        it's fast on the common case and general on the tail. `--browser` skips
+        straight to the browser.
+      - **`anubis-solve <url>`** — the standalone fast path `anubis-fetch` calls.
+        Solves Anubis' SHA-256 PoW in-process over an impersonating HTTP client
+        (curl_cffi, which also clears Cloudflare passive/JA3 fingerprinting).
+        ~4x faster than a browser, no Chromium closure. Exits 3 (no browser) when
+        it can't solve. Reach for it directly when you want the lean/fast tool.
+      - Both take `--text` (readable plain text via w3m), `--timeout <ms>`
+        (default 30000), and `--ua <str>`.
+      - For **lore.kernel.org specifically** there's an even lighter path needing
+        no PoW at all: public-inbox exposes machine-readable endpoints a plain
+        (non-browser) UA passes straight through — append `/t.mbox.gz` to a
+        thread URL (`curl -A curl ... | gunzip`) or `/raw` to a message URL.
+        Prefer this for bulk/patch work.
 
       ## This machine's configuration
       - The NixOS + home-manager config lives at
