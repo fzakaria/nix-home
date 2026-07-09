@@ -34,6 +34,10 @@
     };
   };
   go = {
+    # gopls from unstable so it supports newer Go toolchains (e.g. go 1.25)
+    "go.alternateTools" = {
+      "gopls" = pkgs.lib.getExe pkgs.unstable.gopls;
+    };
   };
   rust = {
   };

@@ -53,7 +53,7 @@
       };
     };
     gopls = {
-      command = "${pkgs.gopls}/bin/gopls";
+      command = "${pkgs.unstable.gopls}/bin/gopls";
       args = ["serve"];
       extensionToLanguage = {
         ".go" = "go";
