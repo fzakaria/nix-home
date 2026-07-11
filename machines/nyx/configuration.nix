@@ -127,6 +127,7 @@
 
   virtualisation = {
     docker = {
+      package = pkgs.docker_29;
       enable = true;
     };
   };

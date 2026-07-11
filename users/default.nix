@@ -71,7 +71,7 @@
       comma
       discord
       dmenu
-      docker
+      docker_29
       emacs
       firefox
       flameshot
