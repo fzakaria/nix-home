@@ -17,8 +17,12 @@
         st = "status";
         ci = "commit";
         br = "branch";
-        # Display tree-like log, because default log is a pain…
-        lg = "log --graph --date=relative --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ad)%Creset'";
+        # One-line graph log: colored per field + relative age. Also the
+        # shallow-clone fallback for `git sl` below.
+        lg = "log --graph --date=relative --pretty=tformat:'%C(bold yellow)%h%Creset %C(auto)%d%Creset %s %C(dim white)- %an%Creset %C(bold green)(%ar)%Creset'";
+        # Smart log: full clone -> git-graph (branch-column layout); shallow clone
+        # (git-graph can't read those) -> fall back to `git lg`.
+        sl = "!f() { if [ \"$(git rev-parse --is-shallow-repository 2>/dev/null)\" = \"true\" ]; then git lg \"$@\"; else git-graph --format '%h%d %s (%an, %as)' \"$@\"; fi; }; f";
         # Useful when you have to update your last commit
         # with staged files without editing the commit message.
         oops = "commit --amend --no-edit";
