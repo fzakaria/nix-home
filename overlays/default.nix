@@ -7,30 +7,6 @@
   # You can change versions, add patches, set compilation flags, anything really.
   # https://nixos.wiki/wiki/Overlays
   modifications = final: prev: {
-    # We want to use the yubikey-agent so disable gnome's ssh-agent
-    # https://discourse.nixos.org/t/disable-ssh-agent-from-gnome-keyring-on-gnome/28176/7?u=fzakaria
-    gnome-keyring = prev.gnome-keyring.overrideAttrs (oldAttrs: {
-      mesonFlags =
-        (builtins.filter (flag: flag != "-Dssh-agent=true") oldAttrs.mesonFlags)
-        ++ [
-          "-Dssh-agent=false"
-        ];
-    });
-
-    # Let's not get that annoying update message.
-    # Remove when https://github.com/NixOS/nixpkgs/pull/338703 merged.
-    google-chrome = prev.google-chrome.override {
-      commandLineArgs = "--simulate-outdated-no-au='Tue, 31 Dec 2099 23:59:59 GMT'";
-    };
-
-    tailscale = prev.tailscale.overrideAttrs (old: {
-      subPackages =
-        old.subPackages
-        ++ [
-          "cmd/proxy-to-grafana"
-        ];
-    });
-
     # TODO(fzakaria): These should from an overlay from the flake.
     # Checkphase with emulation takes a very long time. For now disable it.
     tclip = inputs.tailscale-tclip.packages."${prev.stdenv.hostPlatform.system}".tclip.overrideAttrs (oldAttrs: {

@@ -67,10 +67,6 @@
   hardware = {
     # enables support for SANE scanners
     sane.enable = true;
-
-    # disable framework kernel module
-    # https://github.com/NixOS/nixos-hardware/issues/1330
-    framework.enableKmod = false;
   };
 
   services = {

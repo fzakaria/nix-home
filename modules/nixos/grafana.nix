@@ -7,6 +7,12 @@
 }:
 with lib; let
   cfg = config.services.grafana-proxy;
+  # tailscale's proxy-to-grafana command is not built by the default nixpkgs
+  # package, so build a variant that includes it. Kept local to this module so
+  # only hosts running grafana-proxy rebuild tailscale (not every host).
+  tailscaleWithProxy = pkgs.tailscale.overrideAttrs (old: {
+    subPackages = old.subPackages ++ ["cmd/proxy-to-grafana"];
+  });
 in {
   options.services.grafana-proxy = {
     enable = mkEnableOption "Enable Grafana service with a Tailscale reverse proxy";
@@ -89,7 +95,7 @@ in {
         ${lib.optionalString (cfg.tailscaleAuthKeyFile != null) ''
           export TS_AUTHKEY="$(head -n1 ${lib.escapeShellArg cfg.tailscaleAuthKeyFile})"
         ''}
-        ${pkgs.tailscale}/bin/proxy-to-grafana ${builtins.concatStringsSep " " args};
+        ${tailscaleWithProxy}/bin/proxy-to-grafana ${builtins.concatStringsSep " " args};
       '';
       wantedBy = ["multi-user.target"];
       serviceConfig = {
