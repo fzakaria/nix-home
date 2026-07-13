@@ -13,6 +13,16 @@
   # The Gmail app password is provided as an agenix secret at the NixOS level
   # (see machines/nyx/configuration.nix). We assume it always exists.
   passwordFile = osConfig.age.secrets."gmail-app-password".path;
+
+  # aerc folder-map: rename server folders to nicer displayed names. Gmail hides
+  # its special mailboxes behind a clumsy "[Gmail]/" prefix ("[Gmail]/Sent Mail",
+  # "[Gmail]/All Mail", ...). A single wildcard line strips it everywhere:
+  # `* = [Gmail]/*` maps every "[Gmail]/<x>" to display name "<x>". INBOX and any
+  # ordinary user labels have no prefix and pass through untouched. See the
+  # folder-map docs (referenced via `folder-map = <file>` in accounts.conf).
+  folderMap = pkgs.writeText "aerc-gmail-folder-map" ''
+    * = [Gmail]/*
+  '';
 in {
   accounts.email.accounts.gmail = {
     primary = true;
@@ -24,15 +34,43 @@ in {
     # `cat` the decrypted agenix secret; nothing is written to the nix store.
     passwordCommand = "cat ${passwordFile}";
 
-    # Gmail exposes its special mailboxes under the [Gmail] hierarchy.
+    # Role folders. home-manager turns these into accounts.conf's `default`
+    # (inbox), `postpone` (drafts) and `copy-to` (sent) keys. Because the
+    # folder-map below strips the "[Gmail]/" prefix, we reference them by their
+    # *displayed* names -- aerc translates back to the server folders via the
+    # map. (The docs call this out: default/copy-to/postpone/archive must be
+    # adjusted for any folder affected by a mapping.)
     folders = {
       inbox = "INBOX";
-      drafts = "[Gmail]/Drafts";
-      sent = "[Gmail]/Sent Mail";
-      trash = "[Gmail]/Trash";
+      drafts = "Drafts";
+      sent = "Sent Mail";
+      trash = "Trash";
     };
 
-    aerc.enable = true;
+    aerc = {
+      enable = true;
+
+      # Per-account keys appended verbatim to this account's accounts.conf
+      # section (merged last, so these win over flavor defaults).
+      extraAccounts = {
+        # See folderMap in the `let` above: display "[Gmail]/<x>" as "<x>".
+        folder-map = "${folderMap}";
+
+        # True Gmail-style archive. Every message always lives in "All Mail";
+        # the inbox is merely the set of messages carrying the INBOX label, so
+        # moving one to All Mail just drops that label -- exactly what Gmail's
+        # own "archive" does. Without this, aerc's :archive would fall back to a
+        # folder literally named "Archive" (Gmail would auto-create that label).
+        # `a` / `e` (see binds below) both run :archive and land here.
+        archive = "All Mail";
+
+        # Poll every folder every 5 minutes. aerc also holds an IMAP IDLE on the
+        # currently-open folder, so the *inbox you're looking at* already updates
+        # in near-real-time; this timer catches the other folders. `<C-r>` (bound
+        # below) runs :check-mail for an immediate on-demand refresh.
+        check-mail = "5m";
+      };
+    };
   };
 
   programs.aerc = {
@@ -149,9 +187,17 @@ in {
       pA = :pipe -m ${b4} shazam -<Enter>
       pM = :pipe -m ${b4} am -<Enter>
 
+      # Gmail muscle memory: `e` archives (aerc already binds `a` to the same
+      # :archive; this is just the familiar alias). `<C-r>` forces an immediate
+      # re-poll of all folders on top of the 5m check-mail timer / IMAP IDLE.
+      e = :archive flat<Enter>
+      <C-r> = :check-mail<Enter>
+
       [view]
       pA = :pipe -m ${b4} shazam -<Enter>
       pM = :pipe -m ${b4} am -<Enter>
+
+      e = :archive flat<Enter>
     '';
   };
 }
