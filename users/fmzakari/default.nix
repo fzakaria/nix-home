@@ -77,10 +77,10 @@ in {
       fd
       # Automatically absorb staged changes into your existing commits
       # https://github.com/tummychow/git-absorb
-      git-absorb
+      unstable.git-absorb
       # Prettier static commit graph (branch-column layout) used by the
       # `git graph` alias on full clones. https://github.com/git-bahn/git-graph
-      git-graph
+      unstable.git-graph
       # ripgrep recursively searches directories for a regex pattern
       # https://github.com/BurntSushi/ripgrep
       ripgrep

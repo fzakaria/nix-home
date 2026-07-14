@@ -1,6 +1,8 @@
-{config, ...}: {
+{pkgs, ...}: {
   programs.git = {
     enable = true;
+    # Track git from unstable for the latest features/fixes.
+    package = pkgs.unstable.git;
 
     settings = {
       user = {
