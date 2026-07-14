@@ -157,7 +157,7 @@ in {
       unstable.gh
       # A tool to help with kernel-style patch/email workflows (lore.kernel.org)
       # https://b4.docs.kernel.org/
-      b4
+      unstable.b4
       # Fetch URLs behind Anubis' proof-of-work wall (lore.kernel.org, GNOME,
       # kernel.org, ...) and Cloudflare fingerprinting. See ./claude.nix.
       # https://github.com/fzakaria/anubis-fetch (wired in as a flake input).

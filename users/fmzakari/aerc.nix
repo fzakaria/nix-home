@@ -8,7 +8,7 @@
 }: let
   aerc = pkgs.unstable.aerc;
   filters = "${aerc}/libexec/aerc/filters";
-  b4 = "${pkgs.b4}/bin/b4";
+  b4 = "${pkgs.unstable.b4}/bin/b4";
 
   # The Gmail app password is provided as an agenix secret at the NixOS level
   # (see machines/nyx/configuration.nix). We assume it always exists.
