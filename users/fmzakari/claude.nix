@@ -75,7 +75,7 @@
   # `finalPackage` passes this through unchanged.
   claudeWithLsp = pkgs.symlinkJoin {
     name = "claude-code";
-    paths = [llmAgents.claude-code];
+    paths = [pkgs.claude-code];
     postBuild = ''
       mv $out/bin/claude $out/bin/.claude-wrapped
       cat > $out/bin/claude <<EOF
@@ -84,7 +84,7 @@
       EOF
       chmod +x $out/bin/claude
     '';
-    inherit (llmAgents.claude-code) meta;
+    inherit (pkgs.claude-code) meta;
   };
 
   # Status line renderer for the Claude pane.

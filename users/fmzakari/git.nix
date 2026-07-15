@@ -73,6 +73,9 @@
           trustExitCode = true;
         };
       };
+      # identity from accounts.email.accounts.gmail
+      # set it as the default
+      sendemail.identity = "gmail";
     };
 
     ignores = [

@@ -2,13 +2,16 @@
 # reading/reviewing kernel-style mailing lists (LKML et al.).
 # https://aerc-mail.org/
 {
+  config,
   pkgs,
   osConfig,
   ...
 }: let
   aerc = pkgs.unstable.aerc;
   filters = "${aerc}/libexec/aerc/filters";
-  b4 = "${pkgs.unstable.b4}/bin/b4";
+  # Drive the same b4 that programs.b4 installs (see ./b4.nix), so the CLI on
+  # PATH and the one aerc pipes patches through never drift apart.
+  b4 = "${config.programs.b4.package}/bin/b4";
 
   # The Gmail app password is provided as an agenix secret at the NixOS level
   # (see machines/nyx/configuration.nix). We assume it always exists.

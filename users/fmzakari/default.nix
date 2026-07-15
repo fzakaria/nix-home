@@ -13,6 +13,7 @@
 in {
   imports = [
     ./git.nix
+    ./b4.nix
     ./fish.nix
     ./vscode.nix
     ./helix.nix
@@ -155,9 +156,9 @@ in {
       unstable.radare2
       unstable.eternal-terminal
       unstable.gh
-      # A tool to help with kernel-style patch/email workflows (lore.kernel.org)
-      # https://b4.docs.kernel.org/
-      unstable.b4
+      # b4 (kernel-style patch/email workflows) is installed and configured via
+      # programs.b4 in ./b4.nix (which also wires up its review-editor syntax
+      # highlighting and agent-reviewer instructions).
       # Fetch URLs behind Anubis' proof-of-work wall (lore.kernel.org, GNOME,
       # kernel.org, ...) and Cloudflare fingerprinting. See ./claude.nix.
       # https://github.com/fzakaria/anubis-fetch (wired in as a flake input).
