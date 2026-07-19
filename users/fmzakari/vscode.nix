@@ -66,6 +66,22 @@
     # default for Nix project
     "mesonbuild.buildFolder" = "build";
   };
+
+  # `claudeProcessWrapper` spawns us as `wrapper <that-path>
+  # <claude flags...>`, so `shift` drops the bundled path before we exec.
+  claudeVscodeWrapper = pkgs.writeShellScript "claude-code-vscode-wrapper" ''
+    shift
+    exec ${lib.getExe config.programs.claude-code.finalPackage} "$@"
+  '';
+  claude = {
+    "claudeCode.claudeProcessWrapper" = "${claudeVscodeWrapper}";
+    "claudeCode.preferredLocation" = "sidebar";
+    "claudeCode.initialPermissionMode" = "acceptEdits";
+  };
+  githubPr = {
+    "githubPullRequests.pullBranch" = "never";
+    "githubPullRequests.fileListLayout" = "tree";
+  };
 in {
   xdg.mimeApps.defaultApplications."text/plain" = "code.desktop";
 
@@ -131,6 +147,9 @@ in {
           mesonbuild.mesonbuild
           # malloy
           malloydata.malloy-vscode
+          # AI + code review
+          anthropic.claude-code
+          github.vscode-pull-request-github
         ])
         ++ (with pkgs.vscode-marketplace-release; [
           github.copilot
@@ -154,7 +173,9 @@ in {
         // go
         // frontend
         // rust
-        // meson;
+        // meson
+        // claude
+        // githubPr;
     };
 
     mutableExtensionsDir = false;
