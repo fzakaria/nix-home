@@ -54,6 +54,14 @@
         # this is the safest option. if you want to merge do so explicitly.
         ff = "only";
       };
+      pager = {
+        # Pipe `git blame` through delta for syntax-highlighted blame output.
+        # https://dandavison.github.io/delta/git-blame.html
+        blame = "delta";
+        # Same idea for `git grep` — delta highlights grep-format output.
+        # https://dandavison.github.io/delta/grep.html
+        grep = "delta";
+      };
       diff = {
         tool = "bc";
       };
@@ -65,6 +73,10 @@
       };
       merge = {
         tool = "bc";
+        # Show the merge base alongside both sides so delta can render each
+        # conflict as two diffs from the ancestor.
+        # https://dandavison.github.io/delta/merge-conflicts.html
+        conflictStyle = "zdiff3";
       };
       mergetool = {
         prompt = false;
