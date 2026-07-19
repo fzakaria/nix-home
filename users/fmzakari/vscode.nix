@@ -4,6 +4,10 @@
   lib,
   ...
 }: let
+  # Marketplace / OpenVSX extensions, filtered to versions whose
+  # `engines.vscode` is satisfied by the VS Code we actually ship.
+  marketplace = pkgs.unstable.forVSCodeVersion pkgs.unstable.vscode.version;
+
   window = {
     "window.zoomLevel" = 2;
   };
@@ -82,6 +86,9 @@
     "githubPullRequests.pullBranch" = "never";
     "githubPullRequests.fileListLayout" = "tree";
   };
+  git = {
+    "git.blame.editorDecoration.enabled" = true;
+  };
 in {
   xdg.mimeApps.defaultApplications."text/plain" = "code.desktop";
 
@@ -93,14 +100,13 @@ in {
       enableUpdateCheck = false;
 
       extensions =
-        # use the nixpkgs version but at least unstable
-        (with pkgs.unstable.vscode-extensions; [
-          # nixpkgs has special handling to create this extension
+        (with marketplace.vscode-marketplace; [
+          # Native-binary extensions: nix-vscode-extensions applies nixpkgs'
+          # patchelf/special handling — from unstable, since the marketplace set
+          # is built on pkgs.unstable — over the marketplace extension version.
           ms-vscode.cpptools
-          # remote development
           ms-vscode-remote.remote-ssh
-        ])
-        ++ (with pkgs.vscode-marketplace; [
+
           # rust extensions
           rust-lang.rust-analyzer
 
@@ -134,7 +140,8 @@ in {
           vscjava.vscode-java-pack # just so we don't get prompted. does nothing.
           # haskell
           haskell.haskell
-          justusadam.language-haskell
+          # justusadam.language-haskell — dropped: its marketplace VSIX 404s, and
+          # the all-unstable base can't fall back to a pre-realized copy.
           # frontend
           svelte.svelte-vscode
           bradlc.vscode-tailwindcss
@@ -147,14 +154,19 @@ in {
           mesonbuild.mesonbuild
           # malloy
           malloydata.malloy-vscode
-          # AI + code review
+          # AI
           anthropic.claude-code
-          github.vscode-pull-request-github
-        ])
-        ++ (with pkgs.vscode-marketplace-release; [
+          # git / GitHub
           github.copilot
           github.copilot-chat
-        ]);
+          github.vscode-pull-request-github
+        ])
+        # Kept intentionally empty. Use this channel only for extensions we want
+        # pinned to stable releases (pre-releases excluded). forVSCodeVersion
+        # already guarantees engine compatibility on the main channel above, so
+        # its pre-releases are fine for everything we currently install.
+        ++ (with marketplace.vscode-marketplace-release; [
+          ]);
 
       userSettings =
         {
@@ -174,7 +186,8 @@ in {
         // rust
         // meson
         // claude
-        // githubPr;
+        // githubPr
+        // git;
     };
 
     mutableExtensionsDir = false;

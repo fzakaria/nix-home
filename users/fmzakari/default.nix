@@ -281,6 +281,11 @@ in {
           email = "farid.m.zakaria@gmail.com";
         };
 
+        ui = {
+          "diff-formatter" = ":git";
+          pager = lib.getExe config.programs.delta.package;
+        };
+
         revset-aliases = {
           # see jj bump & jj tug aliases
           "bumpable()" = "all:mutable() & mine()";

@@ -58,6 +58,16 @@
         '
       '';
 
+      # ripgrep piped through delta for syntax-highlighted, file-grouped
+      # search results.
+      # https://dandavison.github.io/delta/grep.html
+      rgd = {
+        body = ''
+          rg --json $argv | delta
+        '';
+        wraps = "rg";
+      };
+
       # disable welcome message
       fish_greeting = "";
       nix-closure-size = {
