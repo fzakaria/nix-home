@@ -154,7 +154,6 @@ in {
         ++ (with pkgs.vscode-marketplace-release; [
           github.copilot
           github.copilot-chat
-          eamodio.gitlens
         ]);
 
       userSettings =
