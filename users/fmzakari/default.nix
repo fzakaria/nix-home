@@ -294,6 +294,14 @@ in {
 
         aliases = {
           all = ["log" "-r" "all()"];
+          # Side-by-side diff: override the pager to `delta -s` just for this
+          # command (the default `jj diff` stays unified). diff-formatter is
+          # already :git globally, so delta gets a git-format diff to render.
+          sdiff = [
+            "diff"
+            "--config"
+            ''ui.pager=["${lib.getExe config.programs.delta.package}", "-s"]''
+          ];
           bump = [
             "rebase"
             "-b"

@@ -88,6 +88,19 @@
   };
   git = {
     "git.blame.editorDecoration.enabled" = true;
+    # Answer the "periodically run git fetch?" prompt up front (declined) so it stops asking.
+    "git.autofetch" = false;
+  };
+  # Silence VS Code's various "would you like to..." / recommendation nags.
+  noise = {
+    # "Do you want to install the recommended '<x>' extension?" (e.g. Dev Containers)
+    "extensions.ignoreRecommendations" = true;
+    # "Do you trust the authors of the files in this folder?"
+    "security.workspace.trust.enabled" = false;
+    "workbench.tips.enabled" = false;
+    "workbench.welcomePage.walkthroughs.openOnInstall" = false;
+    "update.showReleaseNotes" = false;
+    "git.confirmSync" = false;
   };
 in {
   xdg.mimeApps.defaultApplications."text/plain" = "code.desktop";
@@ -187,7 +200,8 @@ in {
         // meson
         // claude
         // githubPr
-        // git;
+        // git
+        // noise;
     };
 
     mutableExtensionsDir = false;

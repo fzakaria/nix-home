@@ -15,6 +15,10 @@
         aliases = "!git config --get-regexp alias | sed -re 's/alias\\.(\\S*)\\s(.*)$/\\1 = \\2/g'";
         # get a diff not fancy!
         patch = "!git --no-pager diff --no-color";
+        # Side-by-side diff: flip delta into two-column mode for this one
+        # command (default `git diff` stays unified). Function form so extra
+        # args (paths, revs) are forwarded via "$@".
+        sdiff = "!f() { git -c delta.side-by-side=true diff \"$@\"; }; f";
         co = "checkout";
         st = "status";
         ci = "commit";
@@ -102,6 +106,10 @@
     enableGitIntegration = true;
     options = {
       syntax-theme = "Dracula";
+      # Dual-column (old/new) line-number gutter on diffs.
+      line-numbers = true;
+      # Jump file-to-file in the pager with n / N.
+      navigate = true;
     };
   };
 }
