@@ -82,6 +82,18 @@
     "claudeCode.preferredLocation" = "sidebar";
     "claudeCode.initialPermissionMode" = "acceptEdits";
   };
+  copilot = {
+    # Copilot ships `{"*" = true; plaintext = false; markdown = false; scminput = false;}`,
+    # so ghost text is off in prose by default. The setting is an object, not a
+    # merge, so every language has to be respelled here to override it.
+    "github.copilot.enable" = {
+      "*" = true;
+      "plaintext" = true;
+      "markdown" = true;
+      # leave the git commit message box alone
+      "scminput" = false;
+    };
+  };
   githubPr = {
     "githubPullRequests.pullBranch" = "never";
     "githubPullRequests.fileListLayout" = "tree";
@@ -199,6 +211,7 @@ in {
         // rust
         // meson
         // claude
+        // copilot
         // githubPr
         // git
         // noise;
