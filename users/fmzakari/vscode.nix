@@ -182,8 +182,13 @@ in {
           # AI
           anthropic.claude-code
           # git / GitHub
-          github.copilot
-          github.copilot-chat
+          # VS Code >= 1.127 bundles GitHub.copilot-chat (0.55.0) as a built-in,
+          # and completions now live in it rather than in the standalone
+          # github.copilot extension — which no longer activates at all. The
+          # marketplace copilot-chat is likewise shadowed by the newer built-in.
+          # Both are dead weight; kept here only as a breadcrumb.
+          # github.copilot
+          # github.copilot-chat
           github.vscode-pull-request-github
         ])
         # Kept intentionally empty. Use this channel only for extensions we want
