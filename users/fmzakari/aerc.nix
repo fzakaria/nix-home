@@ -132,11 +132,13 @@ in {
         # the thread tree on the client instead.
         threading-enabled = true;
         force-client-threads = true;
-        threading-by-subject = true;
-        # Newest threads at the bottom, and show the surrounding thread
-        # context even when only part of it matched a search -- handy when
-        # jumping into the middle of a long kernel discussion.
-        reverse-thread-order = true;
+        # threading-by-subject left OFF: Gmail/GitHub carry proper References, so it only adds false same-subject merges (and can re-root a thread, showing the real first message as an indented child).
+        # threading-by-subject = true;
+        # Thread root at the top with replies below -- matches the Gmail web UI
+        # (reverse-thread-order = true would put the root at the bottom).
+        reverse-thread-order = false;
+        # Show the surrounding thread context even when only part of it matched
+        # a search -- handy when jumping into the middle of a long discussion.
         show-thread-context = true;
 
         this-day-time-format = "           15:04";
