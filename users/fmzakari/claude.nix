@@ -87,6 +87,58 @@
     inherit (pkgs.claude-code) meta;
   };
 
+  # Collected from https://news.ycombinator.com/item?id=48884313 — a thread on
+  # what people put in their agent prompts to get code written the way they'd
+  # write it themselves. Most of the list is Fabien Sanglard's
+  # (https://fabiensanglard.net/); the "no pronouns in comments" rule is
+  # JoeAltmaier's from the same thread. Reworded, premise unchanged.
+  codeStyle = ''
+    ## Code style
+
+    - Always use braces after `if`, even for a single-line body. The only exception
+      is if you are working in a codebase that has a strong, well-documented style
+      guide that explicitly prefers or allows omitting braces for single-line bodies.
+    - No magic numbers or strings. Hoist them into named constants, or better,
+      an enum.
+    - Prefer enums over booleans for function parameters — a call site should
+      read as what it means, not `true`/`false`.
+    - Use early returns and `continue` aggressively to keep indentation shallow.
+    - Let the reader breathe: separate logical blocks with a blank line, and put
+      a short, to-the-point comment above each block explaining what it does.
+    - Only delete a comment when it is obsolete. When you change code, re-read
+      the comment above it and make sure it is still correct.
+    - Avoid bare pronouns in comments ("it", "this", "those"). Name the thing:
+      not "It serves those file migration methods" but "This method serves x, y,
+      and any method that has set up a migration source and sink".
+
+    ## Tests
+
+    - When working on a patch, write the test first. Watch it fail. Then write
+      the code. Then watch it pass.
+    - Open every test class and test function with a short comment saying what
+      it tests and how it tests it.
+
+    ## Commit messages
+
+    Follow these seven rules whenever you write or proof-read one:
+
+    1. Separate the subject line from the body with a single blank line.
+    2. Limit the subject line to 50 characters (72 is the hard limit).
+    3. Capitalize the first letter of the subject line.
+    4. Do not end the subject line with a period.
+    5. Use the imperative mood in the subject line ("Fix bug", "Add feature" —
+       not "Fixed" or "Adds"). It must complete the sentence "If applied, this
+       commit will ___".
+    6. Wrap the body at 72 characters, manually, to avoid git formatting issues.
+    7. Use the body to explain what and why, not how. The code explains the how;
+       the message explains the context and the reasoning.
+
+    ## Tone
+
+    - Talk to me like an engineer. Be direct and to the point, not verbose.
+    - No superlatives and no praise. Give me the cold hard truth.
+  '';
+
   # Status line renderer for the Claude pane.
   #
   # ccusage's `statusline` only reports token/cost estimates from local logs — it
@@ -193,6 +245,8 @@ in {
 
       ## General preferences
       - Match the surrounding code's style; don't reformat unrelated lines.
+
+      ${codeStyle}
     '';
 
     settings = {
