@@ -250,9 +250,18 @@ in {
     };
 
     ghostty = {
+      enable = true;
       package = pkgs.unstable.ghostty;
       settings = {
         theme = "Dracula";
+
+        # Remote hosts rarely ship the xterm-ghostty terminfo entry, which breaks
+        # anything curses-based over ssh. ssh-terminfo makes the shell integration
+        # push our terminfo to the remote (via infocmp locally, tic remotely) on
+        # first connect and cache the fact it did so; ssh-env is the fallback that
+        # downgrades TERM to xterm-256color when that installation fails.
+        # Unlisted features keep their default value.
+        shell-integration-features = "ssh-env,ssh-terminfo";
       };
     };
 

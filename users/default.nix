@@ -31,6 +31,11 @@
   # enable Zsh for users that use it
   # so that home-manager shells can get completion
   environment.pathsToLink = ["/share/zsh" "/share/fish" "/share/bash"];
+
+  # Every machine in this flake is an ssh target for my Ghostty terminal, so give
+  # them the xterm-ghostty terminfo entry outright rather than relying on Ghostty
+  # pushing it over the wire on first connect.
+  environment.systemPackages = [pkgs.ghostty.terminfo];
   programs = {
     zsh.enable = true;
     fish.enable = true;
