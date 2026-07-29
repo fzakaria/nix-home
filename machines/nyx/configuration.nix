@@ -237,7 +237,6 @@
     # web app better
     # element-desktop
     bazel_7
-    unstable.ghostty
     unstable.code-cursor
     meson
   ];
