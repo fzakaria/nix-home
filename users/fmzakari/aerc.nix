@@ -3,10 +3,18 @@
 # https://aerc-mail.org/
 {
   config,
+  lib,
   pkgs,
   osConfig,
   ...
 }: let
+  # The standalone home-manager entrypoints (see flake.nix's homeConfigurations
+  # -- leviathan, dennard, alakwan) have no NixOS configuration behind them, so
+  # `osConfig` is null and the agenix secret below does not exist. aerc is
+  # useless without an account, so gate the account *and* the client on being
+  # on NixOS rather than shipping a half-configured mail reader.
+  onNixOS = osConfig != null;
+
   aerc = pkgs.unstable.aerc;
   filters = "${aerc}/libexec/aerc/filters";
   # Drive the same b4 that programs.b4 installs (see ./b4.nix), so the CLI on
@@ -14,7 +22,8 @@
   b4 = "${config.programs.b4.package}/bin/b4";
 
   # The Gmail app password is provided as an agenix secret at the NixOS level
-  # (see machines/nyx/configuration.nix). We assume it always exists.
+  # (see machines/nyx/configuration.nix). Only ever forced when onNixOS, so the
+  # null `osConfig` on standalone home-manager never reaches this.
   passwordFile = osConfig.age.secrets."gmail-app-password".path;
 
   # aerc folder-map: rename server folders to nicer displayed names. Gmail hides
@@ -27,7 +36,7 @@
     * = [Gmail]/*
   '';
 in {
-  accounts.email.accounts.gmail = {
+  accounts.email.accounts.gmail = lib.mkIf onNixOS {
     primary = true;
     flavor = "gmail.com";
     realName = "Farid Zakaria";
@@ -76,7 +85,7 @@ in {
     };
   };
 
-  programs.aerc = {
+  programs.aerc = lib.mkIf onNixOS {
     enable = true;
     package = aerc;
 
