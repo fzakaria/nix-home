@@ -109,6 +109,16 @@
       # autoread / focus features work.
       set -g focus-events on
 
+      # === Refresh SSH agent forwarding on reattach ========================
+      # Reattaching a session from a *different* SSH connection means the
+      # forwarded agent socket lives at a new path. tmux already refreshes
+      # SSH_AUTH_SOCK/DISPLAY in its session env by default; add
+      # SSH_CONNECTION too. Note this only updates *new* panes/windows —
+      # shells already running keep whatever they originally exported. The
+      # precmd hook in zshrc re-pulls SSH_AUTH_SOCK from tmux before each
+      # prompt to fix up already-running panes as well.
+      set -g update-environment "SSH_AUTH_SOCK SSH_CONNECTION DISPLAY"
+
       # === Splitting panes =================================================
       # Defaults are prefix-" and prefix-% which are unintuitive. Rebind to
       # visually mnemonic keys, and open the split in the *current* directory.

@@ -15,6 +15,23 @@
         wraps = "bash";
       };
 
+      # tmux refreshes SSH_AUTH_SOCK in its session env on reattach (see
+      # update-environment in tmux.nix), but a pane's shell keeps whatever
+      # it already exported. This runs on every prompt, so skip the
+      # tmux round-trip (a fork+exec) unless the socket we're currently
+      # holding is actually dead — `test -S` is a plain stat(), no fork.
+      __refresh_ssh_auth_sock = {
+        body = ''
+          if set -q TMUX; and not test -S "$SSH_AUTH_SOCK"
+            set -l sock (tmux show-environment SSH_AUTH_SOCK 2>/dev/null | string replace -r '^SSH_AUTH_SOCK=' "")
+            if test -n "$sock" -a -S "$sock"
+              set -gx SSH_AUTH_SOCK $sock
+            end
+          end
+        '';
+        onEvent = "fish_prompt";
+      };
+
       # Based on https://gist.github.com/hroi/d0dc0e95221af858ee129fd66251897e
       fish_jj_prompt = ''
         # Is jj installed?
