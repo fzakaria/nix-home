@@ -8,12 +8,21 @@
   osConfig,
   ...
 }: let
-  # The standalone home-manager entrypoints (see flake.nix's homeConfigurations
-  # -- leviathan, dennard, alakwan) have no NixOS configuration behind them, so
-  # `osConfig` is null and the agenix secret below does not exist. aerc is
-  # useless without an account, so gate the account *and* the client on being
-  # on NixOS rather than shipping a half-configured mail reader.
-  onNixOS = osConfig != null;
+  # aerc is useless without an account, and the account needs the Gmail app
+  # password, so gate the account *and* the client on that secret existing
+  # rather than shipping a half-configured mail reader.
+  #
+  # Two ways it can be absent. The standalone home-manager entrypoints (see
+  # flake.nix's homeConfigurations -- leviathan, dennard, alakwan) have no
+  # NixOS configuration behind them at all, so `osConfig` is null. And of the
+  # NixOS machines only nyx declares the secret (see its configuration.nix);
+  # kuato and altaria are on NixOS but were never given it. Checking for the
+  # secret itself covers both -- checking `osConfig != null` covered only the
+  # first, and broke `nix flake check` on the other two machines.
+  hasGmailPassword =
+    osConfig
+    != null
+    && (osConfig.age.secrets or {}) ? "gmail-app-password";
 
   aerc = pkgs.unstable.aerc;
   filters = "${aerc}/libexec/aerc/filters";
@@ -22,8 +31,8 @@
   b4 = "${config.programs.b4.package}/bin/b4";
 
   # The Gmail app password is provided as an agenix secret at the NixOS level
-  # (see machines/nyx/configuration.nix). Only ever forced when onNixOS, so the
-  # null `osConfig` on standalone home-manager never reaches this.
+  # (see machines/nyx/configuration.nix). Only ever forced when
+  # hasGmailPassword, so a machine without the secret never reaches this.
   passwordFile = osConfig.age.secrets."gmail-app-password".path;
 
   # aerc folder-map: rename server folders to nicer displayed names. Gmail hides
@@ -36,7 +45,7 @@
     * = [Gmail]/*
   '';
 in {
-  accounts.email.accounts.gmail = lib.mkIf onNixOS {
+  accounts.email.accounts.gmail = lib.mkIf hasGmailPassword {
     primary = true;
     flavor = "gmail.com";
     realName = "Farid Zakaria";
@@ -85,7 +94,7 @@ in {
     };
   };
 
-  programs.aerc = lib.mkIf onNixOS {
+  programs.aerc = lib.mkIf hasGmailPassword {
     enable = true;
     package = aerc;
 
