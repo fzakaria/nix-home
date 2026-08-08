@@ -37,6 +37,17 @@ in {
     { allowUnfree = true; }
   '';
 
+  # GTK applications do not ask fontconfig what "monospace" is — they read
+  # this GSettings key, which GNOME ships pointing at Adwaita Mono. Adwaita
+  # Mono has no Nerd Font glyphs, so anything using them (the tmux status
+  # bar, the shell prompt) rendered its icons out of a fallback font with
+  # different metrics than the surrounding text. Point the key at the same
+  # font fonts.fontconfig.defaultFonts.monospace already names, so GNOME
+  # Terminal, Ghostty and every fontconfig consumer agree.
+  dconf.settings."org/gnome/desktop/interface" = {
+    monospace-font-name = "CaskaydiaCove Nerd Font Mono 11";
+  };
+
   # List of additional package outputs of the packages home.packages
   # that should be installed into the user environment.
   home.extraOutputsToInstall = ["man" "doc" "info" "devdoc"];
@@ -254,6 +265,17 @@ in {
       package = pkgs.unstable.ghostty;
       settings = {
         theme = "Dracula";
+
+        # Pin the font rather than letting Ghostty pick. With font-family
+        # unset Ghostty resolves its own default (JetBrains Mono), which is
+        # *not* what fontconfig hands every other application for
+        # "monospace" — so Ghostty and GTK terminals disagreed about the
+        # font. Naming it here makes every terminal render identically, and
+        # keeps the Nerd Font glyphs in the tmux status bar coming from the
+        # same font as the surrounding text instead of a fallback with
+        # different metrics. Matches fonts.fontconfig.defaultFonts.monospace
+        # in machines/nyx/configuration.nix.
+        font-family = "CaskaydiaCove Nerd Font Mono";
 
         # Remote hosts rarely ship the xterm-ghostty terminfo entry, which breaks
         # anything curses-based over ssh. ssh-terminfo makes the shell integration
