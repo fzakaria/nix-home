@@ -57,7 +57,7 @@
     # plugin manager) or any `prefix + I` install step.
     plugins = with pkgs.tmuxPlugins; [
       # Dracula theme, matching your bat/ghostty/helix/zellij setup.
-      # It draws the status bar at the bottom.
+      # It draws the status bar (moved to the top in extraConfig below).
       #
       # The @dracula-* options MUST be set *before* the plugin's own
       # run-shell fires, otherwise dracula reads them while still unset and
@@ -72,6 +72,18 @@
           set -g @dracula-show-powerline true
           set -g @dracula-plugins "cpu-usage ram-usage time"
           set -g @dracula-show-left-icon session
+
+          # Nerd Font glyphs instead of the "CPU"/"RAM" words — same meaning,
+          # two fewer columns each, and easier to pick out at a glance.
+          # CaskaydiaCove Nerd Font (this machine's monospace) has both.
+          set -g @dracula-cpu-usage-label "󰘚"
+          set -g @dracula-ram-usage-label "󰍛"
+
+          # Trim the clock: the default is "Fri 08/08 02:31 PM PDT". The date
+          # and timezone are rarely what you want mid-session, so keep the
+          # weekday and the time only.
+          set -g @dracula-show-timezone false
+          set -g @dracula-time-format "%a %-I:%M %p"
         '';
       }
 
@@ -153,6 +165,27 @@
       # the system clipboard). Feels like vim's visual mode.
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-selection-and-cancel
+
+      # === Window numbering ================================================
+      # Close window 2 of 1-2-3 and tmux leaves you with 1-3 forever; the gap
+      # never closes on its own. renumber-windows re-packs the indices every
+      # time a window goes away, so the list always reads 1..N and `prefix N`
+      # stays a reliable way to jump. Pairs with baseIndex = 1 above.
+      set -g renumber-windows on
+
+      # === Status bar placement ============================================
+      # Move the bar to the top: it gets out of the way of the shell prompt,
+      # which is where your eyes already sit at the bottom of the screen.
+      # The window list stays left-justified (tmux's default).
+      set -g status-position top
+
+      # Give the tabs room to breathe. Dracula's window-status-format has a
+      # leading space but no trailing one, so with tmux's default single-space
+      # separator the inactive tabs run together. Drop the separator and pad
+      # the format on both sides instead — every tab then gets the same
+      # symmetric gutter, and the active tab keeps its powerline caps.
+      set -g window-status-separator ""
+      set -ga window-status-format " "
 
       # === Zoom indicator ==================================================
       # When you zoom a pane to fullscreen (prefix + z), it's easy to forget
