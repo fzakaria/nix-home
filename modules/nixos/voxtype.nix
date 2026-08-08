@@ -40,6 +40,11 @@ with lib; let
     parakeet = {
       # A bare name here; the daemon resolves it under its models directory.
       model = cfg.model;
+      # Auto-detection sniffs the model directory's layout and cannot tell
+      # what the int8 files are, so it warns and guesses. The TDT guess is
+      # right for this model; saying so explicitly silences the warning and
+      # stops a future model layout from silently picking the CTC path.
+      model_type = "tdt";
       # Keep the model resident so the first dictation after login does not
       # pay the load.
       on_demand_loading = false;
@@ -183,6 +188,14 @@ in {
     # previous generation's config -- an old hotkey, an old model -- until the
     # next login, while keyd has already moved on.
     system.userActivationScripts.voxtype.text = ''
+      # switch-to-configuration fires `systemctl --user daemon-reexec` without
+      # waiting on it -- the user session sends no Reloaded signal, so it has
+      # nothing to wait for -- and then runs this activation. Restarting here
+      # would race that reexec and hand systemd the *previous* generation's
+      # unit. daemon-reload is synchronous over D-Bus, so it settles the new
+      # unit definitions before anything below reads or restarts them.
+      systemctl --user daemon-reload
+
       pid=$(systemctl --user show voxtype.service --property=MainPID --value 2>/dev/null || true)
       if [ -n "$pid" ] && [ "$pid" != 0 ]; then
         # The daemon names its config file on its command line. Restarting
