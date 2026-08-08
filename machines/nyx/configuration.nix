@@ -16,6 +16,7 @@
     inputs.agenix.nixosModules.default
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
+    outputs.nixosModules.voxtype
   ];
 
   # Use the systemd-boot EFI boot loader
@@ -89,6 +90,20 @@
     disable-fingerprint-reader-on-laptop-lid.enable = true;
     # Enable the tailscale VPN
     vpn.enable = true;
+    # Hold Super+Space and speak; Whisper transcribes it locally and types the
+    # result at the cursor.
+    voxtype = {
+      enable = true;
+      users = ["fmzakari"];
+      replacements = {
+        "nix os" = "NixOS";
+        "nix packages" = "nixpkgs";
+        "get hub" = "GitHub";
+        "jujitsu" = "jujutsu";
+        "type script" = "TypeScript";
+        "java script" = "JavaScript";
+      };
+    };
     # Enable the GNOME Desktop Environment
     desktopManager.gnome.enable = true;
     displayManager.gdm = {
