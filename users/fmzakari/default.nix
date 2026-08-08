@@ -354,7 +354,16 @@ in {
         # I have had so much trouble running fish as my login shell
         # instead run bash as my default login shell but just exec into it.
         # Check if the shell is interactive.
-        if [[ $- == *i* && -z "$NO_FISH_BASH" && -z "$IN_NIX_SHELL" ]]; then
+        #
+        # `nix-shell` exports IN_NIX_SHELL before exec'ing bash, so that check
+        # catches it. `nix develop` does not: it sources ~/.bashrc from the top
+        # of its generated rc file, *before* the rc file applies the developer
+        # environment, so IN_NIX_SHELL is still empty here and exec'ing fish
+        # would throw away the whole environment. NIX_GCROOT is the one variable
+        # `nix develop` puts in the environment beforehand (see CmdDevelop in
+        # nix's src/nix/develop.cc), so guard on it too -- the same trick the
+        # NixOS direnv module uses.
+        if [[ $- == *i* && -z "$NO_FISH_BASH" && -z "$IN_NIX_SHELL" && -z "$NIX_GCROOT" ]]; then
           exec ${pkgs.fish}/bin/fish
         fi
       '';
