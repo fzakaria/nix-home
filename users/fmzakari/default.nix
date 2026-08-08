@@ -48,6 +48,18 @@ in {
     monospace-font-name = "CaskaydiaCove Nerd Font Mono 11";
   };
 
+  # Installing a GNOME extension only puts it on disk; the shell still has to
+  # be told to load it. The package itself lives in the nyx systemPackages
+  # list, alongside the tools it reads its metrics from.
+  #
+  # Note this key is now declarative: enabling or disabling an extension from
+  # the Extensions app survives until the next home-manager activation, which
+  # resets the list to exactly what is written here.
+  dconf.settings."org/gnome/shell" = {
+    disable-user-extensions = false;
+    enabled-extensions = ["monitor@astraext.github.io"];
+  };
+
   # List of additional package outputs of the packages home.packages
   # that should be installed into the user environment.
   home.extraOutputsToInstall = ["man" "doc" "info" "devdoc"];

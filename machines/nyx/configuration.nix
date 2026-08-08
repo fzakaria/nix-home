@@ -236,6 +236,20 @@
     htop
     btop
     amdgpu_top
+
+    # Astra Monitor: system metrics in the GNOME top bar. Enabled for my user
+    # in users/fmzakari. It reads most of what it shows through a GJS typelib
+    # and shells out for the rest, so the pieces below are what turn its
+    # panels from "n/a" into numbers:
+    gnomeExtensions.astra-monitor
+    # `gi://GTop` -- CPU, memory, swap and per-process accounting. Without it
+    # the extension loads but those panels stay empty. Installing it at system
+    # level is what puts GTop-2.0.typelib somewhere gnome-shell looks.
+    libgtop
+    lm_sensors # `sensors`, for the temperature readouts
+    pciutils # `lspci`, to name the GPU
+    iw # wifi link speed and signal
+    # `amdgpu_top` above already covers the Radeon 780M.
     # the 24.11 expired
     unstable.signal-desktop
     perf
