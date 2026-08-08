@@ -246,6 +246,11 @@ in {
       ## General preferences
       - Match the surrounding code's style; don't reformat unrelated lines.
 
+      ## My personal setup
+      - I have code checked out at ~/code/<host>/<org>/<repo> (e.g. ~/code/github.com/fzakaria/nix-home).
+        - You can use `h` to check out code. Check here often if I have the source already when you are searching
+          for something.
+
       ${codeStyle}
     '';
 
