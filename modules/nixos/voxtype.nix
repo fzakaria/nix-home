@@ -1,6 +1,13 @@
 # Local voice dictation: hold a hotkey, speak, and the transcription is typed
-# at the cursor. Whisper runs entirely offline, accelerated on the GPU through
-# Vulkan. Adapted from https://github.com/adeci/root.
+# at the cursor. Transcription runs entirely offline through Parakeet, NVIDIA's
+# FastConformer transducer, on ONNX Runtime.
+#
+# Parakeet rather than Whisper because Whisper pads every clip to a fixed 30
+# second window, so a three word utterance costs the same encoder pass as a
+# paragraph -- measured at ~1.95s for 2s of speech on this laptop's iGPU, which
+# is most of the felt latency. Parakeet consumes the audio's real length
+# instead, so short dictations get short waits.
+# Adapted from https://github.com/adeci/root.
 {
   config,
   lib,
@@ -13,13 +20,13 @@ with lib; let
   # The daemon reads this once at start and does not hot-reload, so a config
   # change needs `systemctl --user restart voxtype`.
   configFile = (pkgs.formats.toml {}).generate "voxtype-config.toml" {
-    engine = "whisper";
+    engine = "parakeet";
     # Lets the daemon remember whether it is currently recording.
     state_file = "auto";
 
     audio = {
       device = "default";
-      # Whisper expects 16 kHz; anything else is resampled.
+      # The acoustic frontend expects 16 kHz; anything else is resampled.
       sample_rate = 16000;
       max_duration_secs = cfg.maxDurationSecs;
     };
@@ -30,14 +37,18 @@ with lib; let
       mode = "push_to_talk";
     };
 
-    whisper = {
-      backend = "local";
+    parakeet = {
+      # A bare name here; the daemon resolves it under its models directory.
       model = cfg.model;
-      language = "en";
-      translate = false;
+      # Keep the model resident so the first dictation after login does not
+      # pay the load.
+      on_demand_loading = false;
     };
 
-    # The on-screen display needs a compositor widget we do not run.
+    # Both OSD frontends anchor their window with wlr-layer-shell, a wlroots
+    # protocol Mutter does not implement, and the nixpkgs build does not turn
+    # on the osd-gtk4/osd-native cargo features anyway. Desktop notifications
+    # below stand in for it on GNOME.
     osd.enabled = false;
 
     output = {
@@ -48,10 +59,12 @@ with lib; let
       # dotool types through /dev/uinput, which works on any compositor.
       driver_order = ["dotool" "clipboard"];
       pre_type_delay_ms = 100;
-      # Dictation is its own feedback; desktop notifications only get in the way.
+      # Standing in for the OSD: without them there is no sign the daemon
+      # heard the hotkey until the text lands. The transcription itself is
+      # typed at the cursor, so repeating it in a notification is just noise.
       notification = {
-        on_recording_start = false;
-        on_recording_stop = false;
+        on_recording_start = true;
+        on_recording_stop = true;
         on_transcription = false;
       };
     };
@@ -67,19 +80,25 @@ in {
 
     package = mkOption {
       type = types.package;
-      # Not in nixpkgs 25.11 yet; the Vulkan build is what makes the larger
-      # Whisper models usable at dictation speed.
-      default = pkgs.unstable.voxtype-vulkan;
-      defaultText = literalExpression "pkgs.unstable.voxtype-vulkan";
+      # Not in nixpkgs 25.11 yet. The ONNX build is the one that carries the
+      # Parakeet engine, and unlike a `voxtype-vulkan.override { onnxSupport
+      # = true; }` it comes straight from the binary cache rather than
+      # recompiling Rust and whisper.cpp on every nixpkgs bump.
+      default = pkgs.unstable.voxtype-onnx;
+      defaultText = literalExpression "pkgs.unstable.voxtype-onnx";
       description = "The voxtype package to run.";
     };
 
     model = mkOption {
       type = types.str;
-      default = "large-v3-turbo";
+      default = "parakeet-tdt-0.6b-v3-int8";
       description = ''
-        Whisper model to transcribe with. Downloaded on first start into
+        Parakeet model to transcribe with. Downloaded on first start into
         $XDG_DATA_HOME/voxtype. See `voxtype setup model` for the full list.
+
+        The int8 build is the quantized one: 670 MB against 2.6 GB for the
+        fp32 `parakeet-tdt-0.6b-v3`, and int8 is precisely what this CPU's
+        AVX-512 VNNI instructions accelerate.
       '';
     };
 
@@ -95,10 +114,17 @@ in {
     hotkey = {
       key = mkOption {
         type = types.str;
-        default = "F13";
+        default = "F24";
         description = ''
-          The evdev key to hold while speaking. F13 has no physical key on a
+          The evdev key to hold while speaking. F24 has no physical key on a
           normal keyboard, which is the point -- see `remapSuperSpace`.
+
+          It also has no keysym in the default XKB keymap, so the compositor
+          drops it instead of acting on it. Do not "fix" this back to F13:
+          xkeyboard-config's inet(evdev) symbols map F13-F18 onto XF86Tools
+          and XF86Launch5-9, and gnome-settings-daemon binds XF86Tools to
+          launching Settings -- so every dictation also popped open the
+          Settings window. F20-F23 are taken as well (mic mute, touchpad).
         '';
       };
 
@@ -150,6 +176,23 @@ in {
     users.users = genAttrs cfg.users (_: {
       extraGroups = ["input" "uinput"];
     });
+
+    # `nixos-rebuild switch` re-execs the user systemd and reruns this
+    # activation, but switch-to-configuration never restarts a *user* service
+    # whose definition changed. Without this the daemon keeps serving the
+    # previous generation's config -- an old hotkey, an old model -- until the
+    # next login, while keyd has already moved on.
+    system.userActivationScripts.voxtype.text = ''
+      pid=$(systemctl --user show voxtype.service --property=MainPID --value 2>/dev/null || true)
+      if [ -n "$pid" ] && [ "$pid" != 0 ]; then
+        # The daemon names its config file on its command line. Restarting
+        # unconditionally would drop an in-flight dictation and pay the model
+        # reload on every switch, so only act when that path actually moved.
+        if ! tr '\0' '\n' < /proc/"$pid"/cmdline | grep -qxF ${configFile}; then
+          systemctl --user restart voxtype.service
+        fi
+      fi
+    '';
 
     # Collapse the compositor-facing chord into one unambiguous evdev event.
     services.keyd = mkIf cfg.hotkey.remapSuperSpace {
