@@ -330,9 +330,25 @@ in {
         };
 
         revset-aliases = {
-          # see jj bump & jj tug aliases
-          "bumpable()" = "all:mutable() & mine()";
-          "tuggable()" = "heads(::@- & bookmarks())";
+          # jj's builtin mine() only checks the author, so it misses commits I
+          # rebased or amended but did not write. Check both sides of authorship.
+          "user(x)" = "author(x) | committer(x)";
+          "mine()" = ''user(exact:"farid.m.zakaria@gmail.com")'';
+
+          # stack(x, n) is the mutable work connected to x, plus n-1 generations
+          # of ancestors for context. reachable() walks only the mutable
+          # subgraph, so two stacks hanging off trunk stay separate -- but a
+          # megamerge joining them makes them a single stack, which is what the
+          # rebase aliases below want.
+          "stack()" = "stack(@)";
+          "stack(x)" = "stack(x, 2)";
+          "stack(x, n)" = "ancestors(reachable(x, mutable()), n)";
+
+          # Every line of work in flight. n = 1 keeps trunk out, so the whole
+          # set is mutable by definition. Since mine() above spans author and
+          # committer, this covers everything I wrote or rewrote, and leaves out
+          # a fetched commit that is still wholly someone else's.
+          "open()" = "stack(mine() | @, 1) ~ hidden()";
         };
 
         aliases = {
@@ -345,18 +361,36 @@ in {
             "--config"
             ''ui.pager=["${lib.getExe config.programs.delta.package}", "-s"]''
           ];
-          bump = [
+          # Replant every in-flight stack onto trunk. --skip-emptied abandons
+          # commits that landed upstream (their diff is already in trunk, so
+          # rebasing empties them); --simplify-parents drops the merge edges
+          # that the move made redundant.
+          retrunk = [
             "rebase"
-            "-b"
-            "bumpable()"
-            "-d"
+            "--skip-emptied"
+            "--simplify-parents"
+            "-o"
             "trunk()"
+            "-s"
+            "roots(open())"
           ];
+          # retrunk, narrowed to the stack the working copy sits on.
+          reheat = [
+            "rebase"
+            "--skip-emptied"
+            "--simplify-parents"
+            "-o"
+            "trunk()"
+            "-s"
+            "roots(trunk()..stack(@))"
+          ];
+          # See every stack at a glance.
+          open = ["log" "-r" "open()"];
+          # `jj bookmark advance` is the built-in tug. Its default --from revset
+          # is already heads(::to & bookmarks()), so naming --to is enough.
           tug = [
             "bookmark"
-            "move"
-            "--from"
-            "tuggable()"
+            "advance"
             "--to"
             "@-"
           ];
