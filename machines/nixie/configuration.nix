@@ -24,6 +24,7 @@
 
   boot.initrd.luks.devices."luks-1b9f570b-04ee-40f2-b5c1-4966d5b6c573".device = "/dev/disk/by-uuid/1b9f570b-04ee-40f2-b5c1-4966d5b6c573";
   networking.hostName = "nixie"; # Define your hostname.
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -70,25 +71,24 @@
     git
     emacs
     niv
-    pinentry
+    pinentry-qt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
 
   # enable gnupg
-  programs.gnupg.agent = {
-    enable = true;
-  };
+  programs.gnupg.agent.enable = true;
+  programs.dconf.enable = true;
 
   # List services that you want to enable:
 
-  hardware.pulseaudio.enable = true;
   services.xserver.enable = true;
   services.xserver.videoDrivers = ["amdgpu"];
   services.fwupd.enable = true;
   programs.ssh.startAgent = true;
   programs.zsh.enable = true;
+  programs.nix-ld.enable = true;
 
   # TODO - this is the default, do you need it?
   services.logind.lidSwitch = "suspend";
@@ -103,11 +103,11 @@
     };
   };
 
-  services.displayManager.lightdm.enable = true;
+  services.xserver.displayManager.lightdm.enable = true;
   # Emulate an old-fashioned session
   # https://github.com/NixOS/nixpkgs/issues/177555#issuecomment-1263498702
   # https://github.com/dwf/dotfiles/blob/eb783902a03a5c0259bb28843101746db31c5623/nixos/modules/user-xsession.nix
-  services.displayManager.session = [
+  services.xserver.displayManager.session = [
     {
       manage = "desktop";
       name = "normal-user-session";
@@ -115,6 +115,13 @@
     }
   ];
 
+  virtualisation.docker = {
+    package = pkgs.docker_29;
+    enable = true;
+  };
+
+  services.printing.enable = true;
+  services.printing.drivers = [ pkgs.brlaser ];
   services.vpn.enable = true;
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;

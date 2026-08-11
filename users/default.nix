@@ -66,30 +66,47 @@
   users.extraUsers.mrw = {
     isNormalUser = true;
     shell = pkgs.bash;
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = ["wheel" "networkmanager" "docker"];
     description = "Mark Williams";
     openssh.authorizedKeys.keyFiles = [
       ./mrw/keys
     ];
     packages = with pkgs; [
+      alsa-utils
       brightnessctl
       comma
+      dafny
       discord
       dmenu
       docker_29
       emacs
       firefox
       flameshot
-      (haskellPackages.ghcWithPackages (hpkgs: [
+      foomatic-db-ppds-withNonfreeDb
+      ghidra
+      adwaita-icon-theme
+      (pkgs.unstable.haskellPackages.ghcWithPackages (hpkgs: [
         hpkgs.xmonad
         hpkgs.xmonad-contrib
       ]))
+      jetbrains.idea-community-bin
+      pkgs.unstable.go
+      pkgs.unstable.gopls
+      pkgs.unstable.opencode
       killall
       man-pages
       pass
       pavucontrol
       polybarFull
       python3
+      (python3.withPackages (ppkgs: [
+        ppkgs.flake8
+      ]))
+      pyright
+      texliveFull
+      pkgs.unstable.signal-desktop
+      pkgs.unstable.snowemu
+      steam
       rxvt-unicode
       rustup
       signal-desktop
@@ -97,6 +114,7 @@
       wmctrl
       vscode
       xcalib
+      z3
     ];
   };
 }

@@ -119,7 +119,8 @@
     nixosConfigurations = {
       nyx = machine "nyx" [];
       # FIXME: Mark is no longer using NixOS but is using Nix.
-      # nixie = machine "nixie" [];
+      # the hell i ain't - nixie lives
+      nixie = machine "nixie" [];
       # As this is a raspberrypi, you might want to build the sdImage
       # nix build '.#nixosConfigurations.kuato.config.system.build.sdImage'
       # Alternatively, you can deploy it as follows:
