@@ -270,6 +270,18 @@
     meson
   ];
 
+  # ../../users gives mrw the full desktop package set he runs on nixie: an X11
+  # session, IDEs, toolchains and games. On nyx the account only ever gets used
+  # over ssh, so replace that list with the handful of things a shell session
+  # needs. mkForce is required because users.users.<name>.packages is a list
+  # option, and list options concatenate their definitions instead of
+  # overriding them.
+  users.extraUsers.mrw.packages = lib.mkForce (with pkgs; [
+    emacs
+    killall
+    man-pages
+  ]);
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
