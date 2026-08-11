@@ -39,17 +39,13 @@
         "fmzakari"
         "mrw"
       ];
-      substituters = (
-        builtins.filter
-          # drop any other tailscale substituters like leviathan because i'm not there
-          (s: if config.networking.hostName == "nixie" then (!lib.hasInfix "ts.net" s) else true)
-          [
-            "http://fzakaria.cachix.org"
-            "https://nix-community.cachix.org"
-            "https://cache.numtide.com"
-            "http://leviathan.cymric-daggertooth.ts.net:5000?priority=100"
-          ]
-      );
+      
+      substituters = [
+        "http://fzakaria.cachix.org"
+        "https://nix-community.cachix.org"
+        "https://cache.numtide.com"
+      ];
+
       trusted-public-keys = [
         "fzakaria.cachix.org-1:qWCiyGu0EmmRlo65Ro7b+L/QB0clhdeEofPxTOkRNng="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="

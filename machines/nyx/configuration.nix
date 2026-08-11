@@ -282,6 +282,12 @@
     man-pages
   ]);
 
+  # Add leviathan which needs Tailscale.
+  # mrw does not want to bug Alex to get onto it
+  nix.settings.substituters = [
+    "http://leviathan.cymric-daggertooth.ts.net:5000?priority=100"
+  ];
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
