@@ -44,6 +44,90 @@
   folderMap = pkgs.writeText "aerc-gmail-folder-map" ''
     * = [Gmail]/*
   '';
+
+  # Both files below take an upstream aerc file and append our own additions.
+  # The obvious spelling -- `builtins.readFile "${aerc}/share/aerc/<file>"` --
+  # is an import-from-derivation: the path only exists once aerc has been
+  # built, so *evaluating* this module (nix flake check, a rebuild dry-run, an
+  # eval on a machine that never installs aerc) would first have to build or
+  # substitute aerc. Concatenating inside a derivation instead keeps evaluation
+  # pure and defers the work to build time, where it belongs.
+  #
+  # Each addendum starts with a blank line because concatText is a plain `cat`
+  # and the upstream file's final newline is not guaranteed.
+
+  # Reading long kernel threads means wading through deeply interleaved
+  # quotes (`>`, `>>`, `>> >`, ...). aerc's `colorize` filter styles quoted
+  # text by depth via the `quote_1`..`quote_4`/`quote_x` styleset objects,
+  # but stock dracula paints *every* level the same dim cyan
+  # (`quote_*.fg=6; quote_*.dim=true`), so the nesting is invisible.
+  #
+  # Rather than fork the whole styleset, we reuse upstream dracula verbatim and
+  # append per-depth *color* overrides giving each quote level a distinct
+  # dracula hue. quote_x covers anything deeper than four.
+  #
+  # We deliberately override only `fg`, not `dim`: stock dracula already sets
+  # `quote_*.dim=true` with `quote_1.dim=false`, i.e. the top quote level is
+  # bright and every deeper level is dimmed. Keeping that means depth is cued
+  # twice over -- by hue *and* by brightness (level 1 vivid, replies faded) --
+  # which reads nicely on long interleaved threads. `fg` and `dim` are
+  # independent attributes, so setting only `fg` leaves that dim pattern intact.
+  #
+  # IMPORTANT: do NOT wrap these in their own `[viewer]` header. The colorize
+  # filter is a small C program (not go-ini) that reads only the *first*
+  # `[viewer]` section and silently ignores any later duplicate section -- so
+  # a second `[viewer]` block has no effect (verified empirically). Within a
+  # single section it is last-key-wins, and stock dracula's `[viewer]` is the
+  # file's final section, so appending bare `quote_*` lines extends it and
+  # our values override the earlier `quote_*` wildcard.
+  draculaInterleaved = pkgs.concatText "aerc-styleset-dracula-interleaved" [
+    "${aerc}/share/aerc/stylesets/dracula"
+    (pkgs.writeText "aerc-styleset-quote-colors" ''
+
+      quote_1.fg=#8be9fd
+      quote_2.fg=#50fa7b
+      quote_3.fg=#ffb86c
+      quote_4.fg=#ff79c6
+      quote_x.fg=#bd93f9
+    '')
+  ];
+
+  # aerc does NOT merge a user binds.conf with its defaults -- if the file
+  # exists, it is used verbatim and the built-in navigation keys (j/k, arrows,
+  # Enter, /, q, ...) are lost. So seed our binds.conf with aerc's shipped
+  # defaults, then append the kernel patch workflow binds.
+  #
+  # Kernel patch workflow via b4 (https://b4.docs.kernel.org): pipe the
+  # message to b4, which reads the mbox from stdin, extracts its Message-Id,
+  # and pulls the *entire* series from lore -- latest revision, collected
+  # review trailers, and any follow-up fixups -- instead of applying just the
+  # one email under the cursor. Launch aerc from inside the target git tree so
+  # these act on the right repo. Keys sit in the patch namespace (aerc's own
+  # patch binds are pl/pa/pd/pb/pt/ps); pA = fetch + apply the series, pM =
+  # fetch it into an mbox for review without applying. The repeated [messages]
+  # / [view] headers are fine: aerc parses binds with go-ini, which merges
+  # duplicate sections into the ones from the defaults above.
+  bindsConf = pkgs.concatText "aerc-binds.conf" [
+    "${aerc}/share/aerc/binds.conf"
+    (pkgs.writeText "aerc-binds-extra" ''
+
+      [messages]
+      pA = :pipe -m ${b4} shazam -<Enter>
+      pM = :pipe -m ${b4} am -<Enter>
+
+      # Gmail muscle memory: `e` archives (aerc already binds `a` to the same
+      # :archive; this is just the familiar alias). `<C-r>` forces an immediate
+      # re-poll of all folders on top of the 5m check-mail timer / IMAP IDLE.
+      e = :archive flat<Enter>
+      <C-r> = :check-mail<Enter>
+
+      [view]
+      pA = :pipe -m ${b4} shazam -<Enter>
+      pM = :pipe -m ${b4} am -<Enter>
+
+      e = :archive flat<Enter>
+    '')
+  ];
 in {
   accounts.email.accounts.gmail = lib.mkIf hasGmailPassword {
     primary = true;
@@ -97,40 +181,6 @@ in {
   programs.aerc = lib.mkIf hasGmailPassword {
     enable = true;
     package = aerc;
-
-    # Reading long kernel threads means wading through deeply interleaved
-    # quotes (`>`, `>>`, `>> >`, ...). aerc's `colorize` filter styles quoted
-    # text by depth via the `quote_1`..`quote_4`/`quote_x` styleset objects,
-    # but stock dracula paints *every* level the same dim cyan
-    # (`quote_*.fg=6; quote_*.dim=true`), so the nesting is invisible.
-    #
-    # Rather than fork the whole styleset, we reuse upstream dracula verbatim
-    # via readFile and append per-depth *color* overrides giving each quote
-    # level a distinct dracula hue. quote_x covers anything deeper than four.
-    #
-    # We deliberately override only `fg`, not `dim`: stock dracula already sets
-    # `quote_*.dim=true` with `quote_1.dim=false`, i.e. the top quote level is
-    # bright and every deeper level is dimmed. Keeping that means depth is cued
-    # twice over -- by hue *and* by brightness (level 1 vivid, replies faded) --
-    # which reads nicely on long interleaved threads. `fg` and `dim` are
-    # independent attributes, so setting only `fg` leaves that dim pattern intact.
-    #
-    # IMPORTANT: do NOT wrap these in their own `[viewer]` header. The colorize
-    # filter is a small C program (not go-ini) that reads only the *first*
-    # `[viewer]` section and silently ignores any later duplicate section -- so
-    # a second `[viewer]` block has no effect (verified empirically). Within a
-    # single section it is last-key-wins, and stock dracula's `[viewer]` is the
-    # file's final section, so appending bare `quote_*` lines extends it and
-    # our values override the earlier `quote_*` wildcard.
-    stylesets.dracula-interleaved = ''
-      ${builtins.readFile "${aerc}/share/aerc/stylesets/dracula"}
-
-      quote_1.fg=#8be9fd
-      quote_2.fg=#50fa7b
-      quote_3.fg=#ffb86c
-      quote_4.fg=#ff79c6
-      quote_x.fg=#bd93f9
-    '';
 
     extraConfig = {
       general = {
@@ -187,40 +237,19 @@ in {
         "image/*" = "${pkgs.catimg}/bin/catimg -";
       };
     };
+  };
 
-    # aerc does NOT merge a user binds.conf with its defaults -- if the file
-    # exists, it is used verbatim and the built-in navigation keys (j/k, arrows,
-    # Enter, /, q, ...) are lost. So seed our binds.conf with aerc's shipped
-    # defaults, then append the kernel patch workflow binds.
-    #
-    # Kernel patch workflow via b4 (https://b4.docs.kernel.org): pipe the
-    # message to b4, which reads the mbox from stdin, extracts its Message-Id,
-    # and pulls the *entire* series from lore -- latest revision, collected
-    # review trailers, and any follow-up fixups -- instead of applying just the
-    # one email under the cursor. Launch aerc from inside the target git tree so
-    # these act on the right repo. Keys sit in the patch namespace (aerc's own
-    # patch binds are pl/pa/pd/pb/pt/ps); pA = fetch + apply the series, pM =
-    # fetch it into an mbox for review without applying. The repeated [messages]
-    # / [view] headers are fine: aerc parses binds with go-ini, which merges
-    # duplicate sections into the ones from the defaults above.
-    extraBinds = ''
-      ${builtins.readFile "${aerc}/share/aerc/binds.conf"}
-
-      [messages]
-      pA = :pipe -m ${b4} shazam -<Enter>
-      pM = :pipe -m ${b4} am -<Enter>
-
-      # Gmail muscle memory: `e` archives (aerc already binds `a` to the same
-      # :archive; this is just the familiar alias). `<C-r>` forces an immediate
-      # re-poll of all folders on top of the 5m check-mail timer / IMAP IDLE.
-      e = :archive flat<Enter>
-      <C-r> = :check-mail<Enter>
-
-      [view]
-      pA = :pipe -m ${b4} shazam -<Enter>
-      pM = :pipe -m ${b4} am -<Enter>
-
-      e = :archive flat<Enter>
-    '';
+  # The styleset and binds.conf are installed directly rather than through
+  # `programs.aerc.stylesets` / `programs.aerc.extraBinds`, because those
+  # options take a *string* -- which would mean readFile-ing aerc's own files
+  # at evaluation time (see draculaInterleaved / bindsConf above). Referencing
+  # the derivations by `source` keeps the store paths opaque to the evaluator.
+  #
+  # No option conflict: home-manager only emits its own binds.conf when
+  # extraBinds (or an account's aerc.extraBinds) is non-empty, and neither is
+  # set here.
+  xdg.configFile = lib.mkIf hasGmailPassword {
+    "aerc/stylesets/dracula-interleaved".source = draculaInterleaved;
+    "aerc/binds.conf".source = bindsConf;
   };
 }
