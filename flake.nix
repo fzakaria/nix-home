@@ -3,6 +3,12 @@
   # found at https://github.com/Misterio77/nix-starter-configs/blob/main/standard/flake.nix
   description = "Our nix-home.";
 
+  # Settings nix applies to every command run against *this* flake.
+  nixConfig = {
+    # Ban import-from-derivation. IFD is easy to write by accident.
+    allow-import-from-derivation = false;
+  };
+
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
