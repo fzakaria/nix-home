@@ -23,13 +23,14 @@
     });
   };
 
-  # When applied, the unstable nixpkgs set (declared in the flake inputs) will
-  # be accessible through 'pkgs.unstable'
+  # When applied, an unstable nixpkgs set is accessible through 'pkgs.unstable'.
   unstable-packages = final: _prev: {
-    unstable = import inputs.nixpkgs-unstable {
-      system = final.stdenv.hostPlatform.system;
-      config.allowUnfree = true;
-      overlays = [inputs.nix-vscode-extensions.overlays.default];
-    };
+    unstable =
+      (inputs.multiverse.lib.mkMultiverse {
+        system = final.stdenv.hostPlatform.system;
+        config.allowUnfree = true;
+        overlays = [inputs.nix-vscode-extensions.overlays.default];
+      })
+      .tip;
   };
 }

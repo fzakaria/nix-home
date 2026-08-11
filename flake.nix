@@ -6,10 +6,9 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    # You can access packages and modules from different nixpkgs revs
-    # at the same time. Here's an working example:
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # Also see the 'unstable-packages' overlay at 'overlays/default.nix'.
+
+    # https://github.com/fzakaria/nixpkgs-multiverse
+    multiverse.url = "github:fzakaria/nixpkgs-multiverse";
 
     # Flake Utils, added so we can dedupe it.
     flake-utils.url = "github:numtide/flake-utils";
@@ -44,18 +43,16 @@
 
     # tailscale tclip
     tailscale-tclip.url = "github:tailscale-dev/tclip";
-    # Could not follow as nixpkgs; had to use nixpkgs-unstable
-    tailscale-tclip.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    tailscale-tclip.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixvim = {
-      url = "github:nix-community/nixvim";
-    };
+    # https://github.com/nix-community/nixvim
+    nixvim.url = "github:nix-community/nixvim";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     # Fetch pages from behind Anubis proof-of-work / Cloudflare bot-walls.
     anubis-fetch.url = "github:fzakaria/anubis-fetch";
-    anubis-fetch.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    anubis-fetch.inputs.nixpkgs.follows = "nixpkgs";
     anubis-fetch.inputs.flake-utils.follows = "flake-utils";
   };
 
