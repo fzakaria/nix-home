@@ -78,12 +78,17 @@
     # pass to it, with each system as an argument
     forAllSystems = nixpkgs.lib.genAttrs systems;
 
+    # Every machine gets an overlays.nix next to its configuration.nix, for
+    # package tweaks that only make sense on that host. It is pulled in here
+    # rather than from each configuration.nix so the file is guaranteed to
+    # exist and is in the same place on every machine.
     machine = name: modules:
       nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
         modules =
           [
             ./machines/${name}/configuration.nix
+            ./machines/${name}/overlays.nix
           ]
           ++ modules;
       };
