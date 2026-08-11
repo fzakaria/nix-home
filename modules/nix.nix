@@ -34,12 +34,16 @@
     };
 
     settings = {
-      experimental-features = ["cgroups" "nix-command" "flakes" "dynamic-derivations" "ca-derivations" "recursive-nix"];
+      # Only the two features the flake actually needs. The rest
+      # ("cgroups" "dynamic-derivations" "ca-derivations" "recursive-nix")
+      # were more trouble than they were worth, so they stay commented out.
+      # experimental-features = ["cgroups" "nix-command" "flakes" "dynamic-derivations" "ca-derivations" "recursive-nix"];
+      experimental-features = ["nix-command" "flakes"];
       trusted-users = [
         "fmzakari"
         "mrw"
       ];
-      
+
       substituters = [
         "http://fzakaria.cachix.org"
         "https://nix-community.cachix.org"
