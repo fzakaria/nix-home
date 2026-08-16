@@ -191,6 +191,12 @@ in {
       pi
       # claude-code is installed via programs.claude-code in ./claude.nix (which
       # also manages ~/.claude/settings.json), so it is intentionally not here.
+      #
+      # Browser automation for Claude: drives a headless Chromium (baked into
+      # the package as AGENT_BROWSER_EXECUTABLE_PATH, so nothing is downloaded
+      # and nothing needs nix-ld). Taught via the agent-browser skill in
+      # ./claude.nix.
+      agent-browser
       antigravity-cli
       opencode
     ]);

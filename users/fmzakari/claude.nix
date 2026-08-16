@@ -254,8 +254,28 @@ in {
       ${codeStyle}
     '';
 
+    # Skills — symlinked into ~/.claude/skills/<name>/ and loaded on demand
+    # (only the frontmatter description is always in context, so a skill costs
+    # nothing until Claude decides it is relevant).
+    #
+    # A *directory* is used rather than an inline string on purpose: the
+    # home-manager module writes strings to `~/.claude/skills/<name>.md`, but
+    # Claude Code discovers skills as `<name>/SKILL.md`.
+    skills = {
+      # Browsing/screenshotting the web. Deliberately a thin stub — the
+      # agent-browser CLI ships its own docs (`agent-browser skills get core`)
+      # that are version-matched to the binary, so the skill points at those
+      # instead of restating commands that would drift on every upgrade.
+      agent-browser = ./skills/agent-browser;
+    };
+
     settings = {
       theme = "auto";
+      permissions.allow = [
+        # agent-browser is read-mostly automation against a throwaway headless
+        # browser; prompting on every click and snapshot makes it unusable.
+        "Bash(agent-browser:*)"
+      ];
       # Claude's own internal status line — rendered at the bottom of the
       # Claude pane. This is the only place session usage/tokens/cost show up
       # (tmux's status bar can't see inside the Claude session). We feed it the
