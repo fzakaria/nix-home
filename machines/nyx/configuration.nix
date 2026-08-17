@@ -121,6 +121,7 @@
     xserver = {
       enable = true;
     };
+    displayManager.sddm.settings.Users.HideUsers = "mrw";
     fwupd.enable = true;
     hardware = {
       bolt.enable = true;
