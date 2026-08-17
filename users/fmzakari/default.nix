@@ -14,6 +14,7 @@ in {
   imports = [
     ./git.nix
     ./b4.nix
+    ./omarchy.nix
     ./fish.nix
     ./vscode.nix
     ./helix.nix

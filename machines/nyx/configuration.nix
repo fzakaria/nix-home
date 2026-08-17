@@ -17,6 +17,7 @@
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
     outputs.nixosModules.voxtype
+    outputs.nixosModules.omarchy
   ];
 
   # Use the systemd-boot EFI boot loader
@@ -62,7 +63,11 @@
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
-  fonts = {
+  # Omarchy names its own default font families, so this block only applies
+  # while Omarchy is off. Both would otherwise define
+  # fonts.fontconfig.defaultFonts, which is a list option and would merge
+  # rather than override.
+  fonts = lib.mkIf (!config.services.omarchy.enable) {
     enableDefaultPackages = true;
     packages = with pkgs.nerd-fonts; [
       fira-code
@@ -119,16 +124,37 @@
         "java script" = "JavaScript";
       };
     };
-    # Enable the GNOME Desktop Environment
-    desktopManager.gnome.enable = true;
-    displayManager.gdm = {
+    # Omarchy: Hyprland under uwsm, SDDM as the greeter, and Omarchy's own
+    # shell, themes and commands. Everything the desktop needs lives in
+    # modules/nixos/omarchy.nix, so this line is the whole switch.
+    #
+    # Omarchy and GNOME cannot both run: each wants a display manager and
+    # each names the default font families. So GNOME stays configured right
+    # here and is selected by the same flag, which makes trying Omarchy a
+    # one-line change and backing out of it the same one line. Until a
+    # session has proven itself, `nixos-rebuild test` leaves the bootloader
+    # alone and a reboot returns to the previous generation.
+    omarchy = {
       enable = true;
+      # The greeter has no username field, so it has to be told which account
+      # it is authenticating. mrw only ever reaches nyx over ssh.
+      greeterUser = "fmzakari";
+    };
+
+    # The GNOME desktop, for when Omarchy is switched off.
+    desktopManager.gnome.enable = !config.services.omarchy.enable;
+    displayManager.gdm = {
+      enable = !config.services.omarchy.enable;
       wayland = true;
     };
-    # Enable the X11 windowing system.
-    xserver = {
-      enable = true;
-    };
+    # X11, which GNOME wants and Omarchy does not.
+    xserver.enable = !config.services.omarchy.enable;
+
+    # Omarchy's SDDM theme is password-only: it logs in whoever
+    # userModel.lastUser resolves to and never draws the name, so a second
+    # account in the model is an unlabelled prompt aimed at the wrong user.
+    # mrw only ever reaches nyx over ssh, so keep the account out of the
+    # greeter entirely. Inert while Omarchy is off, since GDM is in use then.
     displayManager.sddm.settings.Users.HideUsers = "mrw";
     fwupd.enable = true;
     hardware = {

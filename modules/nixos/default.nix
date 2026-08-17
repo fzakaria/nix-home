@@ -13,4 +13,6 @@
   grafana = ./grafana.nix;
 
   voxtype = ./voxtype.nix;
+
+  omarchy = ./omarchy.nix;
 }

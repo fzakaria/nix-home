@@ -5,4 +5,6 @@
   # my-module = import ./my-module.nix;
 
   b4 = ./b4.nix;
+
+  omarchy = ./omarchy.nix;
 }

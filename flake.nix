@@ -60,6 +60,24 @@
     anubis-fetch.url = "github:fzakaria/anubis-fetch";
     anubis-fetch.inputs.nixpkgs.follows = "nixpkgs";
     anubis-fetch.inputs.flake-utils.follows = "flake-utils";
+
+    # DHH's Omarchy desktop. Not a flake, just a source tree, which
+    # pkgs/omarchy vendors into the store and the omarchy NixOS module
+    # points $OMARCHY_PATH at.
+    omarchy = {
+      url = "github:basecamp/omarchy";
+      flake = false;
+    };
+
+    # The agent runtime Omarchy ships. Unlike Omarchy's own applications this
+    # one packages itself, so take its flake rather than rebuilding it here.
+    herdr.url = "github:omacom/herdr";
+    herdr.inputs.nixpkgs.follows = "nixpkgs";
+
+    # tobi's `try`, the scratch-directory tool Omarchy preinstalls. Also
+    # packages itself, so take the flake.
+    try.url = "github:tobi/try";
+    try.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {

@@ -1,7 +1,13 @@
 # This file defines overlays
 {inputs, ...}: {
-  # This one brings our custom packages from the 'pkgs' directory
-  additions = final: _prev: import ../pkgs final.pkgs;
+  # This one brings our custom packages from the 'pkgs' directory.
+  # `inputs` goes along because some packages are built from a flake input
+  # that is a bare source tree, such as the Omarchy checkout.
+  additions = final: _prev:
+    import ../pkgs {
+      pkgs = final;
+      inherit inputs;
+    };
 
   # This one contains whatever you want to overlay
   # You can change versions, add patches, set compilation flags, anything really.
@@ -21,6 +27,14 @@
     tclipd = inputs.tailscale-tclip.packages."${prev.stdenv.hostPlatform.system}".tclipd.overrideAttrs (oldAttrs: {
       doCheck = false;
     });
+
+    # herdr, the agent runtime Omarchy binds SUPER+H to. Surfaced as a plain
+    # package so modules/nixos/omarchy.nix can name it without reaching for
+    # flake inputs, the same way claude-code above is handled.
+    herdr = inputs.herdr.packages.${prev.stdenv.hostPlatform.system}.herdr;
+
+    # tobi's `try`, shipped as tobi-try in Omarchy's package list.
+    try = inputs.try.packages.${prev.stdenv.hostPlatform.system}.default;
   };
 
   # When applied, an unstable nixpkgs set is accessible through 'pkgs.unstable'.
