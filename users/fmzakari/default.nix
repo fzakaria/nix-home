@@ -198,6 +198,9 @@ in {
       # ./claude.nix.
       agent-browser
       antigravity-cli
+      # Terminal workspace manager that runs several coding agents side by
+      # side, each in its own git worktree. https://herdr.dev
+      herdr
       opencode
     ]);
 
