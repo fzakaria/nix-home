@@ -98,7 +98,23 @@
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    # Built against the same overlaid package set the machines get, not bare
+    # legacyPackages: a package here may reach for pkgs.unstable, which only
+    # exists once overlays/default.nix has been applied.
+    packages = forAllSystems (
+      system: let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            outputs.overlays.additions
+            outputs.overlays.modifications
+            outputs.overlays.unstable-packages
+          ];
+          config.allowUnfree = true;
+        };
+      in
+        import ./pkgs {inherit pkgs inputs;}
+    );
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
