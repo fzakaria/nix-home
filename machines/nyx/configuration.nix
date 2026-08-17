@@ -22,7 +22,14 @@
   # Use the systemd-boot EFI boot loader
   boot = {
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        # The ESP is 487M. Left unbounded, systemd-boot keeps an entry (and
+        # nixos keeps a kernel + initrd) for every generation that survives
+        # nix.gc, which eventually fails a rebuild with ENOSPC halfway through
+        # installing the bootloader. Ten is plenty to roll back from.
+        configurationLimit = 10;
+      };
       efi.canTouchEfiVariables = true;
     };
 
