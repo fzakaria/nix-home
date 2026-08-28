@@ -168,6 +168,13 @@ in {
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.users != [];
+        message = "services.voxtype.users must name at least one user; the daemon is gated on it and would otherwise never start.";
+      }
+    ];
+
     environment = {
       # Also drop the config where an interactive `voxtype` picks it up, so a
       # manual run and the daemon agree on the configuration.
@@ -188,21 +195,26 @@ in {
     # previous generation's config -- an old hotkey, an old model -- until the
     # next login, while keyd has already moved on.
     system.userActivationScripts.voxtype.text = ''
+      # The activation script builds its own PATH out of coreutils, grep and
+      # a few others; systemd is not among them, so systemctl has to be named
+      # by store path or every call below exits 127 and fails the unit.
+      systemctl=${pkgs.systemd}/bin/systemctl
+
       # switch-to-configuration fires `systemctl --user daemon-reexec` without
       # waiting on it -- the user session sends no Reloaded signal, so it has
       # nothing to wait for -- and then runs this activation. Restarting here
       # would race that reexec and hand systemd the *previous* generation's
       # unit. daemon-reload is synchronous over D-Bus, so it settles the new
       # unit definitions before anything below reads or restarts them.
-      systemctl --user daemon-reload
+      "$systemctl" --user daemon-reload
 
-      pid=$(systemctl --user show voxtype.service --property=MainPID --value 2>/dev/null || true)
+      pid=$("$systemctl" --user show voxtype.service --property=MainPID --value 2>/dev/null || true)
       if [ -n "$pid" ] && [ "$pid" != 0 ]; then
         # The daemon names its config file on its command line. Restarting
         # unconditionally would drop an in-flight dictation and pay the model
         # reload on every switch, so only act when that path actually moved.
         if ! tr '\0' '\n' < /proc/"$pid"/cmdline | grep -qxF ${configFile}; then
-          systemctl --user restart voxtype.service
+          "$systemctl" --user restart voxtype.service
         fi
       fi
     '';
@@ -216,6 +228,14 @@ in {
     systemd.user.services.voxtype = {
       description = "Local voice-to-text dictation";
       documentation = ["https://voxtype.io"];
+
+      # A systemd.user unit is instantiated in *every* user session, and the
+      # GDM greeter is one -- so without this the daemon starts as gdm, tries
+      # to download 670 MB of Parakeet into /run/gdm's throwaway home on every
+      # boot, and then crash-loops because that download never completes.
+      # Repeating ConditionUser is an OR, so each allowed user matches.
+      unitConfig.ConditionUser = cfg.users;
+
       partOf = ["graphical-session.target"];
       after = [
         "graphical-session.target"

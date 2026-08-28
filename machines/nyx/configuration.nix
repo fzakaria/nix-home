@@ -46,6 +46,14 @@
   };
   systemd.services.systemd-vconsole-setup.unitConfig.After = "local-fs.target";
 
+  # /etc/resolvconf.conf invalidates the nscd cache with a `try-restart` every
+  # time resolv.conf is regenerated. During boot NetworkManager and tailscaled
+  # rewrite it five-plus times in a few seconds, which trips systemd's default
+  # limit of five starts per ten seconds and leaves nscd dead for the rest of
+  # the session -- so every NSS lookup falls back to the slow path. The
+  # restarts are legitimate, so drop the rate limit rather than the restarts.
+  systemd.services.nscd.startLimitIntervalSec = 0;
+
   networking = {
     hostName = "nyx";
     networkmanager.enable = true;
