@@ -5,7 +5,7 @@
     enable = true;
     package = pkgs.unstable.helix;
     settings = {
-      theme = "draula";
+      theme = "dracula";
       editor = {
         color-modes = true;
         lsp = {
