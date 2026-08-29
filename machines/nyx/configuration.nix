@@ -83,6 +83,14 @@
   hardware = {
     # enables support for SANE scanners
     sane.enable = true;
+
+    # BAP is BlueZ's LE Audio profile, and it needs Bluetooth ISO sockets that
+    # this kernel does not build (no CONFIG_BT_LE_AUDIO, nothing for ISO in
+    # /proc/net/protocols). The plugin therefore fails its probe on every boot
+    # and logs two errors before disabling itself. Nothing is lost by not
+    # loading it -- A2DP still registers ldac/aptx/aac as before -- and it goes
+    # quiet. Drop this if the kernel ever ships ISO socket support.
+    bluetooth.disabledPlugins = ["bap"];
   };
 
   services = {
@@ -92,7 +100,10 @@
     # A fuse filesystem that dynamically populates contents of /bin
     # and /usr/bin/ so that it contains all executables from the PATH
     # of the requesting process.
-    envfs.enable = true;
+    envfs = {
+      enable = true;
+      package = pkgs.unstable.envfs;
+    };
     # Enable printing
     printing.enable = true;
     # https://nixos.wiki/wiki/Printing#Enable_autodiscovery_of_network_printers
@@ -129,7 +140,6 @@
     xserver = {
       enable = true;
     };
-    displayManager.sddm.settings.Users.HideUsers = "mrw";
     fwupd.enable = true;
     hardware = {
       bolt.enable = true;
@@ -146,6 +156,20 @@
       };
     };
   };
+
+  # GDM has no HideUsers knob -- its greeter list comes from AccountsService,
+  # which offers up every account at or above UID_MIN (1000 here) that has a
+  # login shell. The supported way to drop a single account from that list is
+  # to mark it a system account in AccountsService's own per-user cache. root
+  # needs no such entry: GDM filters anything below UID_MIN on its own.
+  #
+  # `f+` rewrites the file on every boot, so any greeter preference
+  # AccountsService stores for mrw (icon, language, session) is reset -- moot
+  # for an account that no longer appears in the greeter. mrw keeps a normal
+  # login shell and can still sign in through "Not listed?".
+  systemd.tmpfiles.rules = [
+    ''f+ /var/lib/AccountsService/users/mrw 0600 root root - [User]\nSystemAccount=true\n''
+  ];
 
   # Disable gcr-ssh-agent as it hijacks SSH_AUTH_SOCK and prevents
   # yubikey-agent from setting it correctly.
