@@ -336,6 +336,8 @@ in {
         ui = {
           "diff-formatter" = ":git";
           pager = lib.getExe config.programs.delta.package;
+          # Bare `jj` shows the log instead of the help text.
+          "default-command" = "log";
         };
 
         revset-aliases = {
