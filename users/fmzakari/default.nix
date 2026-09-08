@@ -18,6 +18,7 @@ in {
     ./vscode.nix
     ./helix.nix
     ./claude.nix
+    ./codex.nix
     ./aerc.nix
     ./tmux.nix
     ./vim
@@ -183,7 +184,7 @@ in {
       # programs.b4 in ./b4.nix (which also wires up its review-editor syntax
       # highlighting and agent-reviewer instructions).
       # Fetch URLs behind Anubis' proof-of-work wall (lore.kernel.org, GNOME,
-      # kernel.org, ...) and Cloudflare fingerprinting. See ./claude.nix.
+      # kernel.org, ...) and Cloudflare fingerprinting. See ./agent-settings.nix.
       # https://github.com/fzakaria/anubis-fetch (wired in as a flake input).
       inputs.anubis-fetch.packages.${pkgs.stdenv.hostPlatform.system}.default
     ]
@@ -192,14 +193,13 @@ in {
       # claude-code is installed via programs.claude-code in ./claude.nix (which
       # also manages ~/.claude/settings.json), so it is intentionally not here.
       #
-      # Browser automation for Claude: drives a headless Chromium (baked into
-      # the package as AGENT_BROWSER_EXECUTABLE_PATH, so nothing is downloaded
+      # Browser automation for Claude Code and Codex: drives headless Chromium
+      # (baked in as AGENT_BROWSER_EXECUTABLE_PATH, so nothing is downloaded
       # and nothing needs nix-ld). Taught via the agent-browser skill in
-      # ./claude.nix.
+      # ./agent-settings.nix.
       agent-browser
       antigravity-cli
-      # OpenAI's terminal coding agent.
-      codex
+      # Codex is installed and configured via ./codex.nix.
       # Terminal workspace manager that runs several coding agents side by
       # side, each in its own git worktree. https://herdr.dev
       herdr
