@@ -48,7 +48,7 @@ in {
     custom-instructions = agentSettings.instructions;
 
     # Leave config.toml writable: Codex stores project trust and interactive
-    # preferences there. Use /statusline for Codex's native usage display;
+    # preferences there. The profile configures Codex's native status line;
     # Claude's ccusage script and LSP plugin have Claude-specific interfaces.
   };
 
@@ -63,6 +63,14 @@ in {
         sandbox_mode = "danger-full-access";
         approval_policy = "never";
         project_doc_fallback_filenames = ["CLAUDE.md"];
+        # Limits show remaining allowance and are omitted when unavailable.
+        tui.status_line = [
+          "model-with-reasoning"
+          "context-remaining"
+          "five-hour-limit"
+          "weekly-limit"
+          "estimated-thread-cost"
+        ];
       };
 
       # Equivalent to Claude's Bash(agent-browser:*) allow rule. Keep a
