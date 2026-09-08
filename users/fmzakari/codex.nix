@@ -8,28 +8,41 @@
 }: let
   agentSettings = import ./agent-settings.nix;
   codex = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.codex;
-  profileName = "nix-home";
-  codexWithProfile = pkgs.symlinkJoin {
-    name = "codex-with-profile";
+
+  # Settings Home Manager owns: Full access, no command approval prompts, a
+  # CLAUDE.md fallback, and the native status line. Limits show remaining
+  # allowance and are omitted when unavailable.
+  settings = {
+    approval_policy = "never";
+    project_doc_fallback_filenames = ["CLAUDE.md"];
+    sandbox_mode = "danger-full-access";
+    "tui.status_line" = [
+      "model-with-reasoning"
+      "context-remaining"
+      "five-hour-limit"
+      "weekly-limit"
+      "estimated-thread-cost"
+    ];
+  };
+
+  # `-c key=value` parses the value as TOML, and JSON scalars and string
+  # arrays are valid TOML, so JSON encoding is enough.
+  settingsArgs =
+    lib.concatMapStringsSep " "
+    (name: "-c ${lib.escapeShellArg "${name}=${builtins.toJSON settings.${name}}"}")
+    (lib.attrNames settings);
+
+  codexWithSettings = pkgs.symlinkJoin {
+    name = "codex-with-settings";
     inherit (codex) version meta;
     paths = [codex];
     postBuild = ''
       rm $out/bin/codex
       cat > $out/bin/codex <<'EOF'
       #!${pkgs.bash}/bin/bash
-      # Utility commands do not accept a profile. Runtime commands and bare
-      # prompts use the Home Manager profile.
-      case "''${1-}" in
-        agents|login|logout|plugin|mcp-server|app-server|remote-control|completion|update|doctor|apply|a|migrate-rollouts|cloud|exec-server|features|help)
-          exec ${lib.getExe codex} "$@"
-          ;;
-        debug)
-          if [[ "''${2-}" != prompt-input ]]; then
-            exec ${lib.getExe codex} "$@"
-          fi
-          ;;
-      esac
-      exec ${lib.getExe codex} --profile ${profileName} "$@"
+      # Every subcommand takes the overrides, including the utility ones that
+      # reject --profile.
+      exec ${lib.getExe codex} ${settingsArgs} "$@"
       EOF
       chmod +x $out/bin/codex
     '';
@@ -41,15 +54,17 @@
 in {
   programs.codex = {
     enable = true;
-    package = codexWithProfile;
+    package = codexWithSettings;
 
     # release-25.11 calls this custom-instructions; newer Home Manager calls
     # it context. Both write the global AGENTS.md.
     custom-instructions = agentSettings.instructions;
 
-    # Leave config.toml writable: Codex stores project trust and interactive
-    # preferences there. The profile configures Codex's native status line;
-    # Claude's ccusage script and LSP plugin have Claude-specific interfaces.
+    # Leave config.toml writable and unmanaged: Codex persists project trust
+    # and interactive preferences to the highest-priority config file it
+    # loaded, and anything Nix writes is a read-only store symlink. A profile
+    # file has the same problem, which is why the settings above are CLI
+    # overrides instead.
   };
 
   home.file =
@@ -57,22 +72,6 @@ in {
       lib.nameValuePair ".agents/skills/${name}" {inherit source;})
     agentSettings.skills
     // {
-      # Codex >= 0.134 reads profiles from separate files. The pinned Home
-      # Manager release has no profiles option, so generate the file directly.
-      "${configDir}/${profileName}.config.toml".source = (pkgs.formats.toml {}).generate "codex-profile.toml" {
-        sandbox_mode = "danger-full-access";
-        approval_policy = "never";
-        project_doc_fallback_filenames = ["CLAUDE.md"];
-        # Limits show remaining allowance and are omitted when unavailable.
-        tui.status_line = [
-          "model-with-reasoning"
-          "context-remaining"
-          "five-hour-limit"
-          "weekly-limit"
-          "estimated-thread-cost"
-        ];
-      };
-
       # Equivalent to Claude's Bash(agent-browser:*) allow rule. Keep a
       # separate file so Codex can still append approvals to default.rules.
       "${configDir}/rules/agent-browser.rules".text = ''
