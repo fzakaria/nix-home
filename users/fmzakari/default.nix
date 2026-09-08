@@ -198,6 +198,8 @@ in {
       # ./claude.nix.
       agent-browser
       antigravity-cli
+      # OpenAI's terminal coding agent.
+      codex
       # Terminal workspace manager that runs several coding agents side by
       # side, each in its own git worktree. https://herdr.dev
       herdr
