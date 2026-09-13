@@ -187,6 +187,7 @@ in {
       # kernel.org, ...) and Cloudflare fingerprinting. See ./agent-settings.nix.
       # https://github.com/fzakaria/anubis-fetch (wired in as a flake input).
       inputs.anubis-fetch.packages.${pkgs.stdenv.hostPlatform.system}.default
+      unstable.gcloud
     ]
     ++ (with llmAgents; [
       pi
