@@ -44,9 +44,13 @@
 
   # Load our remote builder agent for nixbuild
   # they don't support yubikey and only ssh-ed25519
+  # The key is owned by fmzakari so client-side ssh (e.g. nix copy --to ssh://)
+  # can read it; the nix-daemon runs as root and can still read it for builds.
   age.secrets = {
     "nixbuild.key" = {
       file = ./secrets/nixbuild.key.age;
+      owner = "fmzakari";
+      mode = "0400";
     };
   };
 
