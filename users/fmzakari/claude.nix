@@ -24,9 +24,9 @@
   # (see home.packages) for Helix and manual use.
   #
   # FORWARD-COMPAT: once home-manager ships `programs.claude-code.lspServers`
-  # (added post-25.11 upstream), delete `claudeLspPlugin` / `claudeWithLsp`
-  # below, point `programs.claude-code.package` back at `llmAgents.claude-code`,
-  # and move `claudeLspServers` verbatim into `programs.claude-code.lspServers`.
+  # (added post-25.11 upstream), delete `claudeLspPlugin` and the `--plugin-dir`
+  # flag in `claudeWrapped` below, and move `claudeLspServers` verbatim into
+  # `programs.claude-code.lspServers`. Keep `claudeWrapped` for `--settings`.
   claudeLspServers = {
     clangd = {
       command = "${pkgs.clang-tools}/bin/clangd";
@@ -73,16 +73,16 @@
   '';
 
   # Wrap the CLI so it always loads the plugin dir (again mirroring master's
-  # `--plugin-dir` wrapper). We have no mcpServers, so the module's own
-  # `finalPackage` passes this through unchanged.
-  claudeWithLsp = pkgs.symlinkJoin {
+  # `--plugin-dir` wrapper) and the Nix-owned `claudeSettings` below. We have no
+  # mcpServers, so the module's own `finalPackage` passes this through unchanged.
+  claudeWrapped = pkgs.symlinkJoin {
     name = "claude-code";
     paths = [pkgs.claude-code];
     postBuild = ''
       mv $out/bin/claude $out/bin/.claude-wrapped
       cat > $out/bin/claude <<EOF
       #! ${pkgs.bash}/bin/bash -e
-      exec -a "\$0" "$out/bin/.claude-wrapped" --plugin-dir "${claudeLspPlugin}" "\$@"
+      exec -a "\$0" "$out/bin/.claude-wrapped" --plugin-dir "${claudeLspPlugin}" --settings "${claudeSettingsFile}" "\$@"
       EOF
       chmod +x $out/bin/claude
     '';
@@ -111,16 +111,42 @@
       printf '%s\n' "$line"
     fi
   '';
+
+  # Settings Home Manager owns. These go in through `--settings` on the wrapper
+  # instead of ~/.claude/settings.json: Claude Code persists `/effort`, `/model`
+  # and `/config` changes to that file, and a store symlink there fails with
+  # EROFS. The `--settings` layer takes precedence over the user file, so the
+  # keys below still win.
+  claudeSettings = {
+    "$schema" = "https://json.schemastore.org/claude-code-settings.json";
+    theme = "auto";
+    permissions.allow = [
+      # agent-browser is read-mostly automation against a throwaway headless
+      # browser; prompting on every click and snapshot makes it unusable.
+      "Bash(agent-browser:*)"
+    ];
+    # Claude's own internal status line — rendered at the bottom of the
+    # Claude pane. This is the only place session usage/tokens/cost show up
+    # (tmux's status bar can't see inside the Claude session). We feed it the
+    # `ccusageStatusline` wrapper (above), referenced by store path so it works
+    # regardless of PATH and is pulled into the closure without also being
+    # installed onto PATH.
+    statusLine = {
+      type = "command";
+      command = "${ccusageStatusline}";
+    };
+  };
+  claudeSettingsFile = (pkgs.formats.json {}).generate "claude-code-settings.json" claudeSettings;
 in {
   # Claude Code — Anthropic's CLI.
   #
-  # The binary comes from llm-agents.nix (wrapped above to load our LSP plugin);
-  # this module owns the *config* it writes to ~/.claude/settings.json. Keeping
-  # the binary here (not in home.packages) avoids installing claude-code twice
-  # into the profile.
+  # The binary comes from llm-agents.nix (wrapped above to load our LSP plugin
+  # and settings); this module owns CLAUDE.md and skills. Keeping the binary
+  # here (not in home.packages) avoids installing claude-code twice into the
+  # profile.
   programs.claude-code = {
     enable = true;
-    package = claudeWithLsp;
+    package = claudeWrapped;
 
     # Host-level memory — written to ~/.claude/CLAUDE.md and loaded for *every*
     # project on this machine (a per-repo ./CLAUDE.md is layered on top). Keep
@@ -137,23 +163,7 @@ in {
     # Claude Code discovers skills as `<name>/SKILL.md`.
     skills = agentSettings.skills;
 
-    settings = {
-      theme = "auto";
-      permissions.allow = [
-        # agent-browser is read-mostly automation against a throwaway headless
-        # browser; prompting on every click and snapshot makes it unusable.
-        "Bash(agent-browser:*)"
-      ];
-      # Claude's own internal status line — rendered at the bottom of the
-      # Claude pane. This is the only place session usage/tokens/cost show up
-      # (tmux's status bar can't see inside the Claude session). We feed it the
-      # `ccusageStatusline` wrapper (above), referenced by store path so it works
-      # regardless of PATH and is pulled into the closure without also being
-      # installed onto PATH.
-      statusLine = {
-        type = "command";
-        command = "${ccusageStatusline}";
-      };
-    };
+    # Leave `settings` unset so ~/.claude/settings.json stays writable and
+    # unmanaged: see `claudeSettings` above.
   };
 }
