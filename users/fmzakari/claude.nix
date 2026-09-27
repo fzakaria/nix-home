@@ -75,6 +75,11 @@
   # Wrap the CLI so it always loads the plugin dir (again mirroring master's
   # `--plugin-dir` wrapper) and the Nix-owned `claudeSettings` below. We have no
   # mcpServers, so the module's own `finalPackage` passes this through unchanged.
+  #
+  # `remote-control` (alias `rc`) refuses to start when global flags come before
+  # the verb, because the sessions it spawns would not inherit them
+  # (anthropics/claude-code#86330). Pass that subcommand straight through; its
+  # spawned sessions run without the LSP plugin and `claudeSettings`.
   claudeWrapped = pkgs.symlinkJoin {
     name = "claude-code";
     paths = [pkgs.claude-code];
@@ -82,6 +87,11 @@
       mv $out/bin/claude $out/bin/.claude-wrapped
       cat > $out/bin/claude <<EOF
       #! ${pkgs.bash}/bin/bash -e
+      case "\''${1:-}" in
+        rc | remote-control)
+          exec -a "\$0" "$out/bin/.claude-wrapped" "\$@"
+          ;;
+      esac
       exec -a "\$0" "$out/bin/.claude-wrapped" --plugin-dir "${claudeLspPlugin}" --settings "${claudeSettingsFile}" "\$@"
       EOF
       chmod +x $out/bin/claude
