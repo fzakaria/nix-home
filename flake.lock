@@ -36,11 +36,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1788899881,
-        "narHash": "sha256-ky1js/yhtGLFk/WcVKAnS082z2SxMkVR++cXkRQ3Efw=",
+        "lastModified": 1790870162,
+        "narHash": "sha256-y79LWCnsRworq1DIu3FpKxYRICvKcRS2gNLGeOhDuDo=",
         "owner": "fzakaria",
         "repo": "anubis-fetch",
-        "rev": "48f172e513464dece4780ce24c7ba4f110702f4b",
+        "rev": "8e7197dd6fc5fe9cd3af5111048d394b7bcb3468",
         "type": "github"
       },
       "original": {
