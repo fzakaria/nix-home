@@ -364,6 +364,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_5": {
+      "locked": {
+        "lastModified": 1790689126,
+        "narHash": "sha256-ilerN1WLSvF+HMjziC/Wv99J5y02maDH+6hZPwsORKg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b4fd65b198c599cbe814fcb9f42d25d021595ec9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -384,6 +400,24 @@
         "type": "github"
       }
     },
+    "rewind": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_5"
+      },
+      "locked": {
+        "lastModified": 1790876744,
+        "narHash": "sha256-6bkmjeSBBT6rtsbZXW6BN1u1gm1CZiXMBwU2aHtguKk=",
+        "owner": "fzakaria",
+        "repo": "rewindvm",
+        "rev": "7408b6244e72bb5c90d64b75f151e693f34e7f2a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fzakaria",
+        "repo": "rewindvm",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -398,6 +432,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixvim": "nixvim",
+        "rewind": "rewind",
         "tailscale-golink": "tailscale-golink",
         "tailscale-tclip": "tailscale-tclip"
       }

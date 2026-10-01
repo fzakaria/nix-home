@@ -60,6 +60,12 @@
     anubis-fetch.url = "github:fzakaria/anubis-fetch";
     anubis-fetch.inputs.nixpkgs.follows = "nixpkgs";
     anubis-fetch.inputs.flake-utils.follows = "flake-utils";
+
+    # https://rewindvm.dev: deterministic Linux VMs you can scrub, rewind and
+    # fork. nixpkgs is deliberately not followed: rewindvm.cachix.org only has
+    # builds against rewindvm's own nixpkgs, and following ours would compile
+    # the guest kernel and the app locally.
+    rewind.url = "github:fzakaria/rewindvm";
   };
 
   outputs = {

@@ -14,6 +14,7 @@
     ../../modules/nixpkgs.nix
     ../../users
     inputs.agenix.nixosModules.default
+    inputs.rewind.nixosModules.default
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
     outputs.nixosModules.voxtype
@@ -321,6 +322,19 @@
     killall
     man-pages
   ]);
+
+  # Rewind VM (https://rewindvm.dev): the rewind CLI and the desktop app. The
+  # module also adds rewindvm.cachix.org to Nix's substituters.
+  # /dev/kvm is already 0666 on this machine, so no kvm group is needed.
+  programs.rewind = {
+    enable = true;
+    app.enable = true;
+    # nyx is a Ryzen 7840U (Zen 4). Set rr's branch counter workaround at
+    # every boot so runs use counter time instead of exit time. This sets an
+    # MSR bit that changes how every CPU speculates around locked
+    # instructions, for every program on the machine.
+    amdBranchCounterWorkaround = true;
+  };
 
   # Add leviathan which needs Tailscale.
   # mrw does not want to bug Alex to get onto it
