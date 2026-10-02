@@ -242,6 +242,17 @@
 
     ssh.startAgent = false;
 
+    # 1Password CLI (`op`) and desktop app. Both go through their NixOS
+    # modules rather than systemPackages: `op` needs a setgid wrapper to talk
+    # to the desktop app, and the desktop app needs a polkit policy to unlock
+    # with the system password (and fingerprint) instead of the master
+    # password every time.
+    _1password.enable = true;
+    _1password-gui = {
+      enable = true;
+      polkitPolicyOwners = ["fmzakari"];
+    };
+
     # I got tired of facing NixOS issues
     # Let's be more pragmatic and try to run binaries sometimes
     # at the cost of sweeping bugs under the rug.
