@@ -436,21 +436,30 @@ in {
     bash = {
       enable = true;
       initExtra = ''
-        # I have had so much trouble running fish as my login shell
-        # instead run bash as my default login shell but just exec into it.
-        # Check if the shell is interactive.
+        # Bash is the login shell; exec into fish for interactive use.
         #
-        # `nix-shell` exports IN_NIX_SHELL before exec'ing bash, so that check
-        # catches it. `nix develop` does not: it sources ~/.bashrc from the top
-        # of its generated rc file, *before* the rc file applies the developer
-        # environment, so IN_NIX_SHELL is still empty here and exec'ing fish
-        # would throw away the whole environment. NIX_GCROOT is the one variable
-        # `nix develop` puts in the environment beforehand (see CmdDevelop in
-        # nix's src/nix/develop.cc), so guard on it too -- the same trick the
-        # NixOS direnv module uses.
-        if [[ $- == *i* && -z "$NO_FISH_BASH" && -z "$IN_NIX_SHELL" && -z "$NIX_GCROOT" ]]; then
+        # nix-shell and nix develop source ~/.bashrc from their --rcfile
+        # *before* applying the dev env, so stay in bash there. The nix
+        # variables are inherited by anything started in a nix/direnv shell
+        # (e.g. a tmux server), so only trust them when another script
+        # sourced this file. BASH_SOURCE[1] is empty or ~/.bash_profile for
+        # bash's own startup.
+        __bashrc_caller="''${BASH_SOURCE[1]:-}"
+        __in_nix_rcfile=""
+        if [[ -n "$__bashrc_caller" && "$__bashrc_caller" != "$HOME/.bash_profile" && ( -n "$IN_NIX_SHELL" || -n "$NIX_GCROOT" ) ]]; then
+          __in_nix_rcfile=1
+        fi
+
+        if [[ $- == *i* && -z "$NO_FISH_BASH" && -z "$__in_nix_rcfile" ]]; then
           exec ${pkgs.fish}/bin/fish
         fi
+        unset __bashrc_caller __in_nix_rcfile
+
+        # NO_FISH_BASH (set by the `bash` function here and in fish.nix)
+        # keeps a typed `bash` from exec'ing straight back into fish. Consume
+        # it so shells started under this one (tmux, terminals) get fish.
+        unset NO_FISH_BASH
+        bash() { NO_FISH_BASH=1 command bash "$@"; }
       '';
     };
   };
