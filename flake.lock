@@ -421,11 +421,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1790950201,
-        "narHash": "sha256-sctJaIQL+T+ajfa4x4z6Zhcwi3edNTed8dxfUe8GPQU=",
+        "lastModified": 1791090950,
+        "narHash": "sha256-P4ZXd2nCBzog5Z9Ge6flI83ZAaRQ4p+ctAmTZKBqFxw=",
         "owner": "fzakaria",
         "repo": "rewindvm",
-        "rev": "f5c0b58a25f5f24e08d9d782b278a5a15f2aa134",
+        "rev": "70626fc60a74527440db54de0ae1f6102c1d41d1",
         "type": "github"
       },
       "original": {
