@@ -42,14 +42,6 @@
       # to show for those devices.
       settings.General.Experimental = true;
     };
-
-    # nixos-hardware already knows this chassis' raw speaker sink; all that is
-    # left is turning the filter chain on. It replaces the bare stereo sink
-    # with a "Framework Speakers" device that runs psychoacoustic bass
-    # extension, loudness compensation, an EQ tuned for the 13" AMD chassis
-    # and a limiter. Set the speakers to 100% once before switching -- the
-    # filter volume and the ALSA volume compound.
-    framework.laptop13.audioEnhancement.enable = true;
   };
 
   fileSystems = {
