@@ -63,6 +63,11 @@
     Defaults timestamp_timeout=60
   '';
 
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
+
   users.extraUsers.mrw = {
     isNormalUser = true;
     shell = pkgs.bash;
