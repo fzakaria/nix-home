@@ -345,6 +345,11 @@
     # MSR bit that changes how every CPU speculates around locked
     # instructions, for every program on the machine.
     amdBranchCounterWorkaround = true;
+    # Add rewind-amd to Nix's system features, so derivations that run Rewind
+    # in their build and name rewind-amd in requiredSystemFeatures build on
+    # nyx. `rewind doctor` reports kvm, cpu and clock as ok here, which the
+    # module asks for before setting the feature.
+    systemFeature = "amd";
   };
 
   # Add leviathan which needs Tailscale.
