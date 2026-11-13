@@ -15,6 +15,7 @@
     ../../users
     inputs.agenix.nixosModules.default
     inputs.rewind.nixosModules.default
+    inputs.bootvine.nixosModules.default
     outputs.nixosModules.vpn
     outputs.nixosModules.fprint-laptop-lid
     outputs.nixosModules.voxtype
@@ -36,6 +37,15 @@
 
     # Let's emulate aarch64-linux so we can build our raspberry pi images
     binfmt.emulatedSystems = ["aarch64-linux"];
+
+    # bootvine can only follow the boot from the initrd onward when the
+    # initrd runs systemd. NixOS 26.05 makes this the default; 25.11 does not.
+    initrd.systemd.enable = true;
+
+    # bootvine silences the kernel console once it starts, but kernel
+    # messages printed before then still land on screen. Keep those to
+    # errors so they do not scroll over the tree.
+    consoleLogLevel = 3;
   };
 
   # High-DPI console
@@ -95,6 +105,9 @@
   };
 
   services = {
+    # Show a live tree of pending systemd units on the console during boot
+    # and shutdown, instead of the scrolling kernel and systemd log.
+    bootvine.enable = true;
     guix = {
       enable = true;
     };

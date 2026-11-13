@@ -66,6 +66,11 @@
     # builds against rewindvm's own nixpkgs, and following ours would compile
     # the guest kernel and the app locally.
     rewind.url = "github:fzakaria/rewindvm";
+
+    # https://codeberg.org/wvhulle/bootvine: a live tree of pending systemd
+    # jobs on the boot and shutdown console in place of the scrolling log.
+    bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
+    bootvine.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
