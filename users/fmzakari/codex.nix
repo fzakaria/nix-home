@@ -56,9 +56,8 @@ in {
     enable = true;
     package = codexWithSettings;
 
-    # release-25.11 calls this custom-instructions; newer Home Manager calls
-    # it context. Both write the global AGENTS.md.
-    custom-instructions = agentSettings.instructions;
+    # Written to the global AGENTS.md under CODEX_HOME.
+    context = agentSettings.instructions;
 
     # Leave config.toml writable and unmanaged: Codex persists project trust
     # and interactive preferences to the highest-priority config file it

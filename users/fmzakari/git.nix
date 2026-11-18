@@ -59,10 +59,9 @@
         ff = "only";
       };
       pager = {
-        # Pipe `git blame` through delta for syntax-highlighted blame output.
-        # https://dandavison.github.io/delta/git-blame.html
-        blame = "delta";
-        # Same idea for `git grep` — delta highlights grep-format output.
+        # Pipe `git grep` through delta, which highlights grep-format output.
+        # programs.delta.enableGitIntegration already sets the blame, diff,
+        # log and show pagers, so only grep is defined here.
         # https://dandavison.github.io/delta/grep.html
         grep = "delta";
       };

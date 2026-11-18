@@ -64,10 +64,10 @@
     openssh = {
       enable = true;
       startWhenNeeded = true;
-      banner = ''
-        Welcome to my EC2 instance. Happy hacking!
-      '';
       settings = {
+        Banner = toString (pkgs.writeText "sshd-banner" ''
+          Welcome to my EC2 instance. Happy hacking!
+        '');
         PasswordAuthentication = false;
       };
     };

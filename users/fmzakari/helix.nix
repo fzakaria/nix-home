@@ -17,7 +17,7 @@
       marksman
       unstable.nixd
       unstable.alejandra
-      nodePackages.prettier
+      prettier
     ];
     languages = {
       language = [

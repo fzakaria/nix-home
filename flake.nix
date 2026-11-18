@@ -11,7 +11,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
 
     # https://github.com/fzakaria/nixpkgs-multiverse
     multiverse.url = "github:fzakaria/nixpkgs-multiverse";
@@ -20,7 +20,7 @@
     flake-utils.url = "github:numtide/flake-utils";
 
     # Home manager
-    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.url = "github:nix-community/home-manager/release-26.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Nix-index-database
@@ -73,8 +73,9 @@
     bootvine.inputs.nixpkgs.follows = "nixpkgs";
 
     # https://github.com/adeci/earwig: local voice dictation. nixpkgs is
-    # deliberately not followed: earwig needs rustc 1.95 and nixos-25.11
-    # ships 1.91, so earwig builds against the nixos-unstable it pins.
+    # not followed, so earwig builds against the nixos-unstable it pins.
+    # earwig needs rustc 1.95, which nixos-25.11 lacked; nixos-26.05 ships
+    # 1.95, so following nixpkgs is now possible but untested.
     earwig.url = "github:adeci/earwig";
   };
 

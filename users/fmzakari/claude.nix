@@ -162,7 +162,7 @@ in {
     # project on this machine (a per-repo ./CLAUDE.md is layered on top). Keep
     # this to durable, machine-wide guidance; project specifics belong in the
     # repo's own CLAUDE.md.
-    memory.text = agentSettings.instructions;
+    context = agentSettings.instructions;
 
     # Skills — symlinked into ~/.claude/skills/<name>/ and loaded on demand
     # (only the frontmatter description is always in context, so a skill costs

@@ -125,8 +125,8 @@
   services.vpn.enable = true;
   services.openssh.enable = true;
   services.openssh.startWhenNeeded = true;
-  services.openssh.banner = "    __                    __              __    __      __\n   / /_  ___  __  __     / /_  __  ______/ /___/ /_  __/ /\n  / __ \\/ _ \\/ / / /    / __ \\/ / / / __  / __  / / / / / \n / / / /  __/ /_/ /    / /_/ / /_/ / /_/ / /_/ / /_/ /_/  \n/_/ /_/\\___/\\__, ( )  /_.___/\\__,_/\\__,_/\\__,_/\\__, (_)   \n           /____/|/                           /____/      \n";
   services.openssh.settings = {
+    Banner = toString (pkgs.writeText "sshd-banner" "    __                    __              __    __      __\n   / /_  ___  __  __     / /_  __  ______/ /___/ /_  __/ /\n  / __ \\/ _ \\/ / / /    / __ \\/ / / / __  / __  / / / / / \n / / / /  __/ /_/ /    / /_/ / /_/ / /_/ / /_/ / /_/ /_/  \n/_/ /_/\\___/\\__, ( )  /_.___/\\__,_/\\__,_/\\__,_/\\__, (_)   \n           /____/|/                           /____/      \n");
     PasswordAuthentication = false;
   };
 

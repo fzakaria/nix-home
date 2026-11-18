@@ -124,10 +124,10 @@
     openssh = {
       enable = true;
       startWhenNeeded = true;
-      banner = ''
-        Welcome to my RaspberryPi 4. Happy hacking!
-      '';
       settings = {
+        Banner = toString (pkgs.writeText "sshd-banner" ''
+          Welcome to my RaspberryPi 4. Happy hacking!
+        '');
         PasswordAuthentication = false;
       };
     };

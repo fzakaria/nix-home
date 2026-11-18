@@ -39,7 +39,8 @@
     binfmt.emulatedSystems = ["aarch64-linux"];
 
     # bootvine can only follow the boot from the initrd onward when the
-    # initrd runs systemd. NixOS 26.05 makes this the default; 25.11 does not.
+    # initrd runs systemd. NixOS 26.05 already defaults to a systemd initrd;
+    # the explicit setting records that bootvine depends on it.
     initrd.systemd.enable = true;
 
     # bootvine silences the kernel console once it starts, but kernel
@@ -135,10 +136,7 @@
     earwig.enable = true;
     # Enable the GNOME Desktop Environment
     desktopManager.gnome.enable = true;
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
+    displayManager.gdm.enable = true;
     # Enable the X11 windowing system.
     xserver = {
       enable = true;
@@ -151,10 +149,10 @@
     openssh = {
       enable = true;
       startWhenNeeded = true;
-      banner = ''
-        Welcome to my Framework AMD laptop. Happy hacking!
-      '';
       settings = {
+        Banner = toString (pkgs.writeText "sshd-banner" ''
+          Welcome to my Framework AMD laptop. Happy hacking!
+        '');
         PasswordAuthentication = false;
       };
     };

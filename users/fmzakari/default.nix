@@ -173,7 +173,7 @@ in {
       # https://github.com/martinvonz/jj
       unstable.jujutsu
       unstable.zed-editor
-      nixfmt-rfc-style
+      nixfmt
       zip
       ccache
       unstable.devenv
