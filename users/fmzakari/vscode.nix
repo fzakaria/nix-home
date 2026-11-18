@@ -6,7 +6,13 @@
 }: let
   # Marketplace / OpenVSX extensions, filtered to versions whose
   # `engines.vscode` is satisfied by the VS Code we actually ship.
-  marketplace = pkgs.unstable.forVSCodeVersion pkgs.unstable.vscode.version;
+  marketplace = pkgs.unstable.forVSCodeVersion vscodeSemVer;
+
+  # forVSCodeVersion throws "Invalid SemVer" on anything but X.Y.Z, and
+  # nixpkgs writes a VS Code x.y.0 release as just "X.Y" (e.g. "1.146").
+  # Pad the nixpkgs version out to the three components SemVer requires.
+  semVerComponents = 3;
+  vscodeSemVer = lib.versions.pad semVerComponents pkgs.unstable.vscode.version;
 
   window = {
     "window.zoomLevel" = 2;
