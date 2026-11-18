@@ -71,6 +71,11 @@
     # jobs on the boot and shutdown console in place of the scrolling log.
     bootvine.url = "git+https://codeberg.org/wvhulle/bootvine";
     bootvine.inputs.nixpkgs.follows = "nixpkgs";
+
+    # https://github.com/adeci/earwig: local voice dictation. nixpkgs is
+    # deliberately not followed: earwig needs rustc 1.95 and nixos-25.11
+    # ships 1.91, so earwig builds against the nixos-unstable it pins.
+    earwig.url = "github:adeci/earwig";
   };
 
   outputs = {

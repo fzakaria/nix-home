@@ -11,6 +11,4 @@
   tclip = ./tclip.nix;
 
   grafana = ./grafana.nix;
-
-  voxtype = ./voxtype.nix;
 }
