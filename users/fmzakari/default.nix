@@ -149,8 +149,9 @@ in {
       # https://github.com/sharkdp/hyperfine
       # CLI benchmarking tool
       hyperfine
-      # get copy and paste working for X11
-      xclip
+      # Command-line copy and paste for Wayland (wl-copy / wl-paste). nvim's
+      # clipboard=unnamedplus and Claude Code's image paste pick these up.
+      wl-clipboard
       niv
       buildifier
       just
@@ -224,7 +225,8 @@ in {
       enableZshIntegration = false;
       settings = {
         theme = "dracula";
-        copy_command = "xclip -selection clipboard";
+        # No copy_command: zellij then copies over OSC 52, which Ghostty
+        # puts on the Wayland clipboard, the same path tmux uses.
       };
     };
 

@@ -87,10 +87,11 @@
         '';
       }
 
-      # Copy to the *system* clipboard from copy mode. Uses xclip under X11,
-      # which you already install. In copy mode: `v` to start selecting,
-      # `y` to yank into the clipboard.
-      yank
+      # No tmux-yank: copying to the system clipboard goes through OSC 52
+      # instead (see set-clipboard in extraConfig). tmux-yank shelled out to
+      # xclip, which wrote the X11 clipboard via Xwayland while Ghostty wrote
+      # the Wayland one, and Mutter's sync between the two left Ctrl+Shift+V
+      # pasting stale text after a copy in Chrome.
     ];
 
     # ---- Everything else ----------------------------------------------------
@@ -109,6 +110,14 @@
       # newline in Claude Code instead of submitting.
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
+
+      # === System clipboard ================================================
+      # set-clipboard on: a tmux copy is sent to the outer terminal as an
+      # OSC 52 escape, and Ghostty puts it on the Wayland clipboard. "on"
+      # (rather than "external") also lets programs *inside* tmux set the
+      # clipboard with OSC 52 (nvim, Claude Code). OSC 52 rides the tty, so
+      # copying works the same inside an SSH session.
+      set -s set-clipboard on
 
       # === True color ======================================================
       # Advertise 24-bit ("true") color to programs so themes render exactly.
@@ -161,8 +170,8 @@
       bind r source-file ~/.config/tmux/tmux.conf \; display-message "tmux.conf reloaded"
 
       # === Copy-mode niceties (vi style) ===================================
-      # In copy mode: v starts a selection, y copies it (yank plugin handles
-      # the system clipboard). Feels like vim's visual mode.
+      # In copy mode: v starts a selection, y copies it (set-clipboard sends
+      # it on to the system clipboard). Feels like vim's visual mode.
       bind -T copy-mode-vi v send -X begin-selection
       bind -T copy-mode-vi y send -X copy-selection-and-cancel
 

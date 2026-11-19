@@ -44,7 +44,7 @@
 
     shellAliases = {
       "cat" = "bat --style=plain";
-      "pbcopy" = "xsel --clipboard --input";
+      "pbcopy" = "wl-copy";
     };
   };
 
