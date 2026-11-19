@@ -188,8 +188,8 @@ in {
       # https://github.com/fzakaria/anubis-fetch (wired in as a flake input).
       inputs.anubis-fetch.packages.${pkgs.stdenv.hostPlatform.system}.default
       unstable.google-cloud-sdk
-      # GPUI treemap explorer for disk usage. Packaged in ../../pkgs/disktree
-      # until it lands in nixpkgs. https://github.com/tobi/disktree
+      # GPUI treemap explorer for disk usage. nixpkgs' package built from my
+      # fork's branch; see ../../pkgs/default.nix.
       disktree
     ]
     ++ (with llmAgents; [
