@@ -180,11 +180,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1794905972,
-        "narHash": "sha256-D5+TyLwaFWvpqPIXcd2Jt5PMhnkvJmlGVSQimupnUXc=",
+        "lastModified": 1795076910,
+        "narHash": "sha256-7gKjtZQXPzt89o/2gdG6MsV8pUhwqbjtdrwIAbb/HRI=",
         "owner": "adeci",
         "repo": "earwig",
-        "rev": "9d13d1cc806bb14f97a08d61385c580534fc1e14",
+        "rev": "2312402f756c6e1c19c76dff2a71c8b9b29615bd",
         "type": "github"
       },
       "original": {
