@@ -56,9 +56,17 @@ in {
   # Note this key is now declarative: enabling or disabling an extension from
   # the Extensions app survives until the next home-manager activation, which
   # resets the list to exactly what is written here.
+  #
+  # AppIndicator gives GNOME a tray so earwig's icon shows in the top bar.
+  # The earwig NixOS module installs it and enables it as a system dconf
+  # default, but a user-level enabled-extensions value (this one) replaces
+  # that default outright, so it has to be listed here too.
   dconf.settings."org/gnome/shell" = {
     disable-user-extensions = false;
-    enabled-extensions = ["monitor@astraext.github.io"];
+    enabled-extensions = [
+      "monitor@astraext.github.io"
+      pkgs.gnomeExtensions.appindicator.extensionUuid
+    ];
   };
 
   # List of additional package outputs of the packages home.packages
