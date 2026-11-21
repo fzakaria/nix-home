@@ -203,6 +203,8 @@ in {
     ]
     ++ (with llmAgents; [
       pi
+      # OMP, a fork of pi with extra tools, from numtide's llm-agents.nix.
+      omp
       # claude-code is installed via programs.claude-code in ./claude.nix (which
       # also manages ~/.claude/settings.json), so it is intentionally not here.
       #
