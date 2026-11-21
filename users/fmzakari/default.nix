@@ -19,6 +19,7 @@ in {
     ./helix.nix
     ./claude.nix
     ./codex.nix
+    ./omp.nix
     ./aerc.nix
     ./tmux.nix
     ./vim
