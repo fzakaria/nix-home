@@ -18,4 +18,6 @@ in {
   "atuin.key.age".publicKeys = allUsers ++ allSystems;
   # Gmail app-specific password used by aerc (see users/fmzakari/aerc.nix).
   "gmail-app-password.age".publicKeys = allUsers ++ [systems.nyx];
+  # unlid API key read by omp (users/fmzakari/omp.nix).
+  "unlid-api-key.age".publicKeys = allUsers ++ [systems.nyx];
 }

@@ -1,11 +1,28 @@
 {
   lib,
   pkgs,
+  osConfig,
   ...
 }: let
   # Chrome for the Playwright MCP server to attach to. Playwright only searches
   # standard FHS locations, so the store path is passed with --executable-path.
   chrome = lib.getExe pkgs.google-chrome;
+
+  # The unlid key is an agenix secret on nyx (machines/nyx/configuration.nix).
+  # Standalone home-manager entrypoints have no osConfig, so they fall back to
+  # the UNLID_API_KEY environment variable.
+  hasUnlidSecret =
+    osConfig
+    != null
+    && (osConfig.age.secrets or {}) ? "unlid-api-key";
+
+  # omp runs a value prefixed with "!" as a shell command and uses its stdout
+  # as the key, so the decrypted file is read at request time and the key is
+  # never written to the nix store.
+  unlidApiKey =
+    if hasUnlidSecret
+    then "!cat ${osConfig.age.secrets."unlid-api-key".path}"
+    else "UNLID_API_KEY";
 in {
   # omp reads its configuration from ~/.omp/agent. These files are managed here
   # so the setup survives a reinstall. Edits made by omp itself are overwritten
@@ -32,14 +49,13 @@ in {
       };
     };
 
-    # The API key is read from the UNLID_API_KEY environment variable, not
-    # stored in this file.
+    # The API key comes from unlidApiKey above. It is never stored in this file.
     ".omp/agent/models.yml".text = ''
       providers:
         unlid:
           baseUrl: https://api.unlid.ai/v1
           api: openai-completions
-          apiKey: UNLID_API_KEY
+          apiKey: ${unlidApiKey}
           models:
             - id: kimi-k3.1-pro-abliterated
               name: Kimi K3.1 Pro (abliterated)

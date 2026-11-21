@@ -190,6 +190,11 @@
       owner = "fmzakari";
     };
     # Gmail app-specific password consumed by aerc (users/fmzakari/aerc.nix).
+    # unlid API key read by omp (users/fmzakari/omp.nix).
+    "unlid-api-key" = {
+      file = ../../users/fmzakari/secrets/unlid-api-key.age;
+      owner = "fmzakari";
+    };
     "gmail-app-password" = {
       file = ../../users/fmzakari/secrets/gmail-app-password.age;
       owner = "fmzakari";
