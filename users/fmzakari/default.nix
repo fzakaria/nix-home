@@ -281,20 +281,20 @@ in {
       enable = true;
       enableDefaultConfig = false;
 
-      matchBlocks = {
+      settings = {
         "*" = {
-          forwardAgent = true;
-          serverAliveInterval = 0;
-          controlMaster = "auto";
-          controlPersist = "60m";
+          ForwardAgent = true;
+          ServerAliveInterval = 0;
+          ControlMaster = "auto";
+          ControlPersist = "60m";
         };
         "alakwan" = {
-          hostname = "alakwan.tail9f4b5.ts.net";
-          user = "fzakaria";
+          Hostname = "alakwan.tail9f4b5.ts.net";
+          User = "fzakaria";
         };
         "leviathan" = {
-          hostname = "leviathan.cymric-daggertooth.ts.net";
-          user = "fmzakari";
+          Hostname = "leviathan.cymric-daggertooth.ts.net";
+          User = "fmzakari";
         };
       };
     };
