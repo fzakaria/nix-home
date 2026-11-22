@@ -39,6 +39,8 @@ in {
       theme:
         dark: dark-dracula
       symbolPreset: nerd
+      modelRoles:
+        smol: unlid/glm-5.3-flash-abliterated
     '';
 
     ".omp/agent/mcp.json".text = builtins.toJSON {
