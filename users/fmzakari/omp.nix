@@ -30,10 +30,15 @@ in {
   home.file = {
     # The built-in browser tool is off because omp drops browser MCP servers at
     # config load while it is on. See docs/mcp-config.md in can1357/oh-my-pi.
+    # Dracula matches the Ghostty theme. The Nerd symbol preset uses the
+    # CaskaydiaCove Nerd Font Mono that the terminal already renders.
     ".omp/agent/config.yml".text = ''
       setupVersion: 3
       browser:
         enabled: false
+      theme:
+        dark: dark-dracula
+      symbolPreset: nerd
     '';
 
     ".omp/agent/mcp.json".text = builtins.toJSON {
