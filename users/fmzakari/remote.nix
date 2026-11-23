@@ -87,7 +87,7 @@
       }
       {
         hostName = "eu.nixbuild.net";
-        systems = ["x86_64-linux"];
+        systems = ["x86_64-linux" "aarch64-linux"];
         maxJobs = 100;
         supportedFeatures = ["benchmark" "big-parallel"];
       }
