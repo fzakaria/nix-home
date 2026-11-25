@@ -1,4 +1,27 @@
-{config, ...}: {
+{config, ...}: let
+  # nix-daemon on daedalus (nix-darwin). fmzakari's login shell there is
+  # bash, whose non-interactive PATH lacks nix, so ssh-ng is pointed at
+  # this binary via remote-program instead of a PATH lookup of nix-daemon.
+  daedalusNixDaemon = "/run/current-system/sw/bin/nix-daemon";
+
+  # remote-program for the daedalus aarch64-linux entry. The flags make
+  # the remote nix-daemon process the connection itself and present
+  # fmzakari as untrusted, which makes the build hook on nyx copy the
+  # .drv over. daedalus's daemon only forwards a build to its own
+  # linux-builder VM when the .drv is in its store. The arguments are
+  # joined with %20 because the store URI cannot contain spaces. Nix
+  # names a lock file after the store URI, so the URI must stay under
+  # 255 bytes; this one is 249.
+  daedalusUntrustedNixDaemon = builtins.concatStringsSep "%20" [
+    daedalusNixDaemon
+    "--extra-experimental-features"
+    "daemon-trust-override"
+    "--extra-experimental-features"
+    "mounted-ssh-store"
+    "--process-ops"
+    "--force-untrusted"
+  ];
+in {
   programs.ssh = {
     # Community builder for Linux
     knownHosts = {
@@ -16,6 +39,10 @@
         hostNames = ["leviathan.cymric-daggertooth.ts.net"];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMeSXZNbJuMapeK3JL7B/NfIo1ER8omtbPqTGMK1KNIj";
       };
+      daedalus = {
+        hostNames = ["daedalus.cymric-daggertooth.ts.net"];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBrGYj1xm3jsByrJoYr+WilmSnY7ldtAZSdR9S5GA/oC";
+      };
     };
 
     # nix remote builders don't work with Yubikey and on NixOS the builder runs as root
@@ -29,6 +56,9 @@
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host leviathan.cymric-daggertooth.ts.net
+        IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
+
+      Host daedalus.cymric-daggertooth.ts.net
         IdentityAgent /run/user/1000/yubikey-agent/yubikey-agent.sock
 
       Host dennard.soe.ucsc.edu
@@ -83,6 +113,30 @@
         systems = ["x86_64-linux"];
         maxJobs = 256;
         supportedFeatures = ["benchmark" "big-parallel"];
+        sshUser = "fmzakari";
+      }
+      # Alex's M4 Mac mini (10 cores, 16 GB) running nix-darwin, where
+      # fmzakari is in trusted-users. Builds aarch64-darwin natively.
+      {
+        protocol = "ssh-ng";
+        hostName = "daedalus.cymric-daggertooth.ts.net?remote-program=${daedalusNixDaemon}";
+        systems = ["aarch64-darwin"];
+        # Matches max-jobs in daedalus's own nix.conf.
+        maxJobs = 2;
+        supportedFeatures = ["apple-virt" "benchmark" "big-parallel" "nixos-test"];
+        sshUser = "fmzakari";
+      }
+      # daedalus again, for aarch64-linux, which its daemon forwards to its
+      # linux-builder VM (8 vCPU, 8 GB). The connection is forced untrusted
+      # (see daedalusUntrustedNixDaemon), so inputs uploaded from here must
+      # be signed or content-addressed.
+      {
+        protocol = "ssh-ng";
+        hostName = "daedalus.cymric-daggertooth.ts.net?remote-program=${daedalusUntrustedNixDaemon}";
+        systems = ["aarch64-linux"];
+        # Matches the linux-builder line in daedalus's /etc/nix/machines.
+        maxJobs = 4;
+        supportedFeatures = ["benchmark" "big-parallel" "kvm" "nixos-test"];
         sshUser = "fmzakari";
       }
       {
